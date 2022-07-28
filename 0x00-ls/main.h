@@ -79,7 +79,7 @@ typedef struct Option
 /* ----- main.c ----- */
 void validate(char *flags);
 int validate_weight(char **argv, char *flags, int count);
-void ls(char **av, int c, option *op);
+int ls(char **av, int c, option *op);
 DIR *open_case(DIR *dir, char *av);
 
 /* ----- create.c ----- */
