@@ -10,7 +10,7 @@ int count_digit(long int num)
 {
 	int i = 1;
 
-	while (num/=10)
+	while (num /= 10)
 		i++;
 	return (i);
 }
@@ -25,10 +25,11 @@ int count_digit(long int num)
  *
  * Return: Nothing
  */
-void printer(save *safe, char* dt, int end, int c, option *op)
+void printer(save *safe, char *dt, int end, int c, option *op)
 {
 	sort *tmp = NULL;
 	int bol = 0;
+
 	while (safe)
 	{
 		if (c > 1)
@@ -38,13 +39,12 @@ void printer(save *safe, char* dt, int end, int c, option *op)
 			printf("%s:\n", (safe->file));
 		}
 		tmp = safe->h;
-		while(tmp)
+		while (tmp)
 		{
-			//printf("value => %s\n", (safe->h)->r);
 			if (type_hidden(op->hidden, tmp) == 1)
 			{
 				if (op->detail == 2)
-					more_detail(tmp);
+					more_detail(tmp, op);
 				printf("%s%s", (tmp)->r, dt);
 			}
 			(tmp) = ((tmp)->next);
