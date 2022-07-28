@@ -36,14 +36,18 @@ int main(int argc, char **argv)
 
 int validate_weight(char **argv, char *flags, int count)
 {
-	int hidden = 0; /* 0 no visibles / 1 visibles / 2 visibles menos . .. */
-	int order = 0; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
-	int detail = 0; /* 0 column / 1 row  / 2 detail */
-	int recursive = 0; /* 0 normal / 1 recursive */
+	struct Option *op;
+	op = malloc(sizeof(option));
+	if (op == NULL)
+		return (-1);
+	op->hidden = 0; /* 0 no visibles / 1 visibles / 2 visibles menos . .. */
+	op->order = 0; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
+	op->detail = 0; /* 0 column / 1 row  / 2 detail */
+	op->recursive = 0; /* 0 normal / 1 recursive */
 	int i = 0;
 	if (flags == NULL)
 	{
-		ls(argv, 0, 0, 0, 0, count);
+		ls(argv, count, op);
 		return (0);
 	}
 	for (i = 0; flags[i]; i++)
@@ -51,74 +55,61 @@ int validate_weight(char **argv, char *flags, int count)
 		switch (flags[i])
 		{
 		case 'a':
-			hidden = 1;
+			op->hidden = 1;
 			continue;
 		case 'A':
-			hidden = 2;
+			op->hidden = 2;
 			continue;
 		case 'l':
-			detail = 2;
+			op->detail = 2;
 			continue;
 		case '1':
-			if (detail == 0)
-				detail = 1;
+			if (op->detail == 0)
+				op->detail = 1;
 			continue;
 		case 'r':
-			if (order == 0)
-				order = 1;
+			if (op->order == 0)
+				op->order = 1;
 			continue;
 		case 'S':
-			order = 3;
+			op->order = 3;
 			continue;
 		case 't':
-			order = 2;
+			op->order = 2;
 			continue;
 		case 'R':
-			recursive = 1;
+			op->recursive = 1;
 			continue;
 		}
 	}
-	ls(argv, hidden, order, detail, recursive, count);
+	ls(argv, count, op);
 	return (0);
 }
 
-void ls(char **av, int h, int o, int d, int r, int c)
+void ls(char **av, int c, option *op)
 {
 	DIR *dir;
-	(void) r;
-	struct Sort *head = NULL;
+	//struct Sort *head = NULL;
 	struct Save *safe = NULL;
-	save *tmp;
 	int i = 0, end = 0;
 	char *dt = NULL;
-
-	if (d == 0)
+	if (op->detail == 0)
 		dt = "  ", end = 0;
 	else
 		dt = "\n" , end = 1;
-	//printf("d => %d\n", d);
-	tmp = safe;
+
 	for (i = 1; av[i]; i++)
 	{
 		if (*av[i] != '-')
 		{
 			if ((dir = open_case(dir, av[i])) == NULL)
 				continue;
-			if (c > 2)
-				printf("%s:\n", av[i]);
 			//printf("DATA -> %s\n", av[i]);
 			//printf("dir = %d\n", res_open);
-			create_bi
-			tmp = malloc(sizeof(save));
-			tmp->h = create_list(av[i], tmp->h, dir);
-			tmp = tmp->next;
-			if (o == 1)
-				head = reverse_sort(head);
-			else if (o == 2)
-				head = time_sort(head);
-			else if (o == 3)
-				head = size_sort(head);
+			safe = create_big_list(safe, av[i], dir, op);
+
 			//printf("orden -> %d\n", o);
+			/*
 			while(head)
 			{
 				if (type_hidden(h, head) == 1)
@@ -131,68 +122,60 @@ void ls(char **av, int h, int o, int d, int r, int c)
 			}
 			if (end == 0)
 				putchar(10);
-
+			*/
 
 			//free_list(head);
 
 		}
 	}
-	printer(safe, dt, d, h, end);
+	printer(safe, dt, end, c, op);
 }
-
-save* add_big_node(save *h, char *name, char *av)
+save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
-	struct stat buf;
-	char *path = NULL;
-	sort *head, *tmp = h;
-
-	head = malloc(sizeof(sort));
-	if (head == NULL)
+	save *tmp, *current = safe;
+	//struct Sort *head;
+        tmp = malloc(sizeof(save));
+	if (tmp == NULL)
 		return (NULL);
+	//tmp->h = malloc(sizeof(sort));
+	//head = tmp->h;
+	//head = NULL;
+	tmp->h = NULL;
+	tmp->h = create_list(av, tmp->h, dir);
+	tmp->file = strdup(av);
 
-	head->r = strdup(name);
-	path = strdup(av);
-	path = realloc(path, strlen(path) + 2);
-	strcpy(&path[strlen(path)], "/");
-	strcat(path, name);
-	lstat(path, &buf);
-	free(path);
-	head->st_mode = buf.st_mode;
-	head->st_time = buf.st_mtime;
-	head->st_size = buf.st_size;
-	head->st_uid = buf.st_uid;
-	head->st_gid = buf.st_gid;
-	head->st_nlink = buf.st_nlink;
-	//head->b = buf;
-
-	if (buf.st_size > size_file)
-		size_file = buf.st_size;
-
-	if (h == NULL)
+	if (op->order == 1)
+		tmp->h = reverse_sort(tmp->h);
+	else if (op->order == 2)
+		tmp->h = time_sort(tmp->h);
+	else if (op->order == 3)
+		tmp->h = size_sort(tmp->h);
+	if (safe == NULL)
 	{
-		h = head;
-
-		return head;
+		safe = tmp;
+		return tmp;
 	}
-	while (tmp->next)
+	while (current->next)
 	{
-		tmp = tmp->next;
+		current = current->next;
 	}
-	tmp->next = head;
+	current->next = tmp;
 
-	return (h);
+	return (safe);
 }
 
-void printer(save *safe, char* dt, int d, int h, int end)
+void printer(save *safe, char* dt, int end, int c, option *op)
 {
-	printf("aaa\n");
 	while (safe)
 	{
+		if (c > 1)
+			printf("%s:\n", (safe->file));
 		while(safe->h)
 		{
-			if (type_hidden(h, safe->h) == 1)
+			//printf("value => %s\n", (safe->h)->r);
+			if (type_hidden(op->hidden, safe->h) == 1)
 			{
-				if (d == 2)
+				if (op->detail == 2)
 					more_detail(safe->h);
 				printf("%s%s", (safe->h)->r, dt);
 			}
@@ -260,47 +243,43 @@ sort* create_list(char *av, sort *head, DIR *dir)
 	return head;
 }
 
-sort* add_node(sort *h, char *name, char *av)
+sort* add_node(sort *head, char *name, char *av)
 {
 	struct stat buf;
 	char *path = NULL;
-	sort *head, *tmp = h;
+	sort *node = NULL, *tmp = head;
 
-	head = malloc(sizeof(sort));
-	if (head == NULL)
+	node = malloc(sizeof(sort));
+	if (node == NULL)
 		return (NULL);
 
-	head->r = strdup(name);
+	node->r = strdup(name);
 	path = strdup(av);
 	path = realloc(path, strlen(path) + 2);
 	strcpy(&path[strlen(path)], "/");
 	strcat(path, name);
 	lstat(path, &buf);
 	free(path);
-	head->st_mode = buf.st_mode;
-	head->st_time = buf.st_mtime;
-	head->st_size = buf.st_size;
-	head->st_uid = buf.st_uid;
-	head->st_gid = buf.st_gid;
-	head->st_nlink = buf.st_nlink;
+	node->st_mode = buf.st_mode;
+	node->st_time = buf.st_mtime;
+	node->st_size = buf.st_size;
+	node->st_uid = buf.st_uid;
+	node->st_gid = buf.st_gid;
+	node->st_nlink = buf.st_nlink;
 	//head->b = buf;
 
 	if (buf.st_size > size_file)
 		size_file = buf.st_size;
 
-	if (h == NULL)
+	if (head == NULL)
 	{
-		h = head;
-
-		return head;
+		head = node;
+		return (head);
 	}
 	while (tmp->next)
-	{
 		tmp = tmp->next;
-	}
-	tmp->next = head;
-
-	return (h);
+	tmp->next = node;
+	return (head);
 }
 
 /**
