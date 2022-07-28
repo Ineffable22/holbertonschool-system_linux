@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	char *flags = NULL;
 	int option = 0;
 	int count = 0;
+	int res = 0;
 	(void) argc;
 
 	while (argv[i])
@@ -30,10 +31,10 @@ int main(int argc, char **argv)
 	}
 	if (option == 1)
 		validate(flags);
-	validate_weight(argv, flags, count);
+	res = validate_weight(argv, flags, count);
 	if (option == 1)
 		free(flags);
-	return (0);
+	return (res);
 }
 
 /**
@@ -118,7 +119,7 @@ int validate_weight(char **argv, char *flags, int count)
 			continue;
 		}
 	ls(argv, count, op);
-	return (0);
+	return (op->err);
 }
 
 /**
@@ -138,6 +139,7 @@ void ls(char **av, int c, option *op)
 	char *dt = NULL;
 	int bol = 0;
 
+	op->err = 0;
 	if (op->detail == 0)
 		dt = "  ", end = 0;
 	else
@@ -150,7 +152,10 @@ void ls(char **av, int c, option *op)
 			bol = 1;
 			dir = open_case(dir, av[i]);
 			if (dir == NULL)
+			{
+				op->err = 2;
 				continue;
+			}
 			safe = create_big_list(safe, av[i], dir, op);
 		}
 	}
@@ -187,7 +192,7 @@ DIR *open_case(DIR *dir, char *av)
 			printf("./hls: cannot open directory '%s': Permission denied\n", av);
 			break;
 		case ENOENT:
-			printf("./hls: cannot access '%s': No such file or directory\n", av);
+			printf("./hls: cannot access '%s'\n", av);
 			break;
 		}
 		return (NULL);
