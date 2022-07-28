@@ -147,11 +147,11 @@ void ls(char **av, int c, option *op)
 	{
 		if (*av[i] != '-')
 		{
+			bol = 1;
 			dir = open_case(dir, av[i]);
 			if (dir == NULL)
 				continue;
 			safe = create_big_list(safe, av[i], dir, op);
-			bol = 1;
 		}
 	}
 	if (bol == 0)
@@ -184,10 +184,10 @@ DIR *open_case(DIR *dir, char *av)
 			printf("'%s' is not a directory\n", av);
 			break;
 		case EACCES:
-			printf("Permission denied\n");
+			printf("./hls: cannot open directory '%s': Permission denied\n", av);
 			break;
 		case ENOENT:
-			printf("ls: cannot access '%s': No such file or directory\n", av);
+			printf("./hls: cannot access '%s': No such file or directory\n", av);
 			break;
 		}
 		return (NULL);
