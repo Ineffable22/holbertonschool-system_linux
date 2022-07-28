@@ -63,6 +63,7 @@ typedef struct Save
  * @detail: 0 column / 1 row / 2 detail
  * @recursive: 0 normal / 1 recursive
  * @size_file: Maximum size of a file in the folder
+ * @err: Error
  */
 typedef struct Option
 {
@@ -71,6 +72,7 @@ typedef struct Option
 	int detail;
 	int recursive;
 	long int size_file;
+	int err;
 } option;
 
 /* prototypes */
