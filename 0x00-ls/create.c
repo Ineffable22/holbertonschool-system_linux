@@ -13,7 +13,7 @@
 save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
 	save *tmp = NULL, *current = safe;
-	(void) op;
+
 	tmp = calloc(sizeof(save), 1);
 	if (tmp == NULL)
 		return (NULL);
