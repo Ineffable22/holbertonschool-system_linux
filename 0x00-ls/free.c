@@ -11,7 +11,6 @@ void free_big_list(save *safe)
 	if (safe)
 	{
 		free_big_list(safe->next);
-		//printf("DATA _-~> %s\n", (safe->h));
 		if (safe->h)
 		{
 			free_list(safe->h);
