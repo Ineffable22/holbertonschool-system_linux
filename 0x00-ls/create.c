@@ -21,6 +21,8 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 	tmp->h = create_list(av, tmp->h, dir, op);
 	tmp->file = strdup(av);
 
+	if (op->order == 1)
+		tmp->h = reverse_sort(tmp->h);
 	if (safe == NULL)
 	{
 		safe = tmp;
