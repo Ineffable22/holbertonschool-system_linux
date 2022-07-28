@@ -1,6 +1,14 @@
 #include "main.h"
 
 long int size_file = 0;
+
+/**
+ * main - Creates ls shell command
+ * @argc: number of arguments
+ * @argv: double pointer with arguments
+ *
+ * Return: always 0 if success
+ */
 int main(int argc, char **argv)
 {
 	int i = 1, len = 0;
@@ -34,6 +42,46 @@ int main(int argc, char **argv)
 	return (0);
 }
 
+/**
+ * validate - Validator with ls options
+ * @flags: string with options to validate
+ *
+ * Return: Nothing
+ */
+void validate(char *flags)
+{
+	char buf[8] = "1aAlrStR";
+	int i = 0, j = 0;
+	int bol = 0;
+	for (i = 0; flags[i]; i++)
+	{
+		for (j = 0; buf[j]; j++)
+		{
+			if (flags[i] == buf[j])
+			{
+				bol = 0;
+				break;
+			}
+			bol = 1;
+		}
+		if (bol == 1)
+		{
+			printf("ls: invalid option -- '%c'\n", flags[i]);
+			printf("Try 'ls --help' for more information.\n");
+			exit(2);
+		}
+	}
+}
+
+/**
+ * validate_weight - Compares the weight of the commands
+ * with respect to others
+ * @argv:  double pointer with arguments
+ * @flags: string with options
+ * @count: count the number of folders
+ *
+ * Return: always 0 if success
+ */
 int validate_weight(char **argv, char *flags, int count)
 {
 	struct Option *op;
@@ -86,6 +134,15 @@ int validate_weight(char **argv, char *flags, int count)
 	return (0);
 }
 
+/**
+ * ls - performs most of the derivation of ls
+ * options to other functions
+ * @av:  double pointer with arguments
+ * @count: count the number of folders
+ * @op: pointer to structure with printing options
+ *
+ * Return: Nothing
+ */
 void ls(char **av, int c, option *op)
 {
 	DIR *dir = NULL;
@@ -131,97 +188,14 @@ void ls(char **av, int c, option *op)
 	free(op);
 	free_big_list(safe);
 }
-save* create_big_list(save *safe, char *av, DIR *dir, option *op)
-{
-	save *tmp = NULL, *current = safe;
-	//struct Sort *head;
-	(void) op;
-        tmp = calloc(sizeof(save), 1);
-	if (tmp == NULL)
-		return (NULL);
-	//tmp->h = malloc(sizeof(sort));
-	//head = tmp->h;
-	//head = NULL;
-	tmp->h = NULL;
-	tmp->h = create_list(av, tmp->h, dir, op);
-	tmp->file = strdup(av);
-	/*
-	if (op->order == 1)
-		tmp->h = reverse_sort(tmp->h);
-	else if (op->order == 2)
-		tmp->h = time_sort(tmp->h);
-	else if (op->order == 3)
-		tmp->h = size_sort(tmp->h);
-	*/
-	if (safe == NULL)
-	{
-		safe = tmp;
-		return tmp;
-	}
-	while (current->next)
-	{
-		current = current->next;
-	}
-	current->next = tmp;
 
-	return (safe);
-}
-
-void printer(save *safe, char* dt, int end, int c, option *op)
-{
-	sort *tmp = NULL;
-	int bol = 0;
-	while (safe)
-	{
-		if (c > 1)
-		{
-			if (bol == 1)
-				putchar(10);
-			printf("%s:\n", (safe->file));
-		}
-		tmp = safe->h;
-		while(tmp)
-		{
-			//printf("value => %s\n", (safe->h)->r);
-			if (type_hidden(op->hidden, tmp) == 1)
-			{
-				if (op->detail == 2)
-					more_detail(tmp);
-				printf("%s%s", (tmp)->r, dt);
-			}
-			(tmp) = ((tmp)->next);
-		}
-		if (end == 0)
-			putchar(10);
-		safe = safe->next;
-		bol = 1;
-	}
-}
-
-void free_big_list(save *safe)
-{
-	if (safe)
-	{
-		free_big_list(safe->next);
-		//printf("DATA _-~> %s\n", (safe->h));
-		if (safe->h)
-		{
-			free_list(safe->h);
-			free(safe->file);
-		}
-		free(safe);
-	}
-}
-void free_list(sort *head)
-{
-	if (head)
-	{
-		free_list(head->next);
-		free(head->r);
-		free(head);
-	}
-}
-
+/**
+ * open_case - opendir function error handling
+ * @dir: pointer to directory
+ * @av: double pointer with arguments
+ *
+ * Return: pointer to the directory if success, otherwise NULL
+ */
 DIR* open_case(DIR *dir, char *av)
 {
 	errno = 0;
@@ -239,283 +213,4 @@ DIR* open_case(DIR *dir, char *av)
 		return (NULL);
 	}
 	return (dir);
-}
-
-int type_hidden(int h, sort *head)
-{
-	if (h == 0)
-	{
-		if ((head->r)[0] == '.')
-			return (0);
-	}
-	else if (h == 2)
-	{
-		if (((head->r)[0] == '.' && (head->r)[1] == '\0')
-		    || ((head->r)[0] == '.' && (head->r)[1] == '.'))
-			return (0);
-	}
-	return (1);
-}
-
-sort* create_list(char *av, sort *head, DIR *dir, option *op)
-{
-	struct dirent *read;
-	while((read = readdir(dir)) != NULL)
-	{
-		head = add_node(head, read->d_name, av, op);
-	}
-	closedir(dir);
-	return head;
-}
-
-sort* add_node(sort *head, char *name, char *av, option *op)
-{
-	struct stat buf;
-	char *path = NULL;
-	sort *node = NULL;
-
-	node = calloc(sizeof(sort), 1);
-	if (node == NULL)
-		return (NULL);
-
-	node->r = calloc(sizeof(char), strlen(name) + 1);
-	if (node->r == NULL)
-		return (NULL);
-	strcpy(node->r, name);
-	path = calloc(sizeof(char), strlen(av) + strlen(name) + 2);
-	strcpy(path, av);
-	strcpy(&path[strlen(av)], "/");
-	strcpy(&path[strlen(av) + 1], name);
-	lstat(path, &buf);
-	free(path);
-	node->st_mode = buf.st_mode;
-	node->st_time = buf.st_mtime;
-	node->st_size = buf.st_size;
-	node->st_uid = buf.st_uid;
-	node->st_gid = buf.st_gid;
-	node->st_nlink = buf.st_nlink;
-	//head->b = buf;
-
-	if (buf.st_size > size_file)
-		size_file = buf.st_size;
-
-	if (head == NULL)
-	{
-		head = node;
-		return (head);
-	}
-	/*
-	if (tmp->next)
-	tmp = tmp->next;
-	*/
-	head = sorting(head, node, op);
-
-	return (head);
-}
-
-sort* sorting(sort *head, sort *node, option *op)
-{
-	sort *tmp = head;
-	//printf("%d ordeeerr\n", op->order);
-	if (op->order == 0)
-	{
-		while (tmp->next)
-			(tmp) = (tmp)->next;
-		(tmp)->next = node;
-		return (head);
-	}
-	else if (op->order == 1)
-	{
-		node->next = head;
-		head = node;
-		return (head);
-	}
-	else if (op->order == 2)
-	{
-		if (node->st_time <= tmp->st_time)
-		{
-			while (tmp->next && (node->st_time <= tmp->st_time))
-				tmp = tmp->next;
-			if (tmp->next)
-			{
-				node->next = tmp->next;
-				tmp->next = node;
-			}
-			else
-				(tmp)->next = node;
-			return (head);
-		}
-		else
-		{
-			node->next = head;
-			head = node;
-			return (head);
-		}
-	}
-	else
-	{
-		if (node->st_size <= tmp->st_size)
-		{
-			while (tmp->next && (node->st_size <= tmp->st_size))
-				tmp = tmp->next;
-			if (tmp->next)
-			{
-				node->next = tmp->next;
-				tmp->next = node;
-			}
-			else
-				(tmp)->next = node;
-			return (head);
-		}
-		else
-		{
-			node->next = head;
-			head = node;
-			return (head);
-		}
-		return (head);
-	}
-
-}
-
-/**
- * reverse_listint - Reverses a listint_t linked list.
- * @head: pointer to the first element in the linked list
- *
- * Return: a pointer to the first node of the reversed list
- */
-sort* reverse_sort(sort *head)
-{
-	sort *prev = NULL;
-	sort *next = NULL;
-
-	while (head)
-	{
-		next = (head)->next;
-		(head)->next = prev;
-		prev = head;
-		head = next;
-	}
-	head = prev;
-	return (head);
-}
-
-sort* time_sort(sort *head)
-{
-	sort *prev = NULL;
-	sort *next = NULL;
-	sort *current = head;
-	sort *tmp = head;
-	int time = 0;
-	int next_time = 0;
-
-	printf("TIME\n");
-	while(head)
-	{
-		time = (head->st_time);
-		next_time = ((head->next)->st_time);
-		tmp = head;
-		printf("time = %d < next_time = %d // %d\n", time, next_time, time < next_time);
-		while (time < next_time)
-		{
-			next = tmp->next;
-			tmp->next = prev;
-			prev = tmp;
-			tmp = next;
-
-			tmp = tmp->next;
-			time = (tmp->st_time);
-			next_time = ((tmp->next)->st_time);
-		}
-		head = head->next;
-	}
-	return (current);
-}
-
-sort* size_sort(sort *head)
-{
-	sort *prev = NULL;
-	sort *next = NULL;
-	sort *current = head;
-	sort *tmp = head;
-	int time = 0;
-	int next_time = 0;
-
-	while(head)
-	{
-		time = (head->st_size);
-		next_time = ((head->next)->st_size);
-		tmp = head;
-		while (time > next_time)
-		{
-			next = tmp->next;
-			tmp->next = prev;
-			prev = tmp;
-			tmp = next;
-
-			tmp = tmp->next;
-			time = (tmp->st_size);
-			next_time = ((tmp->next)->st_size);
-		}
-		head = head->next;
-	}
-	return (current);
-}
-
-
-void more_detail(sort *head)
-{
-	char *time;
-        struct passwd *usr;
-        struct group *grp;
-	int i = 0, j = 0;
-	types(head->st_mode);
-	rights(head->st_mode);
-	printf(" %ld", head->st_nlink);
-	usr = getpwuid(head->st_uid);
-	grp = getgrgid(head->st_gid);
-	printf(" %s %s ", usr->pw_name, grp->gr_name);
-	time = ctime(&(head->st_time));
-	i = count_digit(head->st_size);
-	j = count_digit(size_file);
-	while (j != i)
-	{
-		putchar(32);
-		j--;
-	}
-	printf("%ld ", head->st_size);
-	time_format(time);
-}
-int count_digit(long int num)
-{
-	int i = 1;
-
-	while (num/=10)
-		i++;
-	return (i);
-}
-
-void validate(char *flags)
-{
-	char buf[8] = "1aAlrStR";
-	int i = 0, j = 0;
-	int bol = 0;
-	for (i = 0; flags[i]; i++)
-	{
-		for (j = 0; buf[j]; j++)
-		{
-			if (flags[i] == buf[j])
-			{
-				bol = 0;
-				break;
-			}
-			bol = 1;
-		}
-		if (bol == 1)
-		{
-			printf("ls: invalid option -- '%c'\n", flags[i]);
-			printf("Try 'ls --help' for more information.\n");
-			exit(2);
-		}
-	}
 }
