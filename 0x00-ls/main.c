@@ -147,7 +147,7 @@ void ls(char **av, int c, option *op)
 
 	for (i = 1; av[i]; i++)
 	{
-		if (*av[i] != '-')
+		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
 			dir = open_case(dir, av[i]);
