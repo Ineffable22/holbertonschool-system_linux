@@ -185,14 +185,11 @@ DIR *open_case(DIR *dir, char *av)
 	{
 		switch (errno)
 		{
-		case ENOTDIR:
-			printf("'%s' is not a directory\n", av);
-			break;
 		case EACCES:
 			printf("./hls: cannot open directory '%s': Permission denied\n", av);
 			break;
 		case ENOENT:
-			printf("./hls: cannot access '%s'\n", av);
+			printf("./hls: cannot access '%s': No such file or directory\n", av);
 			break;
 		}
 		return (NULL);
