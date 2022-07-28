@@ -17,6 +17,7 @@ sort *sorting(sort *head, sort *node, option *op)
 		while (tmp->next)
 			(tmp) = (tmp)->next;
 		(tmp)->next = node;
+		node->next = NULL;
 		return (head);
 	}
 	else if (op->order == 1)
