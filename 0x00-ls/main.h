@@ -34,13 +34,22 @@ typedef struct Sort
 typedef struct Save
 {
 	struct Sort *h;
+	char* file;
 	struct Save *next;
 } save;
+
+typedef struct Option
+{
+	int hidden; /* 0 no visibles / 1 visibles / 2 visibles menos . .. */
+	int order; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
+	int detail; /* 0 column / 1 row  / 2 detail */
+	int recursive; /* 0 normal / 1 recursive */
+} option;
 
 /* prototypes */
 void validate(char *flags);
 int validate_weight(char **argv, char *flags, int count);
-void ls(char **av, int h, int o, int d, int r, int c);
+void ls(char **av, int c, option *op);
 void more_detail(sort *head);
 void types(mode_t mode);
 void rights(mode_t mode);
@@ -54,6 +63,7 @@ sort* add_node(sort *h, char *name, char *av);
 DIR* open_case(DIR *dir, char *av);
 void free_list(sort *head);
 int count_digit(long int num);
-void printer(save *safe, char* dt, int d, int h, int end);
+void printer(save *safe, char* dt, int end, int c, option *op);
+save* create_big_list(save *safe, char *av, DIR *dir, option *op);
 
 #endif
