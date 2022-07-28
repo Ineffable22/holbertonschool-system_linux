@@ -42,14 +42,26 @@ sort *sorting(sort *head, sort *node, option *op)
  */
 sort *order_2(sort *node, sort *tmp, sort *head)
 {
-	if (node->st_time >= tmp->st_time)
+	sort *curr = NULL, *prev = NULL;
+
+	if (node->st_time <= tmp->st_time)
 	{
-		while (tmp->next && (node->st_time >= tmp->st_time))
+		while (tmp->next && (node->st_time < tmp->st_time))
+		{
+			prev = tmp;
 			tmp = tmp->next;
+		}
+		while (tmp->next && (node->st_time == tmp->st_time)
+		&& strcmp(tmp->r, node->r))
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
 		if (tmp->next)
 		{
-			node->next = tmp->next;
-			tmp->next = node;
+			curr = prev->next;
+			prev->next = node;
+			node->next = curr;
 		}
 		else
 			(tmp)->next = node;
@@ -72,14 +84,26 @@ sort *order_2(sort *node, sort *tmp, sort *head)
  */
 sort *order_3(sort *node, sort *tmp, sort *head)
 {
+	sort *curr = NULL, *prev = NULL;
+
 	if (node->st_size <= tmp->st_size)
 	{
-		while (tmp->next && (node->st_size <= tmp->st_size))
+		while (tmp->next && (node->st_size < tmp->st_size))
+		{
+			prev = tmp;
 			tmp = tmp->next;
+		}
+		while (tmp->next && (node->st_size == tmp->st_size)
+		&& strcmp(tmp->r, node->r))
+		{
+			prev = tmp;
+			tmp = tmp->next;
+		}
 		if (tmp->next)
 		{
-			node->next = tmp->next;
-			tmp->next = node;
+			curr = prev->next;
+			prev->next = node;
+			node->next = curr;
 		}
 		else
 			(tmp)->next = node;
