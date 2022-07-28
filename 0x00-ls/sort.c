@@ -8,10 +8,10 @@
  *
  * Return: Pointer to struct sort
  */
-sort* sorting(sort *head, sort *node, option *op)
+sort *sorting(sort *head, sort *node, option *op)
 {
 	sort *tmp = head;
-	//printf("%d ordeeerr\n", op->order);
+
 	if (op->order == 0)
 	{
 		while (tmp->next)
@@ -26,127 +26,67 @@ sort* sorting(sort *head, sort *node, option *op)
 		return (head);
 	}
 	else if (op->order == 2)
+		return (order_2(node, tmp, head));
+	else
+		return (order_3(node, tmp, head));
+}
+
+/**
+ * order_2 - Sort nodes
+ * @node: node to insert into a singly linked list
+ * @tmp: pointer to struct Sort with singly linked list
+ * @head: pointer to struct Sort with singly linked list
+ *
+ * Return: Pointer to struct sort
+ */
+sort *order_2(sort *node, sort *tmp, sort *head)
+{
+	if (node->st_time >= tmp->st_time)
 	{
-		if (node->st_time <= tmp->st_time)
+		while (tmp->next && (node->st_time >= tmp->st_time))
+			tmp = tmp->next;
+		if (tmp->next)
 		{
-			while (tmp->next && (node->st_time <= tmp->st_time))
-				tmp = tmp->next;
-			if (tmp->next)
-			{
-				node->next = tmp->next;
-				tmp->next = node;
-			}
-			else
-				(tmp)->next = node;
-			return (head);
+			node->next = tmp->next;
+			tmp->next = node;
 		}
 		else
-		{
-			node->next = head;
-			head = node;
-			return (head);
-		}
+			(tmp)->next = node;
 	}
 	else
 	{
-		if (node->st_size <= tmp->st_size)
-		{
-			while (tmp->next && (node->st_size <= tmp->st_size))
-				tmp = tmp->next;
-			if (tmp->next)
-			{
-				node->next = tmp->next;
-				tmp->next = node;
-			}
-			else
-				(tmp)->next = node;
-			return (head);
-		}
-		else
-		{
-			node->next = head;
-			head = node;
-			return (head);
-		}
-		return (head);
+		node->next = head;
+		head = node;
 	}
-
-}
-/*
-sort* reverse_sort(sort *head)
-{
-	sort *prev = NULL;
-	sort *next = NULL;
-
-	while (head)
-	{
-		next = (head)->next;
-		(head)->next = prev;
-		prev = head;
-		head = next;
-	}
-	head = prev;
 	return (head);
 }
-sort* time_sort(sort *head)
+
+/**
+ * order_3 - Sort nodes
+ * @node: node to insert into a singly linked list
+ * @tmp: pointer to struct Sort with singly linked list
+ * @head: pointer to struct Sort with singly linked list
+ *
+ * Return: Pointer to struct sort
+ */
+sort *order_3(sort *node, sort *tmp, sort *head)
 {
-	sort *prev = NULL;
-	sort *next = NULL;
-	sort *current = head;
-	sort *tmp = head;
-	int time = 0;
-	int next_time = 0;
-
-	printf("TIME\n");
-	while(head)
+	if (node->st_size <= tmp->st_size)
 	{
-		time = (head->st_time);
-		next_time = ((head->next)->st_time);
-		tmp = head;
-		printf("time = %d < next_time = %d // %d\n", time, next_time, time < next_time);
-		while (time < next_time)
-		{
-			next = tmp->next;
-			tmp->next = prev;
-			prev = tmp;
-			tmp = next;
-
+		while (tmp->next && (node->st_size <= tmp->st_size))
 			tmp = tmp->next;
-			time = (tmp->st_time);
-			next_time = ((tmp->next)->st_time);
+		if (tmp->next)
+		{
+			node->next = tmp->next;
+			tmp->next = node;
 		}
-		head = head->next;
+		else
+			(tmp)->next = node;
 	}
-	return (current);
-}
-
-sort* size_sort(sort *head)
-{
-	sort *prev = NULL;
-	sort *next = NULL;
-	sort *current = head;
-	sort *tmp = head;
-	int time = 0;
-	int next_time = 0;
-
-	while(head)
+	else
 	{
-		time = (head->st_size);
-		next_time = ((head->next)->st_size);
-		tmp = head;
-		while (time > next_time)
-		{
-			next = tmp->next;
-			tmp->next = prev;
-			prev = tmp;
-			tmp = next;
-
-			tmp = tmp->next;
-			time = (tmp->st_size);
-			next_time = ((tmp->next)->st_size);
-		}
-		head = head->next;
+		node->next = head;
+		head = node;
 	}
-	return (current);
+	return (head);
 }
-*/
