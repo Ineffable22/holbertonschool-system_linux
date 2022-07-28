@@ -135,6 +135,7 @@ save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
 	save *tmp = NULL, *current = safe;
 	//struct Sort *head;
+	(void) op;
         tmp = calloc(sizeof(save), 1);
 	if (tmp == NULL)
 		return (NULL);
@@ -142,15 +143,16 @@ save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 	//head = tmp->h;
 	//head = NULL;
 	tmp->h = NULL;
-	tmp->h = create_list(av, tmp->h, dir);
+	tmp->h = create_list(av, tmp->h, dir, op);
 	tmp->file = strdup(av);
-
+	/*
 	if (op->order == 1)
 		tmp->h = reverse_sort(tmp->h);
 	else if (op->order == 2)
 		tmp->h = time_sort(tmp->h);
 	else if (op->order == 3)
 		tmp->h = size_sort(tmp->h);
+	*/
 	if (safe == NULL)
 	{
 		safe = tmp;
@@ -168,10 +170,15 @@ save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 void printer(save *safe, char* dt, int end, int c, option *op)
 {
 	sort *tmp = NULL;
+	int bol = 0;
 	while (safe)
 	{
 		if (c > 1)
+		{
+			if (bol == 1)
+				putchar(10);
 			printf("%s:\n", (safe->file));
+		}
 		tmp = safe->h;
 		while(tmp)
 		{
@@ -187,6 +194,7 @@ void printer(save *safe, char* dt, int end, int c, option *op)
 		if (end == 0)
 			putchar(10);
 		safe = safe->next;
+		bol = 1;
 	}
 }
 
@@ -249,22 +257,22 @@ int type_hidden(int h, sort *head)
 	return (1);
 }
 
-sort* create_list(char *av, sort *head, DIR *dir)
+sort* create_list(char *av, sort *head, DIR *dir, option *op)
 {
 	struct dirent *read;
 	while((read = readdir(dir)) != NULL)
 	{
-		head = add_node(head, read->d_name, av);
+		head = add_node(head, read->d_name, av, op);
 	}
 	closedir(dir);
 	return head;
 }
 
-sort* add_node(sort *head, char *name, char *av)
+sort* add_node(sort *head, char *name, char *av, option *op)
 {
 	struct stat buf;
 	char *path = NULL;
-	sort *node = NULL, *tmp = head;
+	sort *node = NULL;
 
 	node = calloc(sizeof(sort), 1);
 	if (node == NULL)
@@ -296,10 +304,78 @@ sort* add_node(sort *head, char *name, char *av)
 		head = node;
 		return (head);
 	}
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = node;
+	/*
+	if (tmp->next)
+	tmp = tmp->next;
+	*/
+	head = sorting(head, node, op);
+
 	return (head);
+}
+
+sort* sorting(sort *head, sort *node, option *op)
+{
+	sort *tmp = head;
+	//printf("%d ordeeerr\n", op->order);
+	if (op->order == 0)
+	{
+		while (tmp->next)
+			(tmp) = (tmp)->next;
+		(tmp)->next = node;
+		return (head);
+	}
+	else if (op->order == 1)
+	{
+		node->next = head;
+		head = node;
+		return (head);
+	}
+	else if (op->order == 2)
+	{
+		if (node->st_time <= tmp->st_time)
+		{
+			while (tmp->next && (node->st_time <= tmp->st_time))
+				tmp = tmp->next;
+			if (tmp->next)
+			{
+				node->next = tmp->next;
+				tmp->next = node;
+			}
+			else
+				(tmp)->next = node;
+			return (head);
+		}
+		else
+		{
+			node->next = head;
+			head = node;
+			return (head);
+		}
+	}
+	else
+	{
+		if (node->st_size <= tmp->st_size)
+		{
+			while (tmp->next && (node->st_size <= tmp->st_size))
+				tmp = tmp->next;
+			if (tmp->next)
+			{
+				node->next = tmp->next;
+				tmp->next = node;
+			}
+			else
+				(tmp)->next = node;
+			return (head);
+		}
+		else
+		{
+			node->next = head;
+			head = node;
+			return (head);
+		}
+		return (head);
+	}
+
 }
 
 /**
@@ -333,12 +409,14 @@ sort* time_sort(sort *head)
 	int time = 0;
 	int next_time = 0;
 
+	printf("TIME\n");
 	while(head)
 	{
 		time = (head->st_time);
 		next_time = ((head->next)->st_time);
 		tmp = head;
-		while (time > next_time)
+		printf("time = %d < next_time = %d // %d\n", time, next_time, time < next_time);
+		while (time < next_time)
 		{
 			next = tmp->next;
 			tmp->next = prev;
