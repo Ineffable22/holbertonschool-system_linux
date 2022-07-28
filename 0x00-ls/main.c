@@ -155,7 +155,7 @@ void ls(char **av, int c, option *op)
 		}
 	}
 	if (bol == 0)
-	{ 
+	{
 		dir = open_case(dir, ".");
 		safe = create_big_list(safe, ".", dir, op);
 	}
