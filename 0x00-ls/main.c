@@ -150,7 +150,7 @@ int ls(char **av, int c, option *op)
 		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
-			dir = open_case(dir, av[i]);
+			dir = open_case(dir, av[i], av[0]);
 			if (dir == NULL)
 			{
 				op->err = 2;
@@ -161,7 +161,7 @@ int ls(char **av, int c, option *op)
 	}
 	if (bol == 0)
 	{
-		dir = open_case(dir, ".");
+		dir = open_case(dir, ".", av[0]);
 		safe = create_big_list(safe, ".", dir, op);
 	}
 	printer(safe, dt, end, c, op);
@@ -175,10 +175,11 @@ int ls(char **av, int c, option *op)
  * open_case - opendir function error handling
  * @dir: pointer to directory
  * @av: double pointer with arguments
+ * @hls: executable name
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR *open_case(DIR *dir, char *av)
+DIR *open_case(DIR *dir, char *av, char *hls)
 {
 	errno = 0;
 
@@ -188,10 +189,10 @@ DIR *open_case(DIR *dir, char *av)
 		switch (errno)
 		{
 		case EACCES:
-			printf("./hls: cannot open directory '%s': Permission denied\n", av);
+			printf("%s: cannot open directory '%s': Permission denied\n", hls, av);
 			break;
 		case ENOENT:
-			printf("./hls: cannot access '%s': No such file or directory\n", av);
+			printf("%s: cannot access '%s': No such file or directory\n", hls, av);
 			break;
 		}
 		return (NULL);
