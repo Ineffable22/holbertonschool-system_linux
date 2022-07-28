@@ -91,7 +91,7 @@ int validate_weight(char **argv, char *flags, int count)
 	op->order = 0; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
 	op->detail = 0; /* 0 column / 1 row  / 2 detail */
 	op->recursive = 0; /* 0 normal / 1 recursive */
-	for (i = 0; flags[i]; i++)
+	for (i = 0; flags && flags[i]; i++)
 		switch (flags[i])
 		{
 		case 'a':
