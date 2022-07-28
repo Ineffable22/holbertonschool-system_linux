@@ -118,8 +118,8 @@ int validate_weight(char **argv, char *flags, int count)
 			op->recursive = 1;
 			continue;
 		}
-	ls(argv, count, op);
-	return (op->err);
+	i = ls(argv, count, op);
+	return (i);
 }
 
 /**
@@ -129,9 +129,9 @@ int validate_weight(char **argv, char *flags, int count)
  * @c: count the number of folders
  * @op: pointer to structure with printing options
  *
- * Return: Nothing
+ * Return: op->err
  */
-void ls(char **av, int c, option *op)
+int ls(char **av, int c, option *op)
 {
 	DIR *dir = NULL;
 	struct Save *safe = NULL;
@@ -165,8 +165,10 @@ void ls(char **av, int c, option *op)
 		safe = create_big_list(safe, ".", dir, op);
 	}
 	printer(safe, dt, end, c, op);
-	free(op);
 	free_big_list(safe);
+	i = op->err;
+	free(op);
+	return (i);
 }
 
 /**
