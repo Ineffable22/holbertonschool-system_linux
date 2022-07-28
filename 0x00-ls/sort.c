@@ -1,6 +1,27 @@
 #include "main.h"
 
 /**
+ * _strcmp - compares two strings
+ * @s1: first string to compare
+ * @s2: second string to compare
+ *
+ * Return: less than 0 if s1 is less than s2, 0 if they're equal,
+ */
+int _strcmp(char *s1, char *s2)
+{
+	while (*s1 == *s2)
+	{
+		if (*s1 == '\0')
+		{
+			return (0);
+		}
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
+/**
  * sorting - Creates nodes, store data and send to sort
  * @head: pointer to struct Sort with singly linked list
  * @node: node to insert into a singly linked list
@@ -10,26 +31,47 @@
  */
 sort *sorting(sort *head, sort *node, option *op)
 {
-	sort *tmp = head;
+	sort *tmp = head, *prev = NULL, *curr = NULL;
 
-	if (op->order == 0)
+	if (op->order == 0 || op->order == 1)
 	{
-		while (tmp->next)
+		while (tmp->next && _strcmp(node->r, tmp->r) > 0)
+		{
+			prev = tmp;
 			(tmp) = (tmp)->next;
-		(tmp)->next = node;
-		node->next = NULL;
-		return (head);
-	}
-	else if (op->order == 1)
-	{
-		node->next = head;
-		head = node;
+		}
+		if (tmp->next)
+		{
+			curr = prev->next;
+			prev->next = node;
+			node->next = curr;
+		}
+		else
+			(tmp)->next = node;
+		if (op->order == 1)
+			return (reverse_sort(head));
 		return (head);
 	}
 	else if (op->order == 2)
 		return (order_2(node, tmp, head));
 	else
 		return (order_3(node, tmp, head));
+}
+
+sort *reverse_sort(sort *head)
+{
+	sort *prev = NULL;
+	sort *next = NULL;
+
+	while (head)
+	{
+		next = (head)->next;
+		(head)->next = prev;
+		prev = head;
+		head = next;
+	}
+	head = prev;
+	return (head);
 }
 
 /**
