@@ -88,7 +88,7 @@ int validate_weight(char **argv, char *flags, int count)
 
 void ls(char **av, int c, option *op)
 {
-	DIR *dir;
+	DIR *dir = NULL;
 	//struct Sort *head = NULL;
 	struct Save *safe = NULL;
 	int i = 0, end = 0;
@@ -107,7 +107,6 @@ void ls(char **av, int c, option *op)
 			//printf("DATA -> %s\n", av[i]);
 			//printf("dir = %d\n", res_open);
 			safe = create_big_list(safe, av[i], dir, op);
-
 			//printf("orden -> %d\n", o);
 			/*
 			while(head)
@@ -129,12 +128,14 @@ void ls(char **av, int c, option *op)
 		}
 	}
 	printer(safe, dt, end, c, op);
+	free(op);
+	free_big_list(safe);
 }
 save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
-	save *tmp, *current = safe;
+	save *tmp = NULL, *current = safe;
 	//struct Sort *head;
-        tmp = malloc(sizeof(save));
+        tmp = calloc(sizeof(save), 1);
 	if (tmp == NULL)
 		return (NULL);
 	//tmp->h = malloc(sizeof(sort));
@@ -166,20 +167,22 @@ save* create_big_list(save *safe, char *av, DIR *dir, option *op)
 
 void printer(save *safe, char* dt, int end, int c, option *op)
 {
+	sort *tmp = NULL;
 	while (safe)
 	{
 		if (c > 1)
 			printf("%s:\n", (safe->file));
-		while(safe->h)
+		tmp = safe->h;
+		while(tmp)
 		{
 			//printf("value => %s\n", (safe->h)->r);
-			if (type_hidden(op->hidden, safe->h) == 1)
+			if (type_hidden(op->hidden, tmp) == 1)
 			{
 				if (op->detail == 2)
-					more_detail(safe->h);
-				printf("%s%s", (safe->h)->r, dt);
+					more_detail(tmp);
+				printf("%s%s", (tmp)->r, dt);
 			}
-			(safe->h) = ((safe->h)->next);
+			(tmp) = ((tmp)->next);
 		}
 		if (end == 0)
 			putchar(10);
@@ -187,6 +190,20 @@ void printer(save *safe, char* dt, int end, int c, option *op)
 	}
 }
 
+void free_big_list(save *safe)
+{
+	if (safe)
+	{
+		free_big_list(safe->next);
+		//printf("DATA _-~> %s\n", (safe->h));
+		if (safe->h)
+		{
+			free_list(safe->h);
+			free(safe->file);
+		}
+		free(safe);
+	}
+}
 void free_list(sort *head)
 {
 	if (head)
@@ -249,15 +266,18 @@ sort* add_node(sort *head, char *name, char *av)
 	char *path = NULL;
 	sort *node = NULL, *tmp = head;
 
-	node = malloc(sizeof(sort));
+	node = calloc(sizeof(sort), 1);
 	if (node == NULL)
 		return (NULL);
 
-	node->r = strdup(name);
-	path = strdup(av);
-	path = realloc(path, strlen(path) + 2);
-	strcpy(&path[strlen(path)], "/");
-	strcat(path, name);
+	node->r = calloc(sizeof(char), strlen(name) + 1);
+	if (node->r == NULL)
+		return (NULL);
+	strcpy(node->r, name);
+	path = calloc(sizeof(char), strlen(av) + strlen(name) + 2);
+	strcpy(path, av);
+	strcpy(&path[strlen(av)], "/");
+	strcpy(&path[strlen(av) + 1], name);
 	lstat(path, &buf);
 	free(path);
 	node->st_mode = buf.st_mode;
