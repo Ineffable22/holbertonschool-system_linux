@@ -15,10 +15,6 @@ int main(int argc, char **argv)
 	int count = 0;
 	(void) argc;
 
-	/*
-	 * if (argc == 1)
-	 * argv[1] = ".";
-	 */
 	while (argv[i])
 	{
 		if (*argv[i] == '-' && *(argv[i] + 1) != '\0')
@@ -87,10 +83,10 @@ int validate_weight(char **argv, char *flags, int count)
 	int i = 0;
 
 	op = malloc(sizeof(option));
-	op->hidden = 0; /* 0 no visibles / 1 visibles / 2 visibles menos . .. */
-	op->order = 0; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
-	op->detail = 0; /* 0 column / 1 row  / 2 detail */
-	op->recursive = 0; /* 0 normal / 1 recursive */
+	op->hidden = 0;
+	op->order = 0;
+	op->detail = 0;
+	op->recursive = 0;
 	for (i = 0; flags && flags[i]; i++)
 		switch (flags[i])
 		{
@@ -140,6 +136,7 @@ void ls(char **av, int c, option *op)
 	struct Save *safe = NULL;
 	int i = 0, end = 0;
 	char *dt = NULL;
+	int bol = 0;
 
 	if (op->detail == 0)
 		dt = "  ", end = 0;
@@ -154,7 +151,13 @@ void ls(char **av, int c, option *op)
 			if (dir == NULL)
 				continue;
 			safe = create_big_list(safe, av[i], dir, op);
+			bol = 1;
 		}
+	}
+	if (bol == 0)
+	{ 
+		dir = open_case(dir, ".");
+		safe = create_big_list(safe, ".", dir, op);
 	}
 	printer(safe, dt, end, c, op);
 	free(op);
