@@ -35,7 +35,7 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 		if (c > 1)
 		{
 			if (bol == 1)
-				putchar(10);
+				printf("\n");
 			printf("%s:\n", (safe->file));
 		}
 		tmp = safe->h;
@@ -50,7 +50,7 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 			(tmp) = ((tmp)->next);
 		}
 		if (end == 0)
-			putchar(10);
+			printf("\n");
 		safe = safe->next;
 		bol = 1;
 	}
