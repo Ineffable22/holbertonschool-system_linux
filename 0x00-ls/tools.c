@@ -1,55 +1,57 @@
 #include "main.h"
 
-void time_format(char *time)
+/**
+ * count_digit - Counts the number of characters in a number
+ * @num: number to count
+ *
+ * Return: number of characters
+ */
+int count_digit(long int num)
 {
-        int i = 4, colon = 0;
+	int i = 1;
 
-        for (; colon < 2; i++)
-        {
-                putchar(time[i]);
-                if (time[i + 1] == ':')
-                        colon++;
-        }
-        putchar(32);
+	while (num/=10)
+		i++;
+	return (i);
 }
 
-void rights(mode_t mode)
+/**
+ * printer - Prints the LS output with the chosen option
+ * @safe: pointer to struct Save with two singly linked list
+ * @dt: separator
+ * @end: string indicating how it will end
+ * @c: flag reporting the number of folders
+ * @op: pointer to struc Option with printing options
+ *
+ * Return: Nothing
+ */
+void printer(save *safe, char* dt, int end, int c, option *op)
 {
-        printf((mode & S_IRUSR) ? "r" : "-");
-        printf((mode & S_IWUSR) ? "w" : "-");
-        printf((mode & S_IXUSR) ? "x" : "-");
-        printf((mode & S_IRGRP) ? "r" : "-");
-        printf((mode & S_IWGRP) ? "w" : "-");
-        printf((mode & S_IXGRP) ? "x" : "-");
-        printf((mode & S_IROTH) ? "r" : "-");
-        printf((mode & S_IWOTH) ? "w" : "-");
-        printf((mode & S_IXOTH) ? "x" : "-");
-}
-
-void types(mode_t mode)
-{
-        switch (mode & S_IFMT)
-        {
-        case S_IFREG:
-                printf("-");
-                break;
-        case S_IFDIR:
-                printf("d");
-                break;
-        case S_IFCHR:
-                printf("c");
-                break;
-        case S_IFBLK:
-                printf("b");
-                break;
-        case S_IFIFO:
-                printf("p");
-                break;
-        case S_IFLNK:
-                printf("l");
-                break;
-        case S_IFSOCK:
-                printf("s");
-                break;
-        }
+	sort *tmp = NULL;
+	int bol = 0;
+	while (safe)
+	{
+		if (c > 1)
+		{
+			if (bol == 1)
+				putchar(10);
+			printf("%s:\n", (safe->file));
+		}
+		tmp = safe->h;
+		while(tmp)
+		{
+			//printf("value => %s\n", (safe->h)->r);
+			if (type_hidden(op->hidden, tmp) == 1)
+			{
+				if (op->detail == 2)
+					more_detail(tmp);
+				printf("%s%s", (tmp)->r, dt);
+			}
+			(tmp) = ((tmp)->next);
+		}
+		if (end == 0)
+			putchar(10);
+		safe = safe->next;
+		bol = 1;
+	}
 }
