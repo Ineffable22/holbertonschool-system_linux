@@ -104,13 +104,13 @@ void printer(save *safe, char *dt, int end, int c, option *op);
 
 /* ----- sort.c ----- */
 sort *sorting(sort *tmp, sort *node, option *op);
+sort *reverse_sort(sort *head);
 sort *order_2(sort *node, sort *tmp, sort *head);
 sort *order_3(sort *node, sort *tmp, sort *head);
 
 /*
  * sort* time_sort(sort *head);
  * sort* size_sort(sort *head);
- * sort* reverse_sort(sort *head);
  */
 
 #endif
