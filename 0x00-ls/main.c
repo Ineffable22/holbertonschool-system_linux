@@ -1,7 +1,5 @@
 #include "main.h"
 
-long int size_file = 0;
-
 /**
  * main - Creates ls shell command
  * @argc: number of arguments
@@ -16,15 +14,16 @@ int main(int argc, char **argv)
 	int option = 0;
 	int count = 0;
 	(void) argc;
-	/*if (argc == 1)
-	  argv[1] = ".";*/
+
+	/*
+	 * if (argc == 1)
+	 * argv[1] = ".";
+	 */
 	while (argv[i])
 	{
 		if (*argv[i] == '-' && *(argv[i] + 1) != '\0')
 		{
 			flags = realloc(flags, len  + (strlen(argv[i])));
-			//printf("->%ld\n", strlen(argv[i]));
-			//printf("%ld\n", strlen(flags) + (strlen(argv[i]) - 1));
 			strcpy(&flags[len], &(*(argv[i] + 1)));
 			len = strlen(flags);
 			option = 1;
@@ -35,7 +34,6 @@ int main(int argc, char **argv)
 	}
 	if (option == 1)
 		validate(flags);
-	//printf("flags => %s\n", flags);
 	validate_weight(argv, flags, count);
 	if (option == 1)
 		free(flags);
@@ -53,6 +51,7 @@ void validate(char *flags)
 	char buf[8] = "1aAlrStR";
 	int i = 0, j = 0;
 	int bol = 0;
+
 	for (i = 0; flags[i]; i++)
 	{
 		for (j = 0; buf[j]; j++)
@@ -85,21 +84,14 @@ void validate(char *flags)
 int validate_weight(char **argv, char *flags, int count)
 {
 	struct Option *op;
+	int i = 0;
+
 	op = malloc(sizeof(option));
-	if (op == NULL)
-		return (-1);
 	op->hidden = 0; /* 0 no visibles / 1 visibles / 2 visibles menos . .. */
 	op->order = 0; /* 0 ningun orden / 1 reverse / 2 time / 3 size */
 	op->detail = 0; /* 0 column / 1 row  / 2 detail */
 	op->recursive = 0; /* 0 normal / 1 recursive */
-	int i = 0;
-	if (flags == NULL)
-	{
-		ls(argv, count, op);
-		return (0);
-	}
 	for (i = 0; flags[i]; i++)
-	{
 		switch (flags[i])
 		{
 		case 'a':
@@ -129,7 +121,6 @@ int validate_weight(char **argv, char *flags, int count)
 			op->recursive = 1;
 			continue;
 		}
-	}
 	ls(argv, count, op);
 	return (0);
 }
@@ -138,7 +129,7 @@ int validate_weight(char **argv, char *flags, int count)
  * ls - performs most of the derivation of ls
  * options to other functions
  * @av:  double pointer with arguments
- * @count: count the number of folders
+ * @c: count the number of folders
  * @op: pointer to structure with printing options
  *
  * Return: Nothing
@@ -146,42 +137,23 @@ int validate_weight(char **argv, char *flags, int count)
 void ls(char **av, int c, option *op)
 {
 	DIR *dir = NULL;
-	//struct Sort *head = NULL;
 	struct Save *safe = NULL;
 	int i = 0, end = 0;
 	char *dt = NULL;
+
 	if (op->detail == 0)
 		dt = "  ", end = 0;
 	else
-		dt = "\n" , end = 1;
+		dt = "\n", end = 1;
 
 	for (i = 1; av[i]; i++)
 	{
 		if (*av[i] != '-')
 		{
-			if ((dir = open_case(dir, av[i])) == NULL)
+			dir = open_case(dir, av[i]);
+			if (dir == NULL)
 				continue;
-			//printf("DATA -> %s\n", av[i]);
-			//printf("dir = %d\n", res_open);
 			safe = create_big_list(safe, av[i], dir, op);
-			//printf("orden -> %d\n", o);
-			/*
-			while(head)
-			{
-				if (type_hidden(h, head) == 1)
-				{
-					if (d == 2)
-						more_detail(head);
-					printf("%s%s", head->r, dt);
-				}
-				head = head->next;
-			}
-			if (end == 0)
-				putchar(10);
-			*/
-
-			//free_list(head);
-
 		}
 	}
 	printer(safe, dt, end, c, op);
@@ -196,19 +168,24 @@ void ls(char **av, int c, option *op)
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR* open_case(DIR *dir, char *av)
+DIR *open_case(DIR *dir, char *av)
 {
 	errno = 0;
-	if ((dir = opendir(av)) == NULL)
+
+	dir = opendir(av);
+	if (dir == NULL)
 	{
 		switch (errno)
 		{
 		case ENOTDIR:
-			printf("'%s' is not a directory\n", av); break;
+			printf("'%s' is not a directory\n", av);
+			break;
 		case EACCES:
-			printf("Permission denied\n"); break;
+			printf("Permission denied\n");
+			break;
 		case ENOENT:
-			printf("ls: cannot access '%s': No such file or directory\n", av); break;
+			printf("ls: cannot access '%s': No such file or directory\n", av);
+			break;
 		}
 		return (NULL);
 	}
