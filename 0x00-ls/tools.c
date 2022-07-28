@@ -29,6 +29,7 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 {
 	sort *tmp = NULL;
 	int bol = 0;
+	char *del = "";
 	int flag = 0;
 
 	while (safe)
@@ -47,13 +48,12 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 				if (op->detail == 2)
 					more_detail(tmp, op);
 				if (flag == 1)
-					printf("%s", dt);
-				printf("%s", (tmp)->r);
+					del = dt;
 				flag = 1;
+				printf("%s%s", del, (tmp)->r);
 			}
 			(tmp) = ((tmp)->next);
 		}
-		flag = 0;
 		if (end == 0)
 			printf("\n");
 		safe = safe->next;
