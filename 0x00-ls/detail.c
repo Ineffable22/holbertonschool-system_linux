@@ -25,7 +25,7 @@ void more_detail(sort *head, option *op)
 	j = count_digit(op->size_file);
 	while (j != i)
 	{
-		putchar(32);
+		printf(" ");
 		j--;
 	}
 	printf("%ld ", head->st_size);
@@ -98,11 +98,11 @@ void time_format(char *time)
 
 	for (; colon < 2; i++)
 	{
-		putchar(time[i]);
+		printf("%c", time[i]);
 		if (time[i + 1] == ':')
 			colon++;
 	}
-	putchar(32);
+	printf(" ");
 }
 
 /**
