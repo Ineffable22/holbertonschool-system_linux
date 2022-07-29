@@ -4,13 +4,8 @@
 /* libraries */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <dirent.h>
-#include <stdio.h>
 #include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
 #include <time.h>
 #include <pwd.h>
 #include <sys/types.h>
@@ -107,6 +102,13 @@ sort *sorting(sort *tmp, sort *node, option *op);
 sort *reverse_sort(sort *head);
 sort *order_2(sort *node, sort *tmp, sort *head);
 sort *order_3(sort *node, sort *tmp, sort *head);
+
+/* ----- holbie_tool.c ----- */
+int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+char *_strdup(char *str);
+void *_calloc(unsigned int nmemb, unsigned int size);
 
 /*
  * sort* time_sort(sort *head);
