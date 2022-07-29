@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 	{
 		if (*argv[i] == '-' && *(argv[i] + 1) != '\0')
 		{
-			flags = realloc(flags, len  + (strlen(argv[i])));
-			strcpy(&flags[len], &(*(argv[i] + 1)));
-			len = strlen(flags);
+			flags = realloc(flags, len  + (_strlen(argv[i])));
+			_strcpy(&flags[len], &(*(argv[i] + 1)));
+			len = _strlen(flags);
 			option = 1;
 		}
 		else
