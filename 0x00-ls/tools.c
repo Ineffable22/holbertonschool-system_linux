@@ -59,3 +59,23 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 		bol = 1;
 	}
 }
+
+/**
+ * _realloc - reallocates a memory block using malloc and free
+ * @ptr: pointer to the memory previsouly allocated by malloc
+ * @old_size: size of the allocated memory for ptr
+ * @new_size: new size of the new memory block
+ *
+ * Return: pointer to the newly allocated memory block
+ */
+char *_realloc(char *ptr, int size)
+{
+	char *ptr1 = NULL;
+
+	if (ptr == NULL)
+		return (malloc(sizeof(char) * size));
+	ptr1 = malloc(sizeof(char) + size + 1);
+	ptr1 = _strcpy(ptr1, ptr);
+	free(ptr);
+	return (ptr1);
+}
