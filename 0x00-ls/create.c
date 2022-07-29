@@ -19,7 +19,7 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 		return (NULL);
 	tmp->h = NULL;
 	tmp->h = create_list(av, tmp->h, dir, op);
-	tmp->file = strdup(av);
+	tmp->file = _strdup(av);
 
 	if (op->order == 1)
 		tmp->h = reverse_sort(tmp->h);
@@ -74,18 +74,18 @@ sort *add_node(sort *head, char *name, char *av, option *op)
 	char *path = NULL;
 	sort *node = NULL;
 
-	node = calloc(sizeof(sort), 1);
+	node = _calloc(sizeof(sort), 1);
 	if (node == NULL)
 		return (NULL);
 
-	node->r = calloc(sizeof(char), strlen(name) + 1);
+	node->r = _calloc(sizeof(char), _strlen(name) + 1);
 	if (node->r == NULL)
 		return (NULL);
-	strcpy(node->r, name);
-	path = calloc(sizeof(char), strlen(av) + strlen(name) + 2);
-	strcpy(path, av);
-	strcpy(&path[strlen(av)], "/");
-	strcpy(&path[strlen(av) + 1], name);
+	_strcpy(node->r, name);
+	path = _calloc(sizeof(char), _strlen(av) + _strlen(name) + 2);
+	_strcpy(path, av);
+	_strcpy(&path[_strlen(av)], "/");
+	_strcpy(&path[_strlen(av) + 1], name);
 	lstat(path, &buf);
 	free(path);
 	node->st_mode = buf.st_mode;
