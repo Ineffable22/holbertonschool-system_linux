@@ -27,10 +27,8 @@ int count_digit(long int num)
  */
 void printer(save *safe, char *dt, int end, int c, option *op)
 {
-	sort *tmp = NULL;
+	sort *tmp = NULL, *del = NULL;
 	int bol = 0;
-	char *del = "";
-	int flag = 0;
 
 	while (safe)
 	{
@@ -43,19 +41,20 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 		tmp = safe->h;
 		while (tmp)
 		{
+			del = tmp->next;
 			if (type_hidden(op->hidden, tmp) == 1)
 			{
 				if (op->detail == 2)
 					more_detail(tmp, op);
-				if (flag == 1)
-					del = dt;
-				flag = 1;
-				printf("%s%s", del, (tmp)->r);
+				if (del == NULL && *dt != '\n')
+					dt = "";
+				printf("%s%s", (tmp)->r, dt);
 			}
 			(tmp) = ((tmp)->next);
 		}
 		if (end == 0)
 			printf("\n");
+
 		safe = safe->next;
 		bol = 1;
 	}
