@@ -150,7 +150,7 @@ int ls(char **av, int c, option *op)
 		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
-			dir = open_case(dir, av[i], av[0]);
+			dir = open_case(dir, av[i], av[0], op);
 			if (dir == NULL)
 			{
 				op->err = 2;
@@ -161,7 +161,7 @@ int ls(char **av, int c, option *op)
 	}
 	if (bol == 0)
 	{
-		dir = open_case(dir, ".", av[0]);
+		dir = open_case(dir, ".", av[0], op);
 		safe = create_big_list(safe, ".", dir, op);
 	}
 	printer(safe, dt, end, c, op);
@@ -176,26 +176,29 @@ int ls(char **av, int c, option *op)
  * @dir: pointer to directory
  * @av: double pointer with arguments
  * @hls: executable name
+ * @op: pointer to structure with printing options
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR *open_case(DIR *dir, char *av, char *hls)
+DIR *open_case(DIR *dir, char *av, char *hls, option *op)
 {
 	errno = 0;
-
 	dir = opendir(av);
 	if (dir == NULL)
 	{
 		switch (errno)
 		{
 		case ENOENT:
-			printf("%s: cannot access '%s': No such file or directory\n", hls, av);
+			fprintf(stderr,
+			"%s: cannot access '%s': No such file or directory\n", hls, av);
 			break;
 		case ENOTDIR:
-			printf("%s: cannot access '%s': Not a directory\n", hls, av);
+			fprintf(stderr,
+			"%s: cannot access '%s': Not a directory\n", hls, av);
 			break;
 		case EACCES:
-			printf("%s: cannot open directory '%s': Permission denied\n", hls, av);
+			fprintf(stderr,
+			"%s: cannot open directory '%s': Permission denied\n", hls, av);
 			break;
 		}
 		return (NULL);
