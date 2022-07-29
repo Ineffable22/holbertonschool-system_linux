@@ -1,0 +1,1238 @@
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+  8         DIR *dir;
+  9         struct dirent *read;
+ 10         struct stat buf;
+ 11         int i;
+ 12         printf("argc -> %d\n", argc);
+ 13         printf("argv -> %s\n", argv[0]);
+ 14         if (argc == 1)
+ 15         {
+ 16                 printf("sin argumentos\n");
+ 17                 return (0);
+ 18         }
+ 19         dir = opendir(argv[1]);
+ 20
+ 21         while((read = readdir(dir)) != NULL)
+ 22         {
+ 23                 i = lstat(read->d_name, &buf);
+ 24                 printf("%s %ld // %d\n", read->d_name, buf.st_blocks, i);
+ 25         }
+ 26         closedir(dir);
+ 27         return (0);
+ 28 }
+
+aea
