@@ -96,6 +96,7 @@ void free_list(sort *head);
 /* ----- tools.c ----- */
 int count_digit(long int num);
 void printer(save *safe, char *dt, int end, int c, option *op);
+char *_realloc(char *ptr, int size);
 
 /* ----- sort.c ----- */
 sort *sorting(sort *tmp, sort *node, option *op);
