@@ -150,7 +150,7 @@ int ls(char **av, int c, option *op)
 		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
-			dir = open_case(dir, av[i], av[0], op);
+			dir = open_case(dir, av[i], av[0]);
 			if (dir == NULL)
 			{
 				op->err = 2;
@@ -161,7 +161,7 @@ int ls(char **av, int c, option *op)
 	}
 	if (bol == 0)
 	{
-		dir = open_case(dir, ".", av[0], op);
+		dir = open_case(dir, ".", av[0]);
 		safe = create_big_list(safe, ".", dir, op);
 	}
 	printer(safe, dt, end, c, op);
@@ -176,11 +176,10 @@ int ls(char **av, int c, option *op)
  * @dir: pointer to directory
  * @av: double pointer with arguments
  * @hls: executable name
- * @op: pointer to structure with printing options
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR *open_case(DIR *dir, char *av, char *hls, option *op)
+DIR *open_case(DIR *dir, char *av, char *hls)
 {
 	errno = 0;
 	dir = opendir(av);
