@@ -64,6 +64,7 @@ void validate(char *flags)
 		{
 			printf("ls: invalid option -- '%c'\n", flags[i]);
 			printf("Try 'ls --help' for more information.\n");
+			free(flags);
 			exit(2);
 		}
 	}
