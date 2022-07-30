@@ -50,26 +50,48 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 sort *create_list(char *av, sort *head, DIR *dir, option *op)
 {
 	struct dirent *read = NULL;
+	int i = 0;
 
 	while ((read = readdir(dir)) != NULL)
 	{
 		if (op->file == NULL)
 			head = add_node(head, read->d_name, av, op);
 		else
+		{
 			if (!_strcmp(op->file, read->d_name))
+			{
 				head = add_node(head, read->d_name, av, op);
+			}
+			else
+			{
+				while (op->file[i])
+				{
+					if (op->file[i - 1] == '/' && !_strcmp(&op->file[i], read->d_name))
+						head = add_node(head, op->file, av, op);
+					i++;
+				}
+				i = 0;
+			}
+		}
 	}
 	op->file = NULL;
 	closedir(dir);
 	return (head);
 }
 
+/**
+ * adjust_file_folder - Check if it is a file and not a directory
+ * @av: double pointer with arguments
+ * @op: pointer to struc Option with printing options
+ *
+ * Return: Pointer with the folder path
+ */
 char *adjust_file_folder(char *av, option *op)
 {
 	int i = _strlen(av);
 	char *folder = NULL;
 
-	for (; av[i]; i--)
+	for (; av[i - 1]; i--)
 	{
 		while (av[i] && av[i] == '/')
 		{
@@ -78,10 +100,9 @@ char *adjust_file_folder(char *av, option *op)
 				i--;
 				continue;
 			}
-			i++;
-			folder = malloc(sizeof(char) * (i + 1));
+			folder = malloc(sizeof(char) * (i) + 1);
 			_strncpy(folder, av, i);
-			op->file = &av[i - 1];
+			op->file = av;
 			return (folder);
 		}
 	}
@@ -101,13 +122,16 @@ char *adjust_file_folder(char *av, option *op)
  */
 char *_strncpy(char *dest, char *src, int n)
 {
-	int i;
+	int i = 0;
 
 	for (i = 0; i < n && src[i] != 0; i++)
+	{
 		dest[i] = src[i];
+	}
+	dest[i] = '\0';
 	while (i < n)
 	{
-		dest[i] = 0;
+		dest[i] = '\0';
 		i++;
 	}
 	return (dest);
