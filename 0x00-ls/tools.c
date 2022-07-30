@@ -25,20 +25,25 @@ int count_digit(long int num)
  *
  * Return: Nothing
  */
-void printer(save *safe, char *dt, int end, int c, option *op)
+int printer(save *safe, int c, char o, option *op, int val)
 {
 	sort *tmp = NULL, *del = NULL;
 	int bol = 0;
 
+	if (val == 1 && o == 1 && c > 1 && op->detail != 2)
+		printf("\n");
 	while (safe)
 	{
-		if (c > 1)
+		if (safe->type != o)
+			safe = safe->next, continue;
+		if ((c > 1 && o == 1))
 		{
-			if (bol == 1)
+			if (bol == 1 && op->detail < 2)
+				printf("\n");
+			if (op->detail == 2)
 				printf("\n");
 			printf("%s:\n", (safe->file));
-		}
-		tmp = safe->h;
+		}, tmp = safe->h;
 		while (tmp)
 		{
 			del = tmp->next;
@@ -46,18 +51,22 @@ void printer(save *safe, char *dt, int end, int c, option *op)
 			{
 				if (op->detail == 2)
 					more_detail(tmp, op);
-				if (del == NULL && *dt != '\n')
-					dt = "";
-				printf("%s%s", (tmp)->r, dt);
+				printf("%s", (tmp)->r), val = 1;
+				if (o == 1 && del != NULL)
+					op->detail == 0 ? printf("  ") : printf("\n");
 			}
 			(tmp) = ((tmp)->next);
 		}
-		if (end == 0)
+		if ((op->detail >= 0 && o == 1 && safe->type == o) ||
+		    (op->detail > 0 && o == 0 && safe->type == o))
 			printf("\n");
-
-		safe = safe->next;
-		bol = 1;
+		if (op->detail == 0 && o == 0 && safe->type == o)
+			printf("  ");
+		safe = safe->next, bol = 1;
 	}
+	if (op->detail == 0 && o == 0 && val == 1)
+		printf("\n");
+	return (val);
 }
 
 /**
