@@ -193,7 +193,7 @@ DIR *open_case(DIR *dir, char *av, option *op)
 		{
 		case ENOENT:
 			fprintf(stderr,
-				"%s: cannot access '%s': No such file or directory\n", op->exe, av);
+				"%s: cannot access %s: No such file or directory\n", op->exe, av);
 			op->err = 2;
 			op->output = 2;
 			break;
@@ -202,7 +202,7 @@ DIR *open_case(DIR *dir, char *av, option *op)
 			break;
 		case EACCES:
 			fprintf(stderr,
-				"%s: cannot open directory '%s': Permission denied\n", op->exe, av);
+				"%s: cannot open directory %s: Permission denied\n", op->exe, av);
 			op->err = 2;
 			op->output = 2;
 			break;
