@@ -114,6 +114,8 @@ void time_format(char *time)
  */
 int type_hidden(int h, sort *head)
 {
+	int i = 0, count = 0;
+
 	if (h == 0)
 	{
 		if ((head->r)[0] == '.')
@@ -121,8 +123,13 @@ int type_hidden(int h, sort *head)
 	}
 	else if (h == 2)
 	{
-		if (((head->r)[0] == '.' && (head->r)[1] == '\0')
-			|| ((head->r)[0] == '.' && (head->r)[1] == '.' && (head->r)[3] == '\0'))
+		while (head->r[i])
+		{
+			if ((head->r)[i] == '.')
+				count++;
+			i++;
+		}
+		if (count == i)
 			return (0);
 	}
 	return (1);
