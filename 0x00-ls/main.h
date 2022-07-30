@@ -35,6 +35,7 @@ typedef struct Sort
 	int st_uid;
 	int st_gid;
 	long int st_nlink;
+	char type;
 	struct Sort *next;
 } sort;
 
@@ -48,6 +49,7 @@ typedef struct Save
 {
 	struct Sort *h;
 	char *file;
+	char type;
 	struct Save *next;
 } save;
 
@@ -68,6 +70,10 @@ typedef struct Option
 	int recursive;
 	long int size_file;
 	int err;
+	char output;
+	char *exe;
+	char *file;
+	char type;
 } option;
 
 /* prototypes */
@@ -75,7 +81,7 @@ typedef struct Option
 void validate(char *flags);
 int validate_weight(char **argv, char *flags, int count);
 int ls(char **av, int c, option *op);
-DIR *open_case(DIR *dir, char *av, char *hls);
+DIR *open_case(DIR *dir, char *av, option *op);
 
 /* ----- create.c ----- */
 save *create_big_list(save *safe, char *av, DIR *dir, option *op);
@@ -95,7 +101,9 @@ void free_list(sort *head);
 
 /* ----- tools.c ----- */
 int count_digit(long int num);
-void printer(save *safe, char *dt, int end, int c, option *op);
+int printer(save *safe, int c, char o, option *op, int val);
+char *_strncpy(char *dest, char *src, int n);
+char *adjust_file_folder(char *av, option *op);
 char *_realloc(char *ptr, int size);
 
 /* ----- sort.c ----- */
