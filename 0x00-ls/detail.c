@@ -122,7 +122,7 @@ int type_hidden(int h, sort *head)
 	else if (h == 2)
 	{
 		if (((head->r)[0] == '.' && (head->r)[1] == '\0')
-			|| ((head->r)[0] == '.' && (head->r)[1] == '.'))
+			|| ((head->r)[0] == '.' && (head->r)[1] == '.' && (head->r)[3] == '\0'))
 			return (0);
 	}
 	return (1);
