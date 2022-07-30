@@ -14,24 +14,25 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
 	save *tmp = NULL, *current = safe;
 
+	op->size_file = 0;
 	tmp = _calloc(sizeof(save), 1);
 	if (tmp == NULL)
 		return (NULL);
 	tmp->h = NULL;
 	tmp->h = create_list(av, tmp->h, dir, op);
 	tmp->file = _strdup(av);
-
+	tmp->type = op->type;
 	if (op->order == 1)
 		tmp->h = reverse_sort(tmp->h);
+
 	if (safe == NULL)
 	{
 		safe = tmp;
 		return (tmp);
 	}
 	while (current->next)
-	{
 		current = current->next;
-	}
+
 	current->next = tmp;
 
 	return (safe);
@@ -48,16 +49,70 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
  */
 sort *create_list(char *av, sort *head, DIR *dir, option *op)
 {
-	struct dirent *read;
+	struct dirent *read = NULL;
 
-	op->size_file = 0;
 	while ((read = readdir(dir)) != NULL)
 	{
-		head = add_node(head, read->d_name, av, op);
+		if (op->file == NULL)
+			head = add_node(head, read->d_name, av, op);
+		else
+			if (!_strcmp(op->file, read->d_name))
+				head = add_node(head, read->d_name, av, op);
 	}
+	op->file = NULL;
 	closedir(dir);
 	return (head);
 }
+
+char *adjust_file_folder(char *av, option *op)
+{
+	int i = _strlen(av);
+	char *folder = NULL;
+
+	for (; av[i]; i--)
+	{
+		while (av[i] && av[i] == '/')
+		{
+			if (av[i] == '/' && av[i + 1] == '/')
+			{
+				i--;
+				continue;
+			}
+			i++;
+			folder = malloc(sizeof(char) * (i + 1));
+			_strncpy(folder, av, i);
+			op->file = &av[i - 1];
+			return (folder);
+		}
+	}
+	folder = malloc(sizeof(char) * 2);
+	_strcpy(folder, ".");
+	op->file = av;
+	return (folder);
+}
+
+/**
+ * _strncpy - copies a string
+ * @dest: destination string
+ * @src: source string
+ * @n: number of bytes to copy
+ *
+ * Return: pointer to the resulting string
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n && src[i] != 0; i++)
+		dest[i] = src[i];
+	while (i < n)
+	{
+		dest[i] = 0;
+		i++;
+	}
+	return (dest);
+}
+
 
 /**
  * add_node - Creates nodes, store data and send to sort
@@ -97,7 +152,6 @@ sort *add_node(sort *head, char *name, char *av, option *op)
 
 	if (buf.st_size > op->size_file)
 		op->size_file = buf.st_size;
-
 	if (head == NULL)
 	{
 		head = node;
