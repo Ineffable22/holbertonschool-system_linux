@@ -135,39 +135,43 @@ int ls(char **av, int c, option *op)
 {
 	DIR *dir = NULL;
 	struct Save *safe = NULL;
-	int i = 0, end = 0;
-	char *dt = NULL;
-	int bol = 0;
+	int i = 0, bol = 0, val = 0;
+	char *folder = NULL;
 
-	op->err = 0;
-	if (op->detail == 0)
-		dt = "  ", end = 0;
-	else
-		dt = "\n", end = 1;
-
+	op->file = NULL, op->exe = av[0], op->err = 0, op->type = 1;
+	op->size_file = 0;
 	for (i = 1; av[i]; i++)
 	{
 		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
-			dir = open_case(dir, av[i], av[0]);
-			if (dir == NULL)
+			dir = open_case(dir, av[i], op);
+			if (dir == NULL && op->err == 2)
+				continue;
+			if (dir == NULL && op->err == 3)
 			{
-				op->err = 2;
+				folder = adjust_file_folder(av[i], op);
+				dir = open_case(dir, folder, op);
+				if (op->err == 0)
+				{
+					op->type = 0;
+					safe = create_big_list(safe, ".", dir, op);
+				}
 				continue;
 			}
+			op->type = 1;
 			safe = create_big_list(safe, av[i], dir, op);
 		}
 	}
 	if (bol == 0)
 	{
-		dir = open_case(dir, ".", av[0]);
+		dir = open_case(dir, ".", op);
 		safe = create_big_list(safe, ".", dir, op);
 	}
-	printer(safe, dt, end, c, op);
+	val = printer(safe, c, 0, op, val);
+	printer(safe, c, 1, op, val);
 	free_big_list(safe);
-	i = op->err;
-	free(op);
+	i = op->output == 2 ? 2 : 0, free(op);
 	return (i);
 }
 
@@ -179,7 +183,7 @@ int ls(char **av, int c, option *op)
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR *open_case(DIR *dir, char *av, char *hls)
+DIR *open_case(DIR *dir, char *av, option *op)
 {
 	errno = 0;
 	dir = opendir(av);
@@ -189,18 +193,22 @@ DIR *open_case(DIR *dir, char *av, char *hls)
 		{
 		case ENOENT:
 			fprintf(stderr,
-			"%s: cannot access '%s': No such file or directory\n", hls, av);
+				"%s: cannot access '%s': No such file or directory\n", op->exe, av);
+			op->err = 2;
+			op->output = 2;
 			break;
 		case ENOTDIR:
-			fprintf(stderr,
-			"%s: cannot access '%s': Not a directory\n", hls, av);
+			op->err = 3;
 			break;
 		case EACCES:
 			fprintf(stderr,
-			"%s: cannot open directory '%s': Permission denied\n", hls, av);
+				"%s: cannot open directory '%s': Permission denied\n", op->exe, av);
+			op->err = 2;
+			op->output = 2;
 			break;
 		}
 		return (NULL);
 	}
+	op->err = 0;
 	return (dir);
 }
