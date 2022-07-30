@@ -24,6 +24,7 @@ extern int errno;
  * @st_uid: user value
  * @st_gid: group value
  * @st_nlink: hardlink value
+ * @type: type of reading
  * @next: Pointer to the next node in the struct Sort
  */
 typedef struct Sort
@@ -43,6 +44,7 @@ typedef struct Sort
  * struct Save - struct Save with two singly linked list
  * @h: Pointer to struct Sort with singly linked list
  * @file: File name
+ * @type: type of reading
  * @next: Pointer to the next node in the struct Save
  */
 typedef struct Save
@@ -60,7 +62,11 @@ typedef struct Save
  * @detail: 0 column / 1 row / 2 detail
  * @recursive: 0 normal / 1 recursive
  * @size_file: Maximum size of a file in the folder
- * @err: Error
+ * @err: Error reading directory
+ * @output: Program output
+ * @exe: executable name
+ * @file: filename
+ * @type: type of reading
  */
 typedef struct Option
 {
@@ -98,6 +104,7 @@ int type_hidden(int h, sort *head);
 /* ----- free.c ----- */
 void free_big_list(save *safe);
 void free_list(sort *head);
+void end_function(save *safe, int c, option *op);
 
 /* ----- tools.c ----- */
 int count_digit(long int num);
