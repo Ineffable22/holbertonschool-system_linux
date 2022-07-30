@@ -23,7 +23,7 @@ void more_detail(sort *head, option *op)
 	time = ctime(&(head->st_time));
 	i = count_digit(head->st_size);
 	j = count_digit(op->size_file);
-	while (j != i)
+	while (j > i)
 	{
 		printf(" ");
 		j--;
