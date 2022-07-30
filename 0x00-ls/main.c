@@ -135,11 +135,11 @@ int ls(char **av, int c, option *op)
 {
 	DIR *dir = NULL;
 	struct Save *safe = NULL;
-	int i = 0, bol = 0, val = 0;
+	int i = 0, bol = 0;
 	char *folder = NULL;
 
 	op->file = NULL, op->exe = av[0], op->err = 0, op->type = 1;
-	op->size_file = 0;
+	op->size_file = 0, op->output = 0;
 	for (i = 1; av[i]; i++)
 	{
 		if (!(*av[i] == '-' && *(av[i] + 1)))
@@ -152,6 +152,7 @@ int ls(char **av, int c, option *op)
 			{
 				folder = adjust_file_folder(av[i], op);
 				dir = open_case(dir, folder, op);
+				free(folder);
 				if (op->err == 0)
 				{
 					op->type = 0;
@@ -168,10 +169,9 @@ int ls(char **av, int c, option *op)
 		dir = open_case(dir, ".", op);
 		safe = create_big_list(safe, ".", dir, op);
 	}
-	val = printer(safe, c, 0, op, val);
-	printer(safe, c, 1, op, val);
-	free_big_list(safe);
-	i = op->output == 2 ? 2 : 0, free(op);
+	end_function(safe, c, op);
+	i = op->output == 2 ? 2 : 0;
+	free(op);
 	return (i);
 }
 
@@ -179,7 +179,7 @@ int ls(char **av, int c, option *op)
  * open_case - opendir function error handling
  * @dir: pointer to directory
  * @av: double pointer with arguments
- * @hls: executable name
+ * @op: pointer to structure with printing options
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
