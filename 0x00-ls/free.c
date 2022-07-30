@@ -35,3 +35,30 @@ void free_list(sort *head)
 		free(head);
 	}
 }
+
+
+/**
+ * end_function - final function
+ * @safe: pointer to struct Save with two singly linked list
+ * @c: count the number of folders
+ * @op: pointer to struc Option with printing options
+ *
+ * Return: op->err
+ */
+void end_function(save *safe, int c, option *op)
+{
+	save *tmp = safe;
+	int val = 0, i = 0;
+
+	val = printer(safe, c, 0, op, val);
+	i = val;
+	while (tmp && i > 0)
+	{
+		tmp = tmp->next;
+		i--;
+	}
+	if (val > 1 && c > 1 && op->detail != 2 && tmp)
+		printf("\n");
+	printer(safe, c, 1, op, val);
+	free_big_list(safe);
+}
