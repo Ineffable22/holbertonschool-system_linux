@@ -12,9 +12,8 @@
  */
 save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 {
-	save *tmp = NULL, *current = safe;
+	save *tmp = NULL/*, *current = safe*/;
 
-	op->size_file = 0;
 	tmp = _calloc(sizeof(save), 1);
 	if (tmp == NULL)
 		return (NULL);
@@ -30,11 +29,17 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 		safe = tmp;
 		return (tmp);
 	}
-	while (current->next)
-		current = current->next;
-
-	current->next = tmp;
-
+	/*
+	 * op->order == 1 // reverse
+	 * while (current->next)
+	 * current = current->next;
+	 * current->next = tmp;
+	 */
+	printf("ORDER => %d\n", op->order);
+	if (op->order == 1)
+		safe = sorting_save_reverse(safe, tmp);
+	else
+		safe = sorting_save(safe, tmp);
 	return (safe);
 }
 
