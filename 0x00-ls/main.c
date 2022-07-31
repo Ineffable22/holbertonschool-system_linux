@@ -208,7 +208,11 @@ DIR *open_case(DIR *dir, char *av, option *op, char r)
 			dir = open_case(dir, folder, op, 1);
 			free(folder);
 			if (dir == NULL)
+			{
+				fprintf(stderr, "%s: cannot access '%s': Not a directory\n", op->exe, av);
+				op->output = 2;
 				return (NULL);
+			}
 			break;
 		case EACCES:
 			fprintf(stderr,
