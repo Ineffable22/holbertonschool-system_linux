@@ -126,6 +126,10 @@ int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
 void *_calloc(unsigned int nmemb, unsigned int size);
 
+save *sorting_save(save *head, save *node);
+save *reverse_save(save *head);
+save *sorting_save_reverse(save *head, save *node);
+
 /*
  * sort* time_sort(sort *head);
  * sort* size_sort(sort *head);
