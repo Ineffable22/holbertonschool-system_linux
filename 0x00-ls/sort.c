@@ -77,7 +77,7 @@ sort *order_2(sort *node, sort *tmp, sort *head)
 			tmp = tmp->next;
 		}
 		while (tmp->next && (node->st_time == tmp->st_time)
-		&& _strcmp(tmp->r, node->r))
+		&& _strcmp(node->r,tmp->r) > 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;
@@ -119,7 +119,7 @@ sort *order_3(sort *node, sort *tmp, sort *head)
 			tmp = tmp->next;
 		}
 		while (tmp->next && (node->st_size == tmp->st_size)
-		&& _strcmp(tmp->r, node->r))
+		&& _strcmp(node->r,tmp->r) > 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;
