@@ -183,10 +183,10 @@ int ls(char **av, int c, option *op)
  */
 DIR *open_case(DIR *dir, char *av, option *op, char r)
 {
-	errno = 0;
-	dir = opendir(av);
 	char *folder = NULL;
 
+	errno = 0;
+	dir = opendir(av);
 	op->err = r;
 	if (dir == NULL)
 	{
