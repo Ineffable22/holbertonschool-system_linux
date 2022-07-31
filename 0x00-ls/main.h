@@ -87,7 +87,7 @@ typedef struct Option
 void validate(char *flags);
 int validate_weight(char **argv, char *flags, int count);
 int ls(char **av, int c, option *op);
-DIR *open_case(DIR *dir, char *av, option *op);
+DIR *open_case(DIR *dir, char *av, option *op, char r);
 
 /* ----- create.c ----- */
 save *create_big_list(save *safe, char *av, DIR *dir, option *op);
