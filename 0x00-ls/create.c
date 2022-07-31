@@ -35,7 +35,6 @@ save *create_big_list(save *safe, char *av, DIR *dir, option *op)
 	 * current = current->next;
 	 * current->next = tmp;
 	 */
-	printf("ORDER => %d\n", op->order);
 	if (op->order == 1)
 		safe = sorting_save_reverse(safe, tmp);
 	else
