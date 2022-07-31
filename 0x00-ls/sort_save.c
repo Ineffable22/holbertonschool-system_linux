@@ -48,8 +48,12 @@ save *sorting_save(save *head, save *node)
 save *sorting_save_reverse(save *head, save *node)
 {
 	save *tmp = head, *prev = NULL;
+	char *name = node->file;
 
-	while (tmp->next && (_strcmp(node->file, tmp->file) <= 0))
+	if (node->file[0] == '.' && node->file[1] == '\0')
+		name = node->h->r;
+
+	while (tmp->next && (_strcmp(name, tmp->file) <= 0))
 	{
 		prev = tmp;
 		(tmp) = (tmp)->next;
