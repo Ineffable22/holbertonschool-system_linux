@@ -137,7 +137,6 @@ int ls(char **av, int c, option *op)
 	DIR *dir = NULL;
 	struct Save *safe = NULL;
 	int i = 0, bol = 0;
-	char *folder = NULL;
 
 	op->file = NULL, op->exe = av[0], op->err = 0, op->type = 1;
 	op->size_file = 0, op->output = 0;
@@ -146,28 +145,25 @@ int ls(char **av, int c, option *op)
 		if (!(*av[i] == '-' && *(av[i] + 1)))
 		{
 			bol = 1;
-			dir = open_case(dir, av[i], op);
-			if (dir == NULL && op->err == 2)
+			dir = open_case(dir, av[i], op, 0);
+			if (dir == NULL)
 				continue;
-			if (dir == NULL && op->err == 3)
+			if (op->err == 1)
 			{
-				folder = adjust_file_folder(av[i], op);
-				dir = open_case(dir, folder, op);
-				free(folder);
-				if (op->err == 0)
-				{
-					op->type = 0;
-					safe = create_big_list(safe, ".", dir, op);
-				}
-				continue;
+				op->type = 0;
+				safe = create_big_list(safe, ".", dir, op);
 			}
-			op->type = 1;
-			safe = create_big_list(safe, av[i], dir, op);
+			else
+			{
+				op->type = 1;
+				safe = create_big_list(safe, av[i], dir, op);
+			}
+			op->err = 0;
 		}
 	}
 	if (bol == 0)
 	{
-		dir = open_case(dir, ".", op);
+		dir = open_case(dir, ".", op, 0);
 		safe = create_big_list(safe, ".", dir, op);
 	}
 	end_function(safe, c, op);
@@ -181,13 +177,17 @@ int ls(char **av, int c, option *op)
  * @dir: pointer to directory
  * @av: double pointer with arguments
  * @op: pointer to structure with printing options
+ * @r: recursion number
  *
  * Return: pointer to the directory if success, otherwise NULL
  */
-DIR *open_case(DIR *dir, char *av, option *op)
+DIR *open_case(DIR *dir, char *av, option *op, char r)
 {
 	errno = 0;
 	dir = opendir(av);
+	char *folder = NULL;
+
+	op->err = r;
 	if (dir == NULL)
 	{
 		switch (errno)
@@ -195,21 +195,26 @@ DIR *open_case(DIR *dir, char *av, option *op)
 		case ENOENT:
 			fprintf(stderr,
 				"%s: cannot access %s: No such file or directory\n", op->exe, av);
-			op->err = 2;
 			op->output = 2;
-			break;
+			return (NULL);
 		case ENOTDIR:
-			op->err = 3;
+			if (r == 1)
+			{
+				fprintf(stderr, "%s: cannot access '%s': Not a directory\n", op->exe, av);
+				op->output = 2;
+				return (NULL);
+			}
+			folder = adjust_file_folder(av, op);
+			dir = open_case(dir, folder, op, 1);
+			free(folder);
+			if (dir == NULL)
+				return (NULL);
 			break;
 		case EACCES:
 			fprintf(stderr,
 				"%s: cannot open directory %s: Permission denied\n", op->exe, av);
-			op->err = 2;
 			op->output = 2;
-			break;
 		}
-		return (NULL);
 	}
-	op->err = 0;
 	return (dir);
 }
