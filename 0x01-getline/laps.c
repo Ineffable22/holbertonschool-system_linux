@@ -11,10 +11,11 @@
 int **sort(int **cars, size_t len, int id)
 {
 	size_t i = 0;
-	int tmp_id1 = id, tmp1 = 0, tmp_id2 = id, tmp2 = 0;
+	int tmp_id1 = id, tmp1 = 0, tmp_id2 = 0, tmp2 = 0;
+	size_t ss = (len == 0) ? 1 : len + 2;
 
-	cars[0] = realloc(cars[0], sizeof(int) * (len + 1));
-	cars[1] = realloc(cars[1], sizeof(int) * (len + 1));
+	cars[0] = realloc(cars[0], sizeof(int) * ss);
+	cars[1] = realloc(cars[1], sizeof(int) * ss);
 
 	printf("Car %d joined the race\n", id);
 	if (len == 0)
@@ -63,11 +64,15 @@ void race_state(int *id, size_t size)
 	size_t i = 0, j = 0, length = len, bol = 0;
 
 	if (!cars)
+	{
+		cars = NULL;
 		cars = malloc(sizeof(int *) * 2);
+		cars[0] = NULL, cars[1] = NULL;
+	}
 
 	if (size == 0 && cars)
 	{
-		free(cars);
+		free(cars[0]), free(cars[1]), free(cars);
 		return;
 	}
 	for (i = 0; i < size; i++)
@@ -79,7 +84,6 @@ void race_state(int *id, size_t size)
 				bol = 1;
 				break;
 			}
-
 		}
 		if (bol == 0)
 		{
