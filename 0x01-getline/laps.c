@@ -23,6 +23,7 @@ int **sort(int **cars, size_t len, int id)
 		cars[0][len] = id;
 		cars[1][len] = 0;
 	}
+
 	for (i = 0; i < len && id > cars[0][i]; i++)
 	{}
 	if (i == len)
