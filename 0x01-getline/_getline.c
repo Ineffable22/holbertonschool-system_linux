@@ -25,35 +25,50 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 }
 
 /**
- * _free - free a double pointer of integers
+ * _free - free a double pointer of integers and chars
  * @sb: sb is a double pointer that stores all the flags in the stream.
- * @size: size of double-pointer
- *
- * Return: Nothing.
- */
-void _free(int **sb, int size)
-{
-	int i = size - 1;
-
-	for (i = size - 1; i >= 0; i--)
-		free(sb[i]);
-	free(sb);
-}
-
-/**
- * _free2 - free a double pointer of chars
  * @b: buff is a double pointer that stores everything read by position.
  * @size: size of double-pointer
  *
  * Return: Nothing.
  */
-void _free2(char **b, int size)
+void _free(int **sb, char **b, int size)
 {
-	int i = 0;
+	int i = size - 1;
 
-	for (i = 0; i < size; i++)
+	for (i = size - 1; i >= 0; i--)
+	{
+		free(sb[i]);
 		free(b[i]);
+	}
+	free(sb);
 	free(b);
+}
+
+/**
+ * _strncpy - copies a string
+ * @dest: destination string
+ * @src: source string
+ * @n: number of bytes to copy
+ *
+ * Return: pointer to the resulting string
+ */
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n; i++)
+	{
+		if (src[i] == 0 && src[i + 1] == 0)
+			break;
+		dest[i] = src[i];
+	}
+	while (i < n)
+	{
+		dest[i] = 0;
+		i++;
+	}
+	return (dest);
 }
 
 /**
@@ -93,7 +108,7 @@ char **create_stream(int pos, int **sb, char **buff, char **line)
 				sb[pos][0] += 1;
 				break;
 			}
-			if (buff[pos][sb[pos][0]] == '\0')
+			if (buff[pos][sb[pos][0]] == '\0' && buff[pos][sb[pos][0] + 1] == '\0')
 			{
 				sb[pos][1] = 2;
 				end = 0;
@@ -103,7 +118,7 @@ char **create_stream(int pos, int **sb, char **buff, char **line)
 		if (sb[pos][0] == READ_SIZE)
 			return (buff);
 		*line = _calloc((sb[pos][0] - sb[pos][2]), sizeof(char));
-		strncpy(*line, &buff[pos][sb[pos][2]], ((sb[pos][0] - sb[pos][2]) - end));
+		_strncpy(*line, &buff[pos][sb[pos][2]], ((sb[pos][0] - sb[pos][2]) - end));
 		sb[pos][2] = sb[pos][0];
 	}
 	return (buff);
@@ -147,8 +162,7 @@ char *_getline(const int fd)
 
 	if (fd == -1)
 	{
-		_free(supabuffa, size);
-		_free2(buff, size);
+		_free(supabuffa, buff, size);
 		size = 0;
 		return (NULL);
 	}
