@@ -1,4 +1,4 @@
-# 0x00-ls (list directory contents)
+# 0x00 - ls (list directory contents)
 
 ## Description
 This is the ls command as in Linux. List information about the files (the current directory by default). Sort entries alphabetically.
