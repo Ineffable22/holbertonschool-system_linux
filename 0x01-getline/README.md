@@ -64,7 +64,7 @@ Write a function that keeps track of the number of laps made by several cars in 
         - For each car sorted by the identifier: `Car X [Y laps]` (where `X` is the identifier and `Y` the number of laps already done).
 - If your function is called with `size = 0`,you must free all allocated memory.
 ```C
-julien@ubuntu:~/0x01-getline$ cat 0-main.c 
+Ineffable@ubuntu:~/0x01-getline$ cat 0-main.c 
 #include "laps.h"
 
 /**
@@ -101,8 +101,8 @@ int main()
     race_state(NULL, 0);
     return (0);
 }
-julien@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -Werror -pedantic 0-main.c laps.c  -o laps
-julien@ubuntu:~/0x01-getline$ ./laps
+Ineffable@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -Werror -pedantic 0-main.c laps.c  -o laps
+Ineffable@ubuntu:~/0x01-getline$ ./laps
 Car 1 joined the race
 Car 42 joined the race
 Car 101 joined the race
@@ -164,7 +164,7 @@ Car 11 [3 laps]
 Car 42 [5 laps]
 Car 101 [5 laps]
 --
-julien@ubuntu:~/0x01-getline$
+Ineffable@ubuntu:~/0x01-getline$
 ```
 
 ### 1. [_getline](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x01-getline/_getline.c)
@@ -181,7 +181,7 @@ Write a function that reads an entire line from a file descriptor.
 - You can assume that `fd` will always be the same.
 
 ```C
-julien@ubuntu:~/0x01-getline$ cat 1-main.c
+Ineffable@ubuntu:~/0x01-getline$ cat 1-main.c
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -208,8 +208,8 @@ int main(void)
     close(fd);
     return (0);
 }
-julien@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -Werror -pedantic 1-main.c _getline.c -o getline
-julien@ubuntu:~/0x01-getline$ ./getline
+Ineffable@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -Werror -pedantic 1-main.c _getline.c -o getline
+Ineffable@ubuntu:~/0x01-getline$ ./getline
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -236,7 +236,7 @@ int main(void)
     close(fd);
     return (0);
 }
-julien@ubuntu:~/0x01-getline$ 
+Ineffable@ubuntu:~/0x01-getline$ 
 ```
 
 ### 2. [_getline](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x01-getline/_getline.c): multi-fd
@@ -244,7 +244,7 @@ Handle multiple file descriptors.
 
 - when called with `-1` you should free everything and reset all your static variables.
 ```C
-julien@ubuntu:~/0x01-getline$ cat 2-main.c
+Ineffable@ubuntu:~/0x01-getline$ cat 2-main.c
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -325,8 +325,8 @@ int main(void)
     _getline(-1);
     return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -pedantic -Werror 2-main.c _getline.c -o getline
-julien@ubuntu:~/0x01-getline$ ./getline
+Ineffable@ubuntu:~/0x01-getline$ gcc -Wall -Wextra -pedantic -Werror 2-main.c _getline.c -o getline
+Ineffable@ubuntu:~/0x01-getline$ ./getline
 ---------THE SWING (first 5 lines)-----------
 The Swing
 BY ROBERT LOUIS STEVENSON
@@ -374,7 +374,7 @@ Till I look down on the garden green,
    Down on the roof so brown— 
 Up in the air I go flying again, 
    Up in the air and down!again, 
-julien@ubuntu:~/0x01-getline$ valgrind ./getline
+Ineffable@ubuntu:~/0x01-getline$ valgrind ./getline
 ==4832== Memcheck, a memory error detector
 ==4832== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
 ==4832== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
@@ -436,7 +436,7 @@ Up in the air I go flying again,
 ==4832== 
 ==4832== For counts of detected and suppressed errors, rerun with: -v
 ==4832== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-julien@ubuntu:~/0x01-getline$
+Ineffable@ubuntu:~/0x01-getline$
 ```
 
 ### 3. [_getline](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x01-getline/_getline.c): `^@`
@@ -445,7 +445,7 @@ Handle characters `\0` in lines.
 Here’s the file used for the example below: [zero](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x01-getline/files/zero)
 
 ```C
-julien@ubuntu:~/0x01-getline$ cat 100-main.c
+Ineffable@ubuntu:~/0x01-getline$ cat 100-main.c
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -488,15 +488,15 @@ int main(void)
     close(fd);
     return (EXIT_SUCCESS);
 }
-julien@ubuntu:~/0x01-getline$ cat zero
+Ineffable@ubuntu:~/0x01-getline$ cat zero
 line 1 Holberton.....
 line 2 still line 2
 line 3 ......School()
-julien@ubuntu:~/0x01-getline$ gcc -g -Wall -Wextra -pedantic 100-main.c _getline.c && ./a.out
+Ineffable@ubuntu:~/0x01-getline$ gcc -g -Wall -Wextra -pedantic 100-main.c _getline.c && ./a.out
 6c 69 6e 65 20 31 20 48 6f 6c 62 65 72 74 6f 6e 2e 2e 2e 2e 2e
 6c 69 6e 65 20 32 20 00 73 74 69 6c 6c 20 6c 69 6e 65 20 32 00
 6c 69 6e 65 20 33 20 2e 2e 2e 2e 2e 2e 53 63 68 6f 6f 6c 28 29
-julien@ubuntu:~/0x01-getline$
+Ineffable@ubuntu:~/0x01-getline$
 ```
 
 ## Author:
