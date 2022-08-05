@@ -34,15 +34,25 @@ void *_calloc(unsigned int nmemb, unsigned int size)
  */
 void _free(int **sb, char **b, int size)
 {
-	int i = size - 1;
+	int i = 0;
 
-	for (i = size - 1; i >= 0; i--)
+	if (sb)
 	{
-		free(sb[i]);
-		free(b[i]);
+		for (i = 0; i < size; i++)
+		{
+			free(sb[i]);
+
+		}
+		free(sb);
 	}
-	free(sb);
-	free(b);
+	if (b)
+	{
+		for (i = 0; i < size; i++)
+		{
+			free(b[i]);
+		}
+		free(b);
+	}
 }
 
 /**
