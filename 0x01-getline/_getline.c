@@ -1,5 +1,5 @@
 #include "_getline.h"
-#include <stdio.h>
+
 /**
  * *_calloc - allocates memory for an array
  * @nmemb: number of elements in the array
@@ -35,12 +35,12 @@ supabuffa *_free(supabuffa *sb, int fd)
 {
 	supabuffa *prev = NULL, *tmp = sb;
 
-	if (sb && fd == -1)
+	if (tmp && fd == -1)
 	{
-		while (sb)
+		while (tmp)
 		{
-			prev = sb;
-			sb = sb->next;
+			prev = tmp;
+			tmp = tmp->next;
 			if (prev->buff[0])
 			{
 				free(prev->buff), free(prev->data), free(prev);
@@ -89,6 +89,8 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 	int end = 0;
 	supabuffa *tmp = sb;
 
+	if (sb == NULL)
+		return (NULL);
 	while (tmp->data[3] != fd)
 		tmp = tmp->next;
 	if (tmp->data[1] == 0)
@@ -156,6 +158,11 @@ supabuffa *validate(supabuffa *sb, int fd)
 		return (NULL);
 	}
 	node->data = malloc(sizeof(int) * 4);
+	if (node->buff == NULL)
+	{
+		_free(sb, -1);
+		return (NULL);
+	}
 	node->data[0] = 0;
 	node->data[1] = 0;
 	node->data[2] = 0;
