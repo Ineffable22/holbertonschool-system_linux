@@ -187,7 +187,7 @@ char *_getline(const int fd)
 			sb->buff = _calloc(READ_SIZE, sizeof(char));
 			if (sb->buff == NULL)
 			{
-				free(sb), sb = NULL
+				free(sb), sb = NULL;
 				return (NULL);
 			}
 			sb->data = malloc(sizeof(int) * 4);
