@@ -177,6 +177,8 @@ char *_getline(const int fd)
 	char *line = NULL;
 	int rd = 0;
 
+	if (READ_SIZE < 0)
+		return (NULL);
 	if (fd != -1)
 	{
 		if (!sb)
@@ -203,9 +205,7 @@ char *_getline(const int fd)
 		sb = create_stream(sb, &line, fd, &rd);
 		if (rd == -1)
 		{
-			free(sb->buff);
-			free(sb->data);
-			free(sb);
+			free(sb->buff),	free(sb->data), free(sb);
 			return (NULL);
 		}
 	}
