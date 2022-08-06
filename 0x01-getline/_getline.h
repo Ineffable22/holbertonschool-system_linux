@@ -9,9 +9,11 @@
 #define READ_SIZE 1024
 
 /**
- * Superbuffer - Struct that stores all the flags in the stream.
+ * struct Superbuffer - Struct that stores all the flags in the stream.
+ * This structure was invoked as static.
  * @buff: Is a pointer that stores everything read by position.
  * @data: Is a pointer with flags to create_stream function
+ * @next: Pointer to the next node in the struct Superbuffer
  */
 typedef struct Superbuffer
 {
