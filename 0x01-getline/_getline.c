@@ -1,5 +1,5 @@
 #include "_getline.h"
-
+#include <stdio.h>
 /**
  * *_calloc - allocates memory for an array
  * @nmemb: number of elements in the array
@@ -41,9 +41,11 @@ supabuffa *_free(supabuffa *sb, int fd)
 		{
 			prev = sb;
 			sb = sb->next;
-			free(prev->buff);
-			free(prev->data);
-			free(prev);
+			if (prev->buff[0])
+			{
+				free(prev->buff), free(prev->data), free(prev);
+			}
+			prev = NULL;
 		}
 	}
 	if (sb && fd != -1)
@@ -53,21 +55,20 @@ supabuffa *_free(supabuffa *sb, int fd)
 			prev = tmp;
 			tmp = tmp->next;
 		}
+		if (tmp->data[3] != fd)
+			return (NULL);
 		if (prev == NULL)
 		{
 			prev = tmp;
 			tmp = tmp->next;
-			free(prev->buff);
-			free(sb->data);
-			free(prev);
+			free(prev->buff), free(prev->data), free(prev), prev = NULL;
 			return (tmp);
 		}
 		else
 		{
 			if (tmp->next)
 				prev->next = tmp->next;
-			free(tmp->buff);
-			free(sb->data);
+			free(tmp->buff), free(tmp->data);
 			free(tmp);
 		}
 	}
@@ -100,18 +101,15 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd)
 	{
 		for (; tmp->data[0] < READ_SIZE; tmp->data[0]++)
 		{
+
 			if (tmp->buff[tmp->data[0]] == '\n')
 			{
 				tmp->data[0] += 1;
 				break;
 			}
-			if (tmp->buff[tmp->data[0]] == '\0' && tmp->buff[tmp->data[0] + 1] == '\0')
-			{
-				tmp->data[1] = 2, end = 0;
-				break;
-			}
 		}
-		if (tmp->data[0] == READ_SIZE)
+		if ((tmp->data[0] ==  READ_SIZE && tmp->data[2] == READ_SIZE) ||
+		(tmp->buff[tmp->data[2]] == '\0' && tmp->data[0] ==  READ_SIZE))
 			return (sb);
 		*line = _calloc((tmp->data[0] - tmp->data[2]), sizeof(char));
 		memcpy(*line, &tmp->buff[tmp->data[2]],
