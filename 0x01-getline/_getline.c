@@ -80,21 +80,24 @@ supabuffa *_free(supabuffa *sb, int fd)
  * @sb: sb is a pointer to structure that stores all the flags in the stream.
  * @line: Is a pointer to the line read from the buffer.
  * @fd: Is the file descriptor to read
+ * @rd: Variable that informs if the reading fails
  *
  * Return: Line with dynamic memory.
  */
-supabuffa *create_stream(supabuffa *sb, char **line, int fd)
+supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 {
-	int rd = 0, end = 1;
+	int end = 1;
 	supabuffa *tmp = sb;
 
 	while (tmp->data[3] != fd)
 		tmp = tmp->next;
 	if (tmp->data[1] == 0)
 	{
-		rd = read(tmp->data[3], tmp->buff, READ_SIZE);
-		if (rd == -1)
-			exit(-1);
+		*rd = read(tmp->data[3], tmp->buff, READ_SIZE);
+		if (*rd == -1)
+		{
+			return (sb);
+		}
 		tmp->data[1] = 1;
 	}
 	if (tmp->data[1] == 1)
@@ -171,6 +174,7 @@ char *_getline(const int fd)
 	static supabuffa *sb;
 	/* sb[0][0] = open, sb[0][1] = door, sb[0][2] = last, sb[0][3] = fd */
 	char *line = NULL;
+	int rd = 0;
 
 	if (fd != -1)
 	{
@@ -182,25 +186,27 @@ char *_getline(const int fd)
 			sb->buff = _calloc(READ_SIZE, sizeof(char));
 			if (sb->buff == NULL)
 			{
-				free(sb);
-				sb = NULL;
+				free(sb), sb = NULL;
 				return (NULL);
 			}
 			sb->data = malloc(sizeof(int) * 4);
 			if (sb->data == NULL)
 			{
-				free(sb->buff);
-				free(sb);
+				free(sb->buff), free(sb);
 				return (NULL);
 			}
-			sb->data[0] = 0;
-			sb->data[1] = 0;
-			sb->data[2] = 0;
-			sb->data[3] = fd;
+			sb->data[0] = 0, sb->data[1] = 0, sb->data[2] = 0, sb->data[3] = fd;
 		}
 		else
 			sb = validate(sb, fd);
-		sb = create_stream(sb, &line, fd);
+		sb = create_stream(sb, &line, fd, &rd);
+		if (rd == -1)
+		{
+			free(sb->buff);
+			free(sb->data);
+			free(sb);
+			return (NULL);
+		}
 	}
 	if (fd == -1 || line == NULL)
 		sb = _free(sb, fd);
