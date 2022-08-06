@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define READ_SIZE 0
+#define READ_SIZE 1024
 
 /**
  * Superbuffer - Struct that stores all the flags in the stream.
