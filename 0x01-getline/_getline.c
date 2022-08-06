@@ -107,8 +107,7 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd)
 			}
 			if (tmp->buff[tmp->data[0]] == '\0' && tmp->buff[tmp->data[0] + 1] == '\0')
 			{
-				tmp->data[1] = 2;
-				end = 0;
+				tmp->data[1] = 2, end = 0;
 				break;
 			}
 		}
