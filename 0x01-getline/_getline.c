@@ -114,11 +114,6 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd)
 		if (tmp->data[0] == READ_SIZE)
 			return (sb);
 		*line = _calloc((tmp->data[0] - tmp->data[2]), sizeof(char));
-		if (*line == NULL)
-		{
-			_free(sb, -1);
-			return (NULL);
-		}
 		memcpy(*line, &tmp->buff[tmp->data[2]],
 		((tmp->data[0] - tmp->data[2]) - end));
 		tmp->data[2] = tmp->data[0];
