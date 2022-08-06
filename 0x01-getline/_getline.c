@@ -172,7 +172,6 @@ int validate(supabuffa **sb, int fd)
 char *_getline(const int fd)
 {
 	static supabuffa *sb;
-	/* sb[0][0] = open, sb[0][1] = door, sb[0][2] = last, sb[0][3] = fd */
 	char *line = NULL;
 	int rd = 0;
 
@@ -188,7 +187,8 @@ char *_getline(const int fd)
 			sb->buff = _calloc(READ_SIZE, sizeof(char));
 			if (sb->buff == NULL)
 			{
-				free(sb), sb = NULL, return (NULL);
+				free(sb), sb = NULL
+				return (NULL);
 			}
 			sb->data = malloc(sizeof(int) * 4);
 			if (sb->data == NULL)
