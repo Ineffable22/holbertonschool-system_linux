@@ -136,6 +136,8 @@ supabuffa *validate(supabuffa *sb, int fd)
 
 	while (tmp)
 	{
+		if (tmp->data[0] == READ_SIZE)
+			return (tmp);
 		if (tmp->data[3] == fd)
 			return (sb);
 		prev = tmp;
