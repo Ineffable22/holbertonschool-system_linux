@@ -86,7 +86,7 @@ supabuffa *_free(supabuffa *sb, int fd)
  */
 supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 {
-	int end = 1;
+	int end = 0;
 	supabuffa *tmp = sb;
 
 	while (tmp->data[3] != fd)
@@ -107,6 +107,7 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 
 			if (tmp->buff[tmp->data[0]] == '\n')
 			{
+				end = 1;
 				tmp->data[0] += 1;
 				break;
 			}
@@ -114,7 +115,7 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 		if ((tmp->data[0] ==  READ_SIZE && tmp->data[2] == READ_SIZE) ||
 		(tmp->buff[tmp->data[2]] == '\0' && tmp->data[0] ==  READ_SIZE))
 			return (sb);
-		*line = _calloc((tmp->data[0] - tmp->data[2]), sizeof(char));
+		*line = _calloc((tmp->data[0] - tmp->data[2]) + 1, sizeof(char));
 		memcpy(*line, &tmp->buff[tmp->data[2]],
 		((tmp->data[0] - tmp->data[2]) - end));
 		tmp->data[2] = tmp->data[0];
