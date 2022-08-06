@@ -8,6 +8,17 @@
 
 #define READ_SIZE 500
 
+/**
+ * Superbuffer - Struct that stores all the flags in the stream.
+ * @buff: Is a pointer that stores everything read by position.
+ * @data: Is a pointer with flags to create_stream function
+ */
+typedef struct Superbuffer
+{
+	char *buff;
+	int *data;
+	struct Superbuffer *next;
+} supabuffa;
 
 char *_getline(const int fd);
 
