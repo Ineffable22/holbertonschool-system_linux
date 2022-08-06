@@ -46,7 +46,7 @@ supabuffa *_free(supabuffa *sb, int fd)
 			free(prev);
 		}
 	}
-	if (fd != -1)
+	if (sb && fd != -1)
 	{
 		while (tmp->data[3] != fd)
 		{
@@ -182,7 +182,12 @@ char *_getline(const int fd)
 			if (sb == NULL)
 				return (NULL);
 			sb->buff = _calloc(READ_SIZE, sizeof(char));
-
+			if (sb->buff == NULL)
+			{
+				free(sb);
+				sb = NULL;
+				return (NULL);
+			}
 			sb->data = malloc(sizeof(int) * 4);
 			if (sb->data == NULL)
 			{
