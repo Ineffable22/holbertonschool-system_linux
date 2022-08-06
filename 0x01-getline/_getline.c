@@ -25,181 +25,171 @@ void *_calloc(unsigned int nmemb, unsigned int size)
 }
 
 /**
- * _free - free a double pointer of integers and chars
- * @sb: sb is a double pointer that stores all the flags in the stream.
- * @b: buff is a double pointer that stores everything read by position.
- * @size: size of double-pointer
+ * _free - free a pointer to structure
+ * @sb: sb is a pointer to structure that stores all the flags in the stream.
+ * @fd: Is the file descriptor to read
  *
  * Return: Nothing.
  */
-void _free(int **sb, char **b, int size)
+supabuffa *_free(supabuffa *sb, int fd)
 {
-	int i = 0;
+	supabuffa *prev = NULL, *tmp = sb;
 
-	if (sb)
+	if (sb && fd == -1)
 	{
-		for (i = 0; i < size; i++)
+		while (sb)
 		{
-			free(sb[i]);
-
+			prev = sb;
+			sb = sb->next;
+			free(prev->buff);
+			free(prev->data);
+			free(prev);
 		}
-		free(sb);
 	}
-	if (b)
+	if (fd != -1)
 	{
-		for (i = 0; i < size; i++)
+		while (tmp->data[3] != fd)
 		{
-			free(b[i]);
+			prev = tmp;
+			tmp = tmp->next;
 		}
-		free(b);
+		if (prev == NULL)
+		{
+			prev = tmp;
+			tmp = tmp->next;
+			free(prev->buff);
+			free(sb->data);
+			free(prev);
+			return (tmp);
+		}
+		else
+		{
+			if (tmp->next)
+				prev->next = tmp->next;
+			free(tmp->buff);
+			free(sb->data);
+			free(tmp);
+		}
 	}
-}
-
-/**
- * _strncpy - copies a string
- * @dest: destination string
- * @src: source string
- * @n: number of bytes to copy
- *
- * Return: pointer to the resulting string
- */
-char *_strncpy(char *dest, char *src, int n)
-{
-	int i;
-
-	for (i = 0; i < n; i++)
-	{
-		if (src[i] == 0 && src[i + 1] == 0)
-			break;
-		dest[i] = src[i];
-	}
-	while (i < n)
-	{
-		dest[i] = 0;
-		i++;
-	}
-	return (dest);
+	return (sb);
 }
 
 /**
  * create_stream - Create a getline stream per fp
- * @pos: is the position that depends on the file descriptor.
- * @sb: sb is a double pointer that stores all the flags in the stream.
- * @buff: buff is a double pointer that stores everything read by position.
+ * @sb: sb is a pointer to structure that stores all the flags in the stream.
  * @line: Is a pointer to the line read from the buffer.
+ * @fd: Is the file descriptor to read
  *
  * Return: Line with dynamic memory.
  */
-char **create_stream(int pos, int **sb, char **buff, char **line)
+supabuffa *create_stream(supabuffa *sb, char **line, int fd)
 {
-	/**
-	 * sb[pos][0] = open;
-	 * sb[pos][1] = door;
-	 * sb[pos][2] = last;
-	 * sb[pos][3] = fd;
-	 */
 	int rd = 0, end = 1;
+	supabuffa *tmp = sb;
 
-	if (sb[pos][1] == 0)
+	while (tmp->data[3] != fd)
+		tmp = tmp->next;
+	if (tmp->data[1] == 0)
 	{
-		rd = read(sb[pos][3], buff[pos], READ_SIZE);
+		rd = read(tmp->data[3], tmp->buff, READ_SIZE);
 		if (rd == -1)
-		{
-			return (NULL);
-		}
-		sb[pos][1] = 1;
+			exit(-1);
+		tmp->data[1] = 1;
 	}
-	if (sb[pos][1] == 1)
+	if (tmp->data[1] == 1)
 	{
-		for (; sb[pos][0] < READ_SIZE; sb[pos][0]++)
+		for (; tmp->data[0] < READ_SIZE; tmp->data[0]++)
 		{
-			if (buff[pos][sb[pos][0]] == '\n')
+			if (tmp->buff[tmp->data[0]] == '\n')
 			{
-				sb[pos][0] += 1;
+				tmp->data[0] += 1;
 				break;
 			}
-			if (buff[pos][sb[pos][0]] == '\0' && buff[pos][sb[pos][0] + 1] == '\0')
+			if (tmp->buff[tmp->data[0]] == '\0' && tmp->buff[tmp->data[0] + 1] == '\0')
 			{
-				sb[pos][1] = 2;
+				tmp->data[1] = 2;
 				end = 0;
 				break;
 			}
 		}
-		if (sb[pos][0] == READ_SIZE)
-			return (buff);
-		*line = _calloc((sb[pos][0] - sb[pos][2]), sizeof(char));
-		_strncpy(*line, &buff[pos][sb[pos][2]], ((sb[pos][0] - sb[pos][2]) - end));
-		sb[pos][2] = sb[pos][0];
+		if (tmp->data[0] == READ_SIZE)
+			return (sb);
+		*line = _calloc((tmp->data[0] - tmp->data[2]), sizeof(char));
+		memcpy(*line, &tmp->buff[tmp->data[2]],
+		((tmp->data[0] - tmp->data[2]) - end));
+		tmp->data[2] = tmp->data[0];
 	}
-	return (buff);
+	return (sb);
 }
 
 /**
  * validate - Validate if the same fd exists in sb
- * @sb: sb is a double pointer that stores all the flags in the stream.
- * @size: size of double-pointer of integers
- * @fd: is the file descriptor to read
+ * @sb: sb is a pointer to structure that stores all the flags in the stream.
+ * @fd: Is the file descriptor to read
  *
  * Return: a position of fd in sb.
  */
-int validate(int **sb, int *size, int fd)
+supabuffa *validate(supabuffa *sb, int fd)
 {
-	int i = 0;
+	supabuffa *tmp = sb, *prev = NULL, *node = NULL;
 
-	for (i = 0; i < *size; i++)
+	while (tmp)
 	{
-		if (sb[i][3] == fd)
-			return (i);
+		if (tmp->data[3] == fd)
+			return (sb);
+		prev = tmp;
+		tmp = tmp->next;
 	}
-	return (i);
+	node = _calloc(1, sizeof(supabuffa));
+	if (node == NULL)
+		exit(-1);
+	node->buff = _calloc(READ_SIZE, sizeof(char));
+	if (node->buff == NULL)
+		exit(-1);
+	node->data = malloc(sizeof(int) * 4);
+	node->data[0] = 0;
+	node->data[1] = 0;
+	node->data[2] = 0;
+	node->data[3] = fd;
+	node->next = NULL;
+	prev->next = node;
+	return (sb);
 }
 
 /**
  * _getline - Reads an entire line from a file descriptor
- * @fd: is the file descriptor to read
+ * @fd: Is the file descriptor to read
  *
  * Return: If there are no more lines to return, or if there is an error,
  * the function should return NULL
  */
 char *_getline(const int fd)
 {
-	static int **supabuffa;
-	/* sp[0][0] = open, sp[0][1] = door, sp[0][2] = last, sp[0][3] = fd */
-	static char **buff;
-	static int size;
+	static supabuffa *sb;
+	/* sb[0][0] = open, sb[0][1] = door, sb[0][2] = last, sb[0][3] = fd */
 	char *line = NULL;
-	int pos = 0;
 
-	if (fd == -1)
+	if (fd != -1)
 	{
-		_free(supabuffa, buff, size);
-		size = 0;
-		return (NULL);
-	}
-	if (size == 0)
-	{
-		supabuffa = malloc(sizeof(int *) * 1);
-		supabuffa[0] = malloc(sizeof(int) * 4);
-		supabuffa[0][0] = 0, supabuffa[0][1] = 0;
-		supabuffa[0][2] = 0, supabuffa[0][3] = fd;
-		buff = _calloc(1, sizeof(char *));
-		buff[0] = _calloc(READ_SIZE + 1, sizeof(char));
-		size = 1;
-	}
-	else
-	{
-		pos = validate(supabuffa, &size, fd);
-		if (pos == size)
+		if (!sb)
 		{
-			supabuffa = realloc(supabuffa, sizeof(int *) * (size + 1));
-			supabuffa[size] = malloc(sizeof(int) * 4);
-			supabuffa[size][0] = 0, supabuffa[size][1] = 0;
-			supabuffa[size][2] = 0,	supabuffa[size][3] = fd;
-			buff = realloc(buff, sizeof(char *) * (size + 1));
-			buff[size] = _calloc(READ_SIZE + 1, sizeof(char));
-			size += 1;
+			sb = _calloc(1, sizeof(supabuffa));
+			if (sb == NULL)
+				exit(-1);
+			sb->buff = _calloc(READ_SIZE, sizeof(char));
+			if (sb->buff == NULL)
+				exit(-1);
+			sb->data = malloc(sizeof(int) * 4);
+			sb->data[0] = 0;
+			sb->data[1] = 0;
+			sb->data[2] = 0;
+			sb->data[3] = fd;
 		}
+		else
+			sb = validate(sb, fd);
+		sb = create_stream(sb, &line, fd);
 	}
-	buff = create_stream(pos, supabuffa, buff, &line);
+	if (fd == -1 || line == NULL)
+		sb = _free(sb, fd);
 	return (line);
 }
