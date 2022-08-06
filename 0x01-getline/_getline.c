@@ -42,9 +42,8 @@ supabuffa *_free(supabuffa *sb, int fd)
 			prev = tmp;
 			tmp = tmp->next;
 			if (prev->buff[0])
-			{
 				free(prev->buff), free(prev->data), free(prev);
-			}
+			sb = tmp;
 			prev = NULL;
 		}
 	}
