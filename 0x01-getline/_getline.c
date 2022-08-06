@@ -115,6 +115,11 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd)
 		if (tmp->data[0] == READ_SIZE)
 			return (sb);
 		*line = _calloc((tmp->data[0] - tmp->data[2]), sizeof(char));
+		if (*line == NULL)
+		{
+			_free(sb, -1);
+			return (NULL);
+		}
 		memcpy(*line, &tmp->buff[tmp->data[2]],
 		((tmp->data[0] - tmp->data[2]) - end));
 		tmp->data[2] = tmp->data[0];
@@ -142,10 +147,16 @@ supabuffa *validate(supabuffa *sb, int fd)
 	}
 	node = _calloc(1, sizeof(supabuffa));
 	if (node == NULL)
-		exit(-1);
+	{
+		_free(sb, -1);
+		return (NULL);
+	}
 	node->buff = _calloc(READ_SIZE, sizeof(char));
 	if (node->buff == NULL)
-		exit(-1);
+	{
+		_free(sb, -1);
+		return (NULL);
+	}
 	node->data = malloc(sizeof(int) * 4);
 	node->data[0] = 0;
 	node->data[1] = 0;
@@ -175,11 +186,21 @@ char *_getline(const int fd)
 		{
 			sb = _calloc(1, sizeof(supabuffa));
 			if (sb == NULL)
-				exit(-1);
+				return (NULL);
 			sb->buff = _calloc(READ_SIZE, sizeof(char));
 			if (sb->buff == NULL)
-				exit(-1);
+			{
+				free(sb);
+				sb = NULL;
+				return (NULL);
+			}
 			sb->data = malloc(sizeof(int) * 4);
+			if (sb->data == NULL)
+			{
+				free(sb->buff);
+				free(sb);
+				return (NULL);
+			}
 			sb->data[0] = 0;
 			sb->data[1] = 0;
 			sb->data[2] = 0;
