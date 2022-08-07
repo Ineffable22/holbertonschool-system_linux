@@ -92,9 +92,8 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 	if (sb == NULL)
 		return (NULL);
 	while (tmp->data[3] != fd)
-	{
 		tmp = tmp->next;
-	}
+
 	if (tmp->data[1] == 0)
 	{
 		*rd = read(tmp->data[3], tmp->buff, READ_SIZE);
@@ -116,7 +115,11 @@ supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 		}
 		if ((tmp->data[0] ==  READ_SIZE && tmp->data[2] == READ_SIZE) ||
 		(tmp->buff[tmp->data[2]] == '\0' && tmp->data[0] ==  READ_SIZE))
+		{
+			tmp->data[1] = 2;
+			*rd = 2;
 			return (sb);
+		}
 		*line = _calloc((tmp->data[0] - tmp->data[2]) + 1, sizeof(char));
 		memcpy(*line, &tmp->buff[tmp->data[2]],
 		((tmp->data[0] - tmp->data[2]) - end));
@@ -139,6 +142,8 @@ int validate(supabuffa **sb, int fd)
 	tmp = *sb;
 	while (tmp)
 	{
+		if (tmp->data[3] == fd && tmp->data[1] == 2)
+			return (-2);
 		if (tmp->data[3] == fd)
 			return (0);
 		prev = tmp;
@@ -208,7 +213,7 @@ char *_getline(const int fd)
 			return (line);
 		}
 	}
-	if (fd == -1 || line == NULL)
+	if ((fd == -1 && rd != 2) || (line == NULL && rd != 2))
 		sb = _free(sb, fd);
 	return (line);
 }
