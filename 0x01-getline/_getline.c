@@ -86,7 +86,7 @@ supabuffa *_free(supabuffa *sb, int fd)
  */
 supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 {
-	int end = 0;
+	int end = 1;
 	supabuffa *tmp = sb;
 
 	if (sb == NULL)
