@@ -1,76 +1,48 @@
 #include "_getline.h"
 
 /**
- * *_calloc - allocates memory for an array
- * @nmemb: number of elements in the array
- * @size: size of each element
+ * _realloc - reallocates a memory block using malloc and free
+ * @ptr: pointer to the memory previsouly allocated by malloc
+ * @size: size or new size of the new memory block
  *
- * Return: pointer to allocated memory
+ * Return: pointer to the newly allocated memory block
  */
-void *_calloc(unsigned int nmemb, unsigned int size)
+void *_realloc(void *ptr, unsigned int size)
 {
-	char *p = NULL;
-	unsigned int i = 0;
+	char *ptr1 = NULL;
 
-	if (nmemb == 0 || size == 0)
+	if (size == 0)
 		return (NULL);
-
-	p = malloc(nmemb * size);
-
-	for (i = 0; i < (nmemb * size); i++)
+	if (ptr == NULL)
 	{
-		*(p + i) = 0;
+		ptr = malloc(size);
+		if (ptr == NULL)
+			return (NULL);
+		memset(ptr, 0, size);
+		return (ptr);
 	}
-	return (p);
+	ptr1 = malloc(size);
+	if (ptr1 == NULL)
+		return (NULL);
+	memset(ptr1, 0, size);
+	ptr1 = memcpy(ptr1, ptr, size - 2);
+	free(ptr);
+return (ptr1);
 }
 
 /**
  * _free - free a pointer to structure
  * @sb: sb is a pointer to structure that stores all the flags in the stream.
- * @fd: Is the file descriptor to read
  *
  * Return: Nothing.
  */
-supabuffa *_free(supabuffa *sb, int fd)
+supabuffa *_free(supabuffa *sb)
 {
-	supabuffa *prev = NULL, *tmp = sb;
-
-	if (tmp && fd == -1)
+	if (sb)
 	{
-		while (tmp)
-		{
-			prev = tmp;
-			tmp = tmp->next;
-			if (prev->buff)
-				free(prev->buff);
-			if (prev->data)
-				free(prev->data);
-			if (prev)
-				free(prev), prev = NULL;
-		}
+		_free(sb->next);
+		free(sb);
 		sb = NULL;
-	}
-	if (tmp && fd != -1)
-	{
-		while (tmp->data[3] != fd)
-		{
-			prev = tmp;
-			tmp = tmp->next;
-		}
-		if (tmp->data[3] != fd)
-			return (NULL);
-		if (prev == NULL)
-		{
-			prev = tmp, tmp = tmp->next;
-			free(prev->buff), free(prev->data), free(prev), prev = NULL;
-			sb = tmp;
-		}
-		else
-		{
-			if (tmp->next)
-				prev->next = tmp->next;
-			free(tmp->buff), free(tmp->data), free(tmp), prev->next = NULL;
-		}
 	}
 	return (sb);
 }
@@ -86,44 +58,44 @@ supabuffa *_free(supabuffa *sb, int fd)
  */
 supabuffa *create_stream(supabuffa *sb, char **line, int fd, int *rd)
 {
-	int end = 1;
+	int new_line = 0;
 	supabuffa *tmp = sb;
 
-	if (sb == NULL)
-		return (NULL);
 	while (tmp->data[3] != fd)
 		tmp = tmp->next;
-
-	if (tmp->data[1] == 0)
+	while (1)
 	{
-		*rd = read(tmp->data[3], tmp->buff, READ_SIZE);
-		if (*rd == -1)
-			return (sb);
-		*rd = 0;
-		tmp->data[1] = 1;
-	}
-	if (tmp->data[1] == 1)
-	{
+		if (tmp->data[1] == 0)
+		{
+			*rd = read(tmp->data[3], tmp->buff, READ_SIZE);
+			if (*rd == -1)
+				return (sb);
+			if (*rd == 0)
+				break;
+		}
 		for (; tmp->data[0] < READ_SIZE; tmp->data[0]++)
 		{
 			if (tmp->buff[tmp->data[0]] == '\n')
 			{
-				end = 1;
-				tmp->data[0] += 1;
+				new_line = 1, tmp->data[0] += 1;
 				break;
 			}
 		}
-		if ((tmp->data[0] ==  READ_SIZE && tmp->data[2] == READ_SIZE) ||
-		(tmp->buff[tmp->data[2]] == '\0' && tmp->data[0] ==  READ_SIZE))
+		*line = _realloc(*line,
+		((tmp->data[0] + tmp->data[2] - tmp->data[1]) * sizeof(char))  + 1);
+		memcpy(&(*line)[tmp->data[2]], &tmp->buff[tmp->data[1]],
+		tmp->data[0] - new_line - tmp->data[1]);
+		tmp->data[2] += tmp->data[0] - tmp->data[1];
+		if (tmp->data[0] == READ_SIZE && tmp->buff[tmp->data[0] - 1] != '\n')
 		{
-			tmp->data[1] = 2;
-			*rd = 2;
-			return (sb);
+			memset(tmp->buff, 0, READ_SIZE);
+			tmp->data[0] = 0, tmp->data[1] = 0;
+			continue;
 		}
-		*line = _calloc((tmp->data[0] - tmp->data[2]) + 1, sizeof(char));
-		memcpy(*line, &tmp->buff[tmp->data[2]],
-		((tmp->data[0] - tmp->data[2]) - end));
-		tmp->data[2] = tmp->data[0];
+		if (!(new_line == 1 && tmp->data[0] != READ_SIZE && tmp->buff[tmp->data[0]]))
+			tmp->data[0] = 0;
+		tmp->data[1] = tmp->data[0], tmp->data[2] = 0;
+		break;
 	}
 	return (sb);
 }
@@ -142,25 +114,14 @@ int validate(supabuffa **sb, int fd)
 	tmp = *sb;
 	while (tmp)
 	{
-		if (tmp->data[3] == fd && tmp->data[1] == 2)
-			return (-2);
 		if (tmp->data[3] == fd)
 			return (0);
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	node = _calloc(1, sizeof(supabuffa));
+	node = _realloc(node, sizeof(supabuffa));
 	if (node == NULL)
 		return (fd);
-	node->buff = _calloc(READ_SIZE, sizeof(char));
-	if (node->buff == NULL)
-		return (fd);
-	node->data = malloc(sizeof(int) * 4);
-	if (node->data == NULL)
-		return (fd);
-	node->data[0] = 0;
-	node->data[1] = 0;
-	node->data[2] = 0;
 	node->data[3] = fd;
 	node->next = NULL;
 	prev->next = node;
@@ -180,28 +141,16 @@ char *_getline(const int fd)
 	char *line = NULL;
 	int rd = 0;
 
-	if (READ_SIZE < 0)
+	if (READ_SIZE <= 0)
 		return (NULL);
 	if (fd != -1)
 	{
 		if (!sb)
 		{
-			sb = _calloc(1, sizeof(supabuffa));
+			sb = _realloc(sb, sizeof(supabuffa));
 			if (sb == NULL)
 				return (NULL);
-			sb->buff = _calloc(READ_SIZE, sizeof(char));
-			if (sb->buff == NULL)
-			{
-				free(sb), sb = NULL;
-				return (NULL);
-			}
-			sb->data = malloc(sizeof(int) * 4);
-			if (sb->data == NULL)
-			{
-				free(sb->buff), free(sb);
-				return (NULL);
-			}
-			sb->data[0] = 0, sb->data[1] = 0, sb->data[2] = 0, sb->data[3] = fd;
+			sb->data[3] = fd;
 		}
 		else
 			rd = validate(&sb, fd);
@@ -209,11 +158,11 @@ char *_getline(const int fd)
 			sb = create_stream(sb, &line, fd, &rd);
 		if (rd == -1)
 		{
-			sb = _free(sb, rd);
+			sb = _free(sb);
 			return (line);
 		}
 	}
-	if ((fd == -1 && rd != 2) || (line == NULL && rd != 2))
-		sb = _free(sb, fd);
+	if (fd == -1)
+		sb = _free(sb);
 	return (line);
 }
