@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#define READ_SIZE 1024
+#define READ_SIZE 2
 
 /**
  * struct Superbuffer - Struct that stores all the flags in the stream.
@@ -16,8 +16,8 @@
  */
 typedef struct Superbuffer
 {
-	char *buff;
-	int *data;
+	char buff[READ_SIZE];
+	int data[4];
 	struct Superbuffer *next;
 } supabuffa;
 
