@@ -14,9 +14,9 @@
  */
 int main(void)
 {
-    int fd;
-    char *line;
-    int i;
+    int fd = 0;
+    char *line = NULL;
+    int i = 0;
 
     fd = open("files/zero", O_RDONLY);
     if (-1 == fd)
@@ -38,5 +38,6 @@ int main(void)
         free(line);
     }
     close(fd);
+    _getline(-1);
     return (EXIT_SUCCESS);
 }
