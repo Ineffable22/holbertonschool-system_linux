@@ -5,7 +5,8 @@ from sys import argv
 import os
 
 directory = "proc"
-msg = "Usage: ./search PID String_to_find String_to_replace"
+msg = """Usage:
+\tsudo python3 read_write_heap.py PID String_to_find String_to_replace"""
 
 try:
     pid = argv[1]
@@ -61,20 +62,26 @@ if heap == "":
 with open(cmd_line, "r") as fd:
     cmd = fd.read()
 
-new_string = new_string + (len(old_string) - len(new_string)) * " "
-with open(mem, "rb+") as fd:
-    fd.seek(start)
-    mem_field = fd.read(end - start)
-    try:
-        i = mem_field.find(old_string.encode('utf-8'))
-        if (i == -1):
-            print("'{}' string to find not found".format(old_string))
+# Replaces rest of the Old String with spaces.
+# new_string = new_string + (len(old_string) - len(new_string)) * " "
+try:
+    with open(mem, "rb+") as fd:
+        fd.seek(start)
+        mem_field = fd.read(end - start)
+        try:
+            i = mem_field.find(old_string.encode('utf-8'))
+            if (i == -1):
+                print("'{}' string to find not found".format(old_string))
+                exit(1)
+        except ValueError:
+            print("Not matching string")
             exit(1)
-    except ValueError:
-        print("Not matching string")
-        exit(1)
-    fd.seek(start + i)
-    fd.write(new_string.encode('utf-8'))
+        fd.seek(start + i)
+        fd.write(new_string.encode('utf-8'))
+except PermissionError as Error:
+    print("Error: {}". format(Error))
+    print(msg)
+    exit(1)
 
 heredoc = """
 [*] Command detected: {0}
