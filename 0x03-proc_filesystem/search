@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Search pid of process
+# Search pid of process and execute Python
 pid=$(ps aux | grep "${1}" | grep -Po "\d+" | head -n 1)
-sudo python3 test.py "${pid}" "${2}" "${3}"
+sudo python3 read_write_heap.py "${pid}" "${2}" "${3}"
