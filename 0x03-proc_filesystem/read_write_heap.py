@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-# Replaces the string being printed in a process
-
+""" Replaces the string being printed in a process """
 from sys import argv
 import os
 
-directory = "proc"
-msg = """Usage:
-\tsudo python3 read_write_heap.py PID String_to_find String_to_replace"""
+
+def print_error():
+    print("""Usage:
+    \tsudo python3 read_write_heap.py PID String_to_find String_to_replace""")
+    exit(1)
+
 
 try:
     pid = argv[1]
@@ -14,23 +16,20 @@ try:
     new_string = argv[3]
     if pid == "":
         print("PID not found")
-        print(msg)
-        exit(1)
+        print_error()
+
     if old_string == "":
         print("Insert string to find")
-        print(msg)
-        exit(1)
+        print_error()
     if new_string == "":
         print("Insert string to replace")
-        print(msg)
-        exit(1)
+        print_error()
 except IndexError as Error:
     print("Error: {}". format(Error))
-    print(msg)
-    exit(1)
+    print_error()
 
 
-filename = "/{}/{}".format(directory, pid)
+filename = "/proc/{}".format(pid)
 maps = filename + "/maps"
 mem = filename + "/mem"
 cmd_line = filename + "/cmdline"
@@ -80,8 +79,7 @@ try:
         fd.write(new_string.encode('utf-8'))
 except PermissionError as Error:
     print("Error: {}". format(Error))
-    print(msg)
-    exit(1)
+    print_error()
 
 heredoc = """
 [*] Command detected: {0}
