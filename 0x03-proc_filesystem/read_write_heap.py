@@ -5,23 +5,29 @@ from sys import argv
 import os
 
 directory = "proc"
-pid = argv[1]
-old_string = argv[2]
-new_string = argv[3]
 msg = "Usage: ./search PID String_to_find String_to_replace"
 
-if pid == "":
-    print("PID not found")
+try:
+    pid = argv[1]
+    old_string = argv[2]
+    new_string = argv[3]
+    if pid == "":
+        print("PID not found")
+        print(msg)
+        exit(1)
+    if old_string == "":
+        print("Insert string to find")
+        print(msg)
+        exit(1)
+    if new_string == "":
+        print("Insert string to replace")
+        print(msg)
+        exit(1)
+except IndexError as Error:
+    print("Error: {}". format(Error))
     print(msg)
     exit(1)
-if old_string == "":
-    print("Insert string to find")
-    print(msg)
-    exit(1)
-if new_string == "":
-    print("Insert string to replace")
-    print(msg)
-    exit(1)
+
 
 filename = "/{}/{}".format(directory, pid)
 maps = filename + "/maps"
@@ -44,7 +50,7 @@ try:
                 start = int(address[0], 16)
                 end = int(address[1], 16)
                 break
-except FileNotFoundError as e:
+except FileNotFoundError:
     print("PID not found")
     exit(1)
 
