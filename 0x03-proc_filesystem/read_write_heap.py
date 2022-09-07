@@ -12,6 +12,7 @@ def print_error():
 
 
 def search_replace():
+    """Replace"""
     if len(argv) < 4:
         print_error()
     try:
