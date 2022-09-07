@@ -15,10 +15,10 @@ def search_replace():
     if len(argv) < 4:
         print_error()
     try:
-        pid = intargv[1]
+        pid = int(argv[1])
         old_string = argv[2]
         new_string = argv[3]
-        if pid == "":
+        if pid <= 0:
             print("PID not found")
             print_error()
         if old_string == "":
