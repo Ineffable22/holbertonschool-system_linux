@@ -53,6 +53,9 @@ try:
 except FileNotFoundError:
     print("PID not found")
     exit(1)
+except IOError as Error:
+    print("Error: {}". format(Error))
+    print_error()
 
 if heap == "":
     print("Heap not found")
@@ -68,7 +71,7 @@ try:
         fd.seek(start)
         mem_field = fd.read(end - start)
         try:
-            i = mem_field.find(old_string.encode('utf-8'))
+            i = mem_field.find(old_string.encode('ASCII'))
             if (i == -1):
                 print("'{}' string to find not found".format(old_string))
                 exit(1)
@@ -76,13 +79,12 @@ try:
             print("Not matching string")
             exit(1)
         fd.seek(start + i)
-        fd.write(new_string.encode('utf-8'))
+        fd.write(new_string.encode('ASCII'))
 except PermissionError as Error:
     print("Error: {}". format(Error))
     print_error()
 
-heredoc = """
-[*] Command detected: {0}
+heredoc = """[*] Command detected: {0}
 [*] maps: {1}
 [*] mem: {2}
 [*] Found {3}:
