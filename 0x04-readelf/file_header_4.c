@@ -1,62 +1,6 @@
 #include "lib_elf.h"
 
 /**
- * start_program_headers - Identifies the start of program headers
- * @header: Pointer to the ELF header
- *
- * Return: Resulting string
- */
-char *start_program_headers(Elf64_Ehdr *header)
-{
-	if (header->e_phoff)
-		return (itoa(header->e_phoff, 10));
-	else
-		return ("0");
-}
-
-/**
- * start_section_headers - Identifies the start of section headers
- * @header: Pointer to the ELF header
- *
- * Return: Resulting string
- */
-char *start_section_headers(Elf64_Ehdr *header)
-{
-	if (header->e_shoff)
-		return (itoa(header->e_shoff, 10));
-	else
-		return ("0");
-}
-
-/**
- * flags - Identifies the flags
- * @header: Pointer to the ELF header
- *
- * Return: Resulting string
- */
-char *flags(Elf64_Ehdr *header)
-{
-	if (header->e_flags)
-		return (itoa(header->e_flags, 16));
-	else
-		return ("0");
-}
-
-/**
- * header_size - Identifies the size of this header
- * @header: Pointer to the ELF header
- *
- * Return: Resulting string
- */
-char *header_size(Elf64_Ehdr *header)
-{
-	if (header->e_ehsize)
-		return (itoa(header->e_ehsize, 10));
-	else
-		return ("0");
-}
-
-/**
  * program_header_size - Identifies the size of program headers
  * @header: Pointer to the ELF header
  *
@@ -68,4 +12,60 @@ char *program_header_size(Elf64_Ehdr *header)
 		return (itoa(header->e_phentsize, 10));
 	else
 		return ("0");
+}
+
+/**
+ * program_headers_number - Identifies the number of program headers
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *program_headers_number(Elf64_Ehdr *header)
+{
+	if (header->e_phnum < PN_XNUM)
+		return (itoa(header->e_phnum, 10));
+	else
+		return ("0");
+}
+
+/**
+ * section_headers_size - Identifies the size of section headers
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *section_headers_size(Elf64_Ehdr *header)
+{
+	if (header->e_shentsize)
+		return (itoa(header->e_shentsize, 10));
+	else
+		return ("0");
+}
+
+/**
+ * section_headers_number - Identifies the number of section headers
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *section_headers_number(Elf64_Ehdr *header)
+{
+	if (header->e_shnum)
+		return (itoa(header->e_shnum, 10));
+	else
+		return ("0");
+}
+
+/**
+ * section_headers_index - Identifies the section header string table index
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *section_headers_index(Elf64_Ehdr *header)
+{
+	if (header->e_shstrndx)
+		return (itoa(header->e_shstrndx, 10));
+	else
+		return ("0\n");
 }
