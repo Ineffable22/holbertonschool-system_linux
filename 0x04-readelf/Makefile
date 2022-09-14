@@ -32,7 +32,7 @@ SRC0 = file_header*.c holbie_tools.c
 NAME0 = 0-hreadelf
 
 # Task1
-SRC1 = section_header*.c holbie_tools.c
+SRC1 = section_header*.c file_header_*.c holbie_tools.c
 NAME1 = 1-hreadelf
 
 # Task2
