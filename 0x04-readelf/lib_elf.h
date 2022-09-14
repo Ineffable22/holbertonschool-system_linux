@@ -9,37 +9,34 @@
 
 /* -----  ----- */
 
-
-
-
-/* ----- file_header_1.c ----- */
+/* ----- file_header.c ----- */
 void file_header_1(Elf64_Ehdr *header);
 void file_header_2(Elf64_Ehdr *header);
 void printer_file_header(char *key, char *value, char type);
-void check_elf(Elf64_Ehdr *header);
 
-/* ----- file_header_2.c ----- */
+/* ----- file_header_1.c ----- */
+void check_elf(Elf64_Ehdr *header);
 void magic_number(Elf64_Ehdr *header);
 char *class_file(Elf64_Ehdr *header);
 char *data(Elf64_Ehdr *header);
 char *version_0(Elf64_Ehdr *header);
-char *os_abi(Elf64_Ehdr *header);
 
-/* ----- file_header_3.c ----- */
+/* ----- file_header_2.c ----- */
+char *os_abi(Elf64_Ehdr *header);
 char *abi_version(Elf64_Ehdr *header);
 char *type(Elf64_Ehdr *header);
 char *machine(Elf64_Ehdr *header);
 char *version_1(Elf64_Ehdr *header);
-char *point_address(Elf64_Ehdr *header);
 
-/* ----- file_header_4.c ----- */
+/* ----- file_header_3.c ----- */
+char *point_address(Elf64_Ehdr *header);
 char *start_program_headers(Elf64_Ehdr *header);
 char *start_section_headers(Elf64_Ehdr *header);
 char *flags(Elf64_Ehdr *header);
 char *header_size(Elf64_Ehdr *header);
-char *program_header_size(Elf64_Ehdr *header);
 
-/* ----- file_header_5.c ----- */
+/* ----- file_header_4.c ----- */
+char *program_header_size(Elf64_Ehdr *header);
 char *program_headers_number(Elf64_Ehdr *header);
 char *section_headers_size(Elf64_Ehdr *header);
 char *section_headers_number(Elf64_Ehdr *header);
