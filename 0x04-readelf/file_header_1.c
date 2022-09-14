@@ -37,15 +37,125 @@ int main(int argc, char **argv)
 		fprintf(stderr, "Can't read file %s\n", argv[1]);
 		exit(98);
 	}
-	check_elf(header);
-	osabi(header);
-	machine(header);
-	version(header);
-	number(header);
+
+	file_header_1(header);
+	file_header_2(header);
 	free(header);
 	return (0);
 }
 
+/**
+ * file_header_1 - Sends the function to validate
+ * @header: Pointer to the ELF header
+ *
+ * Return: Nothing
+ */
+void file_header_1(Elf64_Ehdr *header)
+{
+	char *str = NULL;
+
+	check_elf(header);
+
+	magic_number(header);
+
+	str = class_file(header);
+	printer_file_header("Class", str, 0);
+
+	str = data(header);
+	printer_file_header("Data", str, 0);
+
+	str = version_0(header);
+	printer_file_header("Version", str, 0);
+
+	str = os_abi(header);
+	printer_file_header("OS/ABI", str, 0);
+
+	str = abi_version(header);
+	printer_file_header("ABI Version", str, 0);
+
+	str = type(header);
+	printer_file_header("Type", str, 0);
+
+	str = machine(header);
+	printer_file_header("Machine", str, 0);
+
+	str = version_1(header);
+	printer_file_header("Version", str, 1);
+
+	str = point_address(header);
+	printer_file_header("Entry Point Address", str, 1);
+
+	str = start_program_headers(header);
+	printer_file_header("Start of program headers", str, 2);
+
+	str = start_section_headers(header);
+	printer_file_header("Start of section headers", str, 2);
+}
+
+/**
+ * file_header_2 - Sends the function to validate
+ * @header: Pointer to the ELF header
+ *
+ * Return: Nothing
+ */
+void file_header_2(Elf64_Ehdr *header)
+{
+	char *str = NULL;
+
+	str = flags(header);
+	printer_file_header("Flags", str, 1);
+
+	str = header_size(header);
+	printer_file_header("Size of this header", str, 3);
+
+	str = program_header_size(header);
+	printer_file_header("Size of program headers", str, 3);
+
+	str = program_headers_number(header);
+	printer_file_header("Number of program headers", str, 0);
+
+	str = section_headers_size(header);
+	printer_file_header("Size of section headers", str, 3);
+
+	str = section_headers_number(header);
+	printer_file_header("Number of section headers", str, 0);
+
+	str = section_headers_index(header);
+	printer_file_header("Section header string table index", str, 0);
+}
+
+/**
+ * printer_file_header - Prints in file header order format
+ * @key: Key to insert
+ * @value: Value to insert
+ * @type: Type of format to add
+ *
+ * Return: Nothing
+ */
+void printer_file_header(char *key, char *value, char type)
+{
+	int i = 0;
+
+	putchar(0x20);
+	putchar(0x20);
+	printf("%s", key);
+	putchar(0x3a);
+	for (i = 34 - _strlen(key); i > 0; i--)
+	{
+		putchar(0x20);
+	}
+	if (type == 1)
+	{
+		putchar(0x30);
+		putchar(0x78);
+	}
+	printf("%s", value);
+	if (type == 2)
+		printf(" (bytes into file)");
+	if (type == 3)
+		printf(" (bytes)");
+	putchar(0xa);
+}
 
 /**
  * check_elf - Checks if file is ELF file
@@ -55,8 +165,6 @@ int main(int argc, char **argv)
  */
 void check_elf(Elf64_Ehdr *header)
 {
-	int i = 0;
-
 	if (header->e_ident[EI_MAG0] != 0x7f ||
 	    header->e_ident[EI_MAG1] != 'E' ||
 	    header->e_ident[EI_MAG2] != 'L' ||
@@ -66,121 +174,4 @@ void check_elf(Elf64_Ehdr *header)
 		printf("magic bytes at the start\n");
 		exit(1);
 	}
-	printf("ELF Header:\n");
-	printf("  Magic:   ");
-	for (i = 0; i != EI_NIDENT; i++)
-	{
-		printf("%02x ", header->e_ident[i]);
-	}
-	putchar(0xa);
-	if (header->e_ident[EI_CLASS] == ELFCLASS32)
-		printf("  Class:                             ELF32\n");
-	if (header->e_ident[EI_CLASS] == ELFCLASS64)
-		printf("  Class:                             ELF64\n");
-	if (header->e_ident[EI_DATA] == ELFDATA2LSB)
-	{
-		printf("  Data:                              2's complement,");
-		printf("little-endian\n");
-	}
-	if (header->e_ident[EI_DATA] == ELFDATA2MSB)
-		printf("  Data:                              2's complement, big-endian\n");
-
-	if (header->e_ident[EI_VERSION] == EV_NONE)
-		printf("  Version:                           Invalid version\n");
-	if (header->e_ident[EI_VERSION] == EV_CURRENT)
-		printf("  Version:                           1 (current)\n");
-}
-
-/**
- * osabi - Identifies the operating system
- * @header: Pointer to the ELF header
- *
- * Return: Nothing
- */
-void osabi(Elf64_Ehdr *header)
-{
-	if (header->e_ident[EI_OSABI] == ELFOSABI_NONE)
-		printf("  OS/ABI:                            UNIX System V\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_HPUX)
-		printf("  OS/ABI:                            HP-UX\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_NETBSD)
-		printf("  OS/ABI:                            NetBSD\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_LINUX)
-		printf("  OS/ABI:                            Linux\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_SOLARIS)
-		printf("  OS/ABI:                            Solaris\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_IRIX)
-		printf("  OS/ABI:                            IRIX\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_FREEBSD)
-		printf("  OS/ABI:                            FreeBSD\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_TRU64)
-		printf("  OS/ABI:                            TRU64 UNIX\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_ARM)
-		printf("  OS/ABI:                            ARM architecture\n");
-	if (header->e_ident[EI_OSABI] == ELFOSABI_STANDALONE)
-		printf("  OS/ABI:                            Stand-alone (embedded)\n");
-	if (header->e_ident[EI_ABIVERSION] == 0)
-		printf("  ABI Version:                       0\n");
-	if (header->e_ident[EI_ABIVERSION] == 1)
-		printf("  ABI Version:                       1\n");
-
-	if (header->e_type == ET_NONE)
-		printf("  Type:                              NONE (An unknown type)\n");
-	if (header->e_type == ET_REL)
-		printf("  Type:                              REL (A relocatable file)\n");
-	if (header->e_type == ET_EXEC)
-		printf("  Type:                              EXEC (An executable file)\n");
-	if (header->e_type == ET_DYN)
-		printf("  Type:                              DYN (A shared object)\n");
-	if (header->e_type == ET_CORE)
-		printf("  Type:                              CORE (A core file)\n");
-}
-
-/**
- * machine - Identifies the type of machine
- * @header: Pointer to the ELF header
- *
- * Return: Nothing
- */
-void machine(Elf64_Ehdr *header)
-{
-	printf("  Machine:                           ");
-	if (header->e_machine == EM_NONE)
-		printf("An unknown machine\n");
-	if (header->e_machine == EM_M32)
-		printf("AT&T WE 32100\n");
-	if (header->e_machine == EM_SPARC)
-		printf("Sun Microsystems SPARC\n");
-	if (header->e_machine == EM_386)
-		printf("Intel 80386\n");
-	if (header->e_machine == EM_68K)
-		printf("Motorola 68000\n");
-	if (header->e_machine == EM_88K)
-		printf("Motorola 88000\n");
-	if (header->e_machine == EM_860)
-		printf("Intel 80860\n");
-	if (header->e_machine == EM_MIPS)
-		printf("MIPS RS3000 (big-endian only)\n");
-	if (header->e_machine == EM_PARISC)
-		printf("HP/PA\n");
-	if (header->e_machine == EM_SPARC32PLUS)
-		printf("SPARC with enhanced instruction set\n");
-	if (header->e_machine == EM_PPC)
-		printf("PowerPC\n");
-	if (header->e_machine == EM_PPC64)
-		printf("PowerPC 64-bit\n");
-	if (header->e_machine == EM_S390)
-		printf("IBM S/390\n");
-	if (header->e_machine == EM_ARM)
-		printf("Advanced RISC Machines\n");
-	if (header->e_machine == EM_SH)
-		printf("Renesas SuperH\n");
-	if (header->e_machine == EM_SPARCV9)
-		printf("SPARC v9 64-bit\n");
-	if (header->e_machine == EM_IA_64)
-		printf("Intel Itanium\n");
-	if (header->e_machine == EM_X86_64)
-		printf("Advanced Micro Devices x86-64\n");
-	if (header->e_machine == EM_VAX)
-		printf("DEC Vax\n");
 }
