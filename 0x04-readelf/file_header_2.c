@@ -1,84 +1,96 @@
 #include "lib_elf.h"
 
 /**
- * version - Identifies the version and address
+ * magic_number - Prints the magic number
  * @header: Pointer to the ELF header
  *
  * Return: Nothing
  */
-void version(Elf64_Ehdr *header)
+void magic_number(Elf64_Ehdr *header)
 {
-	printf("  Version:                           ");
-	if (header->e_version == EV_NONE)
-		printf("0x0\n");
-	if (header->e_version == EV_CURRENT)
-		printf("0x1\n");
+	int i = 0;
 
-	if (header->e_entry)
-		printf("  Entry Point Address:               0x%lx\n", header->e_entry);
-	else
-		printf("  Entry Point Address:               0x0\n");
-
-	printf("  Start of program headers:          ");
-	if (header->e_phoff)
-		printf("%ld (bytes into file)\n", header->e_phoff);
-	else
-		printf("0\n");
-
-	printf("  Start of section headers:          ");
-	if (header->e_shoff)
-		printf("%ld (bytes into file)\n", header->e_shoff);
-	else
-		printf("0\n");
-
-	printf("  Flags:                             ");
-	if (header->e_flags)
-		printf("0x%x (bytes into file)\n", header->e_flags);
-	else
-		printf("0x0\n");
-
-	printf("  Size of this header:               ");
-	if (header->e_ehsize)
-		printf("%d (bytes)\n", header->e_ehsize);
-	else
-		printf("0\n");
-
-	printf("  Size of program headers:           ");
-	if (header->e_phentsize)
-		printf("%d (bytes)\n", header->e_phentsize);
-	else
-		printf("0\n");
+	printf("ELF Header:\n");
+	printf("  Magic:   ");
+	for (i = 0; i != EI_NIDENT; i++)
+		printf("%02x ", header->e_ident[i]);
+	putchar(0xa);
 }
 
 /**
- * number - Identifies the number or size of headers
+ * class_file - Checks the class of the file
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *class_file(Elf64_Ehdr *header)
+{
+	if (header->e_ident[EI_CLASS] == ELFCLASS32)
+		return ("ELF32");
+	else if (header->e_ident[EI_CLASS] == ELFCLASS64)
+		return ("ELF64");
+	else /* ELFCLASSNONE */
+		return ("invalid");
+}
+
+/**
+ * data - Checks the data of the file
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *data(Elf64_Ehdr *header)
+{
+	if (header->e_ident[EI_DATA] == ELFDATA2LSB)
+		return ("2's complement, little endian");
+
+	else if (header->e_ident[EI_DATA] == ELFDATA2MSB)
+		return ("2's complement, big endian");
+	else /* ELFDATANONE */
+		return ("Unknown data format");
+}
+
+/**
+ * version_0 - Checks the version of the file
+ * @header: Pointer to the ELF header
+ *
+ * Return: Resulting string
+ */
+char *version_0(Elf64_Ehdr *header)
+{
+	if (header->e_ident[EI_VERSION] == EV_CURRENT)
+		return ("1 (current)");
+	else /* (header->e_ident[EI_VERSION] == EV_NONE) */
+		return ("Invalid version");
+}
+
+/**
+ * os_abi - Identifies the operating system
  * @header: Pointer to the ELF header
  *
  * Return: Nothing
  */
-void number(Elf64_Ehdr *header)
+char *os_abi(Elf64_Ehdr *header)
 {
-	printf("  Number of program headers:         ");
-	if (header->e_phnum < PN_XNUM)
-		printf("%d\n", header->e_phnum);
-	else
-		printf("0\n");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_HPUX)
+		return ("HP-UX");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_NETBSD)
+		return ("NetBSD");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_LINUX)
+		return ("Linux");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_SOLARIS)
+		return ("Solaris");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_IRIX)
+		return ("IRIX");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_FREEBSD)
+		return ("FreeBSD");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_TRU64)
+		return ("TRU64 UNIX");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_ARM)
+		return ("ARM architecture");
+	if (header->e_ident[EI_OSABI] == ELFOSABI_STANDALONE)
+		return ("Stand-alone (embedded)");
 
-	printf("  Size of section headers:           ");
-	if (header->e_shentsize)
-		printf("%d (bytes)\n", header->e_shentsize);
-	else
-		printf("0 (bytes)\n");
-
-	printf("  Number of section headers:         ");
-	if (header->e_shnum)
-		printf("%d\n", header->e_shnum);
-	else
-		printf("0\n");
-
-	printf("  Section header string table index: ");
-	if (header->e_shstrndx)
-		printf("%d\n", header->e_shstrndx);
-	else
-		printf("0\n");
+	/* EI_OSABI == ELFOSABI_NONE || ELFOSABI_SYSV */
+	return ("UNIX - System V");
 }
