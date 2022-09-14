@@ -28,19 +28,19 @@ EFLAG2 = -W -l
 EFLAG3 = -W -s
 
 # Task0
-SRC0 = file_header_1.c file_header_2.c
+SRC0 = file_header*.c holbie_tools.c
 NAME0 = 0-hreadelf
 
 # Task1
-SRC1 = section_header_1.c
+SRC1 = section_header*.c holbie_tools.c
 NAME1 = 1-hreadelf
 
 # Task2
-SRC2 = program_header_1.c
+SRC2 = program_header*.c holbie_tools.c
 NAME2 = 2-hreadelf
 
 # Task3
-SRC3 = section_header_1.c
+SRC3 = section_header*.c holbie_tools.c
 NAME3 = 100-hreadelf
 
 # Optional ARGS="ELF file"
