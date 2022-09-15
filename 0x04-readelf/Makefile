@@ -36,7 +36,7 @@ SRC1 = section_header*.c file_header_*.c holbie_tools.c
 NAME1 = 1-hreadelf
 
 # Task2
-SRC2 = program_header*.c holbie_tools.c
+SRC2 = program_header*.c file_header_*.c holbie_tools.c
 NAME2 = 2-hreadelf
 
 # Task3
@@ -86,7 +86,7 @@ test3: 100-hreadelf
 # Tools
 val: 0-hreadelf 1-hreadelf 2-hreadelf 100-hreadelf
 	$(VAL) $(VFLAGS) ./$(ARGS)
-gdb: 0-hreadelf 1-hreadelf 2-hreadelf 100-hreadelf
+gdb: 0-hreadelf 1-hreadelf 2-hreadelf # 100-hreadelf
 	$(GDB) ./$(ARGS)
 betty:
 	$(BETTY) $(SRC) $(HEADER)
