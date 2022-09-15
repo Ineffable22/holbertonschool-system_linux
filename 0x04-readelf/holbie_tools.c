@@ -54,3 +54,37 @@ char *itoa(int val, int base)
 
 	return (&buf[i + 1]);
 }
+
+/**
+ * process_ehdr - Malloc pointer and open and read file
+ * @header: Pointer to the ELF header
+ * @filename: name of the file to read
+ *
+ * Return: File descriptor
+ */
+int process_ehdr(Elf64_Ehdr **header, char *filename)
+{
+	Elf64_Ehdr size;
+	int fd = 0, rd = 0;
+
+	(*header) = malloc(sizeof(size));
+	if ((*header) == NULL)
+	{
+		fprintf(stderr, "Can't malloc\n");
+		exit(98);
+	}
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		fprintf(stderr, "Can't open file %s\n", filename);
+		exit(98);
+	}
+	rd = read(fd, (*header), sizeof(size));
+	if (rd == -1)
+	{
+		fprintf(stderr, "Can't read file %s\n", filename);
+		exit(98);
+	}
+	return (fd);
+}
+

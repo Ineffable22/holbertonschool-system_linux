@@ -10,37 +10,20 @@
  */
 int main(int argc, char **argv)
 {
-	Elf64_Ehdr *header = NULL, size;
-	int fd = 0, rd = 0;
+	Elf64_Ehdr *header = NULL;
+	int fd = 0;
 
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: 0-hreadelf elf_filename\n");
 		exit(98);
 	}
-
-	header = malloc(sizeof(size));
-	if (header == NULL)
-	{
-		fprintf(stderr, "Can't malloc\n");
-		exit(98);
-	}
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		fprintf(stderr, "Can't open file %s\n", argv[1]);
-		exit(98);
-	}
-	rd = read(fd, header, sizeof(size));
-	if (rd == -1)
-	{
-		fprintf(stderr, "Can't read file %s\n", argv[1]);
-		exit(98);
-	}
+	fd = process_ehdr(&header, argv[1]);
 
 	file_header_1(header);
 	file_header_2(header);
 	free(header);
+	close(fd);
 	return (0);
 }
 
