@@ -51,7 +51,7 @@ void section_header_2(Elf64_Shdr *shdr, Elf64_Ehdr *ehdr, int len, int fd);
 int program_header_1(Elf64_Ehdr *header);
 void program_header_2(Elf64_Phdr *phdr, int len);
 void program_header_3(Elf64_Shdr *shdr, int len, int fd, Elf64_Ehdr *ehdr);
-char * program_header_name(char *num);
+char *program_header_name(char *num);
 void printer_program_header(Elf64_Phdr phdr);
 char *ptype(int type);
 
