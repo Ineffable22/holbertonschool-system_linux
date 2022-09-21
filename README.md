@@ -1,4 +1,4 @@
-# System programming & Algorithm - Linux programming
+#  System programming & Algorithm - Linux programming
 
 ## Directories
 ### [0x00-ls](https://github.com/Ineffable22/holbertonschool-system_linux/tree/main/0x00-ls)
