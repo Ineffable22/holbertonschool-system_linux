@@ -20,12 +20,11 @@ loop:
 	jmp	loop
 
 greater:
-	sub     al, cl
+	mov	rax, 0x0
 	jmp	end
 
 less:
-	sub	al, cl
-	sub	rax, 256
+	mov	rax, -0x0
 	jmp	end
 
 compare:
