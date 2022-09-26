@@ -7,10 +7,10 @@ asm_strchr:
 	mov	rax, 0x0
 
 loop:
-	cmp	byte [rdi], 0x0
-	je	end
 	cmp	byte [rdi], sil
 	je	success
+	cmp	byte [rdi], 0x0
+	je	end
 	inc	rdi
 	jmp	loop
 
