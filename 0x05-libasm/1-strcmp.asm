@@ -11,9 +11,10 @@ loop:
 	mov	rdx, rsi
 	movzx 	eax, byte [rax]
 	movzx 	edx, byte [rdx]
+	cmp	al, 0x0
+	je	compare
 	cmp	al, dl
-	jg	greater
-	jl	less
+	jne	compare
 	inc	rdi
 	inc	rsi
 	jmp	loop
