@@ -20,7 +20,7 @@ loop:
 	jmp	loop
 
 greater:
-	mov	rax, 0x0
+	mov	rax, 0x1
 	jmp	end
 
 less:
