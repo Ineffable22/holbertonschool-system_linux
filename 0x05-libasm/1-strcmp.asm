@@ -4,7 +4,6 @@ BITS 64
 asm_strcmp:
 	push	rbp
 	mov	rbp, rsp
-	push	rdx
 
 loop:
 	movzx 	eax, byte [rdi]
@@ -32,7 +31,6 @@ compare:
 	mov	rax, 0x0
 
 end:
-	pop	rdx
 	mov	rsp, rbp
 	pop	rbp
 	ret
