@@ -29,7 +29,7 @@ greater:
 less:
 	mov	rax, -0x1
 	jmp	end
-	
+
 success:
 	mov	rax, 0x0
 
