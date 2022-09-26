@@ -24,7 +24,7 @@ greater:
 	jmp	end
 
 less:
-	mov	rax, -0x0
+	mov	rax, -0x1
 	jmp	end
 
 compare:
