@@ -7,8 +7,10 @@ asm_strcmp:
 	push	rdx
 
 loop:
-	movzx 	eax, byte [rdi]
-	movzx 	edx, byte [rsi]
+	mov	rax, rdi
+	mov	rdx, rsi
+	movzx 	eax, byte [rax]
+	movzx 	edx, byte [rdx]
 	cmp	al, 0x0
 	je	success
 	cmp	al, dl
