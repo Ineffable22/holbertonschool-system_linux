@@ -11,16 +11,12 @@ loop:
 	mov	rdx, rsi
 	movzx 	eax, byte [rax]
 	movzx 	edx, byte [rdx]
-	cmp	al, 0x0
-	je	success
 	cmp	al, dl
-	jne	noequal
+	jg	greater
+	jl	less
 	inc	rdi
 	inc	rsi
 	jmp	loop
-
-noequal:
-	jl	less
 
 greater:
 	mov	rax, 0x1
@@ -30,7 +26,10 @@ less:
 	mov	rax, -0x1
 	jmp	end
 
-success:
+compare:
+	cmp	al, dl
+	jg	greater
+	jl	less
 	mov	rax, 0x0
 
 end:
