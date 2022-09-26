@@ -16,7 +16,7 @@ loop:
 	inc	rdi
 	inc	rsi
 	dec	edx
-	jz	compare
+	jz	success
 	jmp	loop
 
 greater:
@@ -32,6 +32,8 @@ compare:
 	cmp	al, cl
 	jg	greater
 	jl	less
+
+success:
 	mov	rax, 0x0
 
 end:
