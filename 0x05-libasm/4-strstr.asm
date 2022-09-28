@@ -4,15 +4,14 @@ BITS 64
 asm_strstr:
 	push	rbp
 	mov	rbp, rsp
-	cmp	byte [rsi], 0x0
-	je	validate
+	movzx	ecx, byte [rsi]
+	cmp	cl, 0x0
+	je	haystack
 
 loop:
 	movzx	edx, byte [rdi]
 	movzx	ecx, byte [rsi]
 	cmp	dl, 0x0
-	je	fail
-	cmp	cl, 0x0
 	je	fail
 	cmp	dl, cl
 	je	send
@@ -22,7 +21,6 @@ loop:
 send:
 	mov	rdx, rdi
 	mov	rcx, rsi
-	jmp	loop2
 
 loop2:
 	movzx	eax, byte [rdi]
@@ -42,6 +40,10 @@ retrn:
 	mov	rsi, rcx
 	inc	rdi
 	jmp	loop
+
+haystack:
+	mov	rax, rdi
+	jmp	end
 
 validate:
 	mov	rax, rdx
