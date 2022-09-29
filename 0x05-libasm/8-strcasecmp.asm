@@ -11,22 +11,26 @@ compare:
 	cmp	al, 0x0
 	je	success
 	cmp	al, dl
-	jne	cmp
+	jne	is_alpha
 
 increment:
 	inc	rdi
 	inc	rsi
 	jmp	compare
 
-cmp:
+is_alpha:
 	cmp	al, 0x41
-	jl	end
+	jl	fail
 	cmp	al, 0x5A
 	jle	upper
 	cmp	al, 0x61
-	jl	end
+	jl	fail
 	cmp	al, 0x7A
 	jle	lower
+	jmp	fail
+
+fail:
+	sub	al, dl
 	jmp	end
 
 upper:
