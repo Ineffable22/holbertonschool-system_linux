@@ -46,6 +46,8 @@ haystack:
 	jmp	end
 
 validate:
+	cmp	bl, 0x0
+	jne	fail
 	mov	rax, rdx
 	jmp	end
 
