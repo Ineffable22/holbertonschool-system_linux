@@ -7,7 +7,7 @@ asm_memcpy:
 	push	rax
 
 loop:
-	cmp	dl, 0x0
+	test	rdx, rdx
 	je	end
 	mov	al, byte [rsi]
 	mov	byte [rdi], al
