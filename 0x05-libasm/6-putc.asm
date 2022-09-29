@@ -4,7 +4,7 @@ BITS 64
 asm_putc:
 	push	rbp
 	mov	rbp, rsp
-	
+
 print:
 	push	rdi
 	mov	rax, 1
