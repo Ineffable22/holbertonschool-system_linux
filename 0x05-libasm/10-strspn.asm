@@ -20,8 +20,6 @@ loop:
 
 found:
 	inc	rax
-
-not_found:
 	inc	rdi
 	mov	rsi, rcx
 	jmp	loop
