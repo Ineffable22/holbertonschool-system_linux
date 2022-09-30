@@ -6,19 +6,16 @@ asm_strcasecmp:
 	mov	rbp, rsp
 
 compare:
-	mov	al, byte [rdi]
-	mov	dl, byte [rsi]
+	movzx	eax, byte [rdi]
+	movzx	ecx, byte [rdi]
+	movzx	edx, byte [rsi]
+
 	cmp	al, 0x0
 	je	success
 	cmp	al, dl
-	jne	is_alpha
+	je	increment
 
-increment:
-	inc	rdi
-	inc	rsi
-	jmp	compare
-
-is_alpha:
+	sub	cl, dl
 	cmp	al, 0x41
 	jl	fail
 	cmp	al, 0x5A
@@ -29,21 +26,32 @@ is_alpha:
 	jle	lower
 	jmp	fail
 
+increment:
+	inc	rdi
+	inc	rsi
+	jmp	compare
+
 fail:
-	sub	al, dl
+	cmp	al, dl
+	jl	less
+	mov	al, cl
+	jmp	end
+
+less:
+	mov	al, cl
+	neg	al
+	imul	eax, -1
 	jmp	end
 
 upper:
-	sub	al, dl
-	cmp	al, -0x20
+	cmp	cl, -0x20
 	je	increment
-	jmp	end
+	jmp	fail
 
 lower:
-	sub	al, dl
-	cmp	al, 0x20
+	cmp	cl, 0x20
 	je	increment
-	jmp	end
+	jmp	fail
 
 success:
 	cmp	dl, 0x0
