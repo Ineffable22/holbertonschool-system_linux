@@ -27,7 +27,7 @@ void all_in_one(void)
 	int i = 0;
 
 	act.sa_sigaction = handle_all_signal;
-	for (i = 1; i < SIGRTMIN; i++)
+	for (; i <= SIGRTMAX; i++)
 	{
 		if (i != SIGKILL && i != SIGSTOP)
 			if (sigaction(i, &act, NULL) == -1)
