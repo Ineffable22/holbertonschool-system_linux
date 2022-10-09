@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# kill process
+
+a=$(ps aux | grep ${1} | cut -d " " -f 3 | tr '\n' ' ')
+kill -9 $a
