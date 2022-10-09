@@ -1,14 +1,15 @@
 #include "signals.h"
 
 /**
- * sigint - Prints when signal is called
+ * handle_sigint - Prints when signal is called
  * @signum: Signal number that was caught
  *
  * Return: Nothing
  */
-void sigint(int signum)
+void handle_sigint(int signum)
 {
 	printf("Gotcha! [%d]\n", signum);
+	fflush(stdout);
 }
 
 /**
@@ -18,7 +19,7 @@ void sigint(int signum)
  */
 int handle_signal(void)
 {
-	if (signal(SIGINT, sigint) == SIG_ERR)
+	if (signal(SIGINT, handle_sigint) == SIG_ERR)
 		return (-1);
 	return (0);
 }
