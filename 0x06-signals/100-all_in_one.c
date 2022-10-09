@@ -30,7 +30,6 @@ void all_in_one(void)
 	for (; i < SIGRTMIN; i++)
 	{
 		if (i != SIGKILL && i != SIGSTOP)
-			if (sigaction(i, &act, NULL) == -1)
-				return;
+			sigaction(i, &act, NULL);
 	}
 }
