@@ -26,6 +26,7 @@ void all_in_one(void)
 	struct sigaction act;
 	int i = 1;
 
+	act.sa_flags |= SA_SIGINFO;
 	act.sa_sigaction = handle_all_signal;
 	for (; i < SIGRTMIN; i++)
 	{
