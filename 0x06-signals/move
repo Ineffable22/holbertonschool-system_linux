@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# move files
+
+cp -r * /mnt/e/Holberton/c16/data/signal/
