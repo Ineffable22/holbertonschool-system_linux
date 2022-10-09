@@ -28,5 +28,5 @@ int trace_signal_sender(void)
 	struct sigaction act;
 
 	act.sa_sigaction = handle_sigquit;
-	return (sigaction(SIGQUIT, &act, NULL) == -1);
+	return (sigaction(SIGQUIT, &act, NULL));
 }
