@@ -24,7 +24,7 @@ void handle_all_signal(int sig, siginfo_t *info, void *ucontext)
 void all_in_one(void)
 {
 	struct sigaction act;
-	int i = 0;
+	int i = 1;
 
 	act.sa_sigaction = handle_all_signal;
 	for (; i <= SIGRTMAX; i++)
