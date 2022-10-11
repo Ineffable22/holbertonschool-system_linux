@@ -1,7 +1,5 @@
 # 0x06-signals
 
-## Description:
-
 # Files
 
 ### 0. Handle signal
