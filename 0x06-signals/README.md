@@ -1,11 +1,11 @@
-# 0x06. C - Signals
+# 0x06-signals
 
 ## Description:
 
 # Files
 
 ### 0. Handle signal
-### [0-handle_signal.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/0-handle_signal.c)
+### [0-handle_signal.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/0-handle_signal.c)
 
 ```C
 alex@~/0x06-signals$ cat 0-main.c
@@ -58,7 +58,7 @@ alex@~/0x06-signals$
 ```
 
 ### 1. Current handler - signal
-### [1-current_handler_signal.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/1-current_handler_signal.c)
+### [1-current_handler_signal.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/1-current_handler_signal.c)
 
 ```C
 alex@~/0x06-signals$ cat 1-main.c 
@@ -119,7 +119,7 @@ alex@~/0x06-signals$
 ```
 
 ### 2. Gotta catch them all
-### [2-handle_sigaction.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/2-handle_sigaction.c)
+### [2-handle_sigaction.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/2-handle_sigaction.c)
 
 ```C
 alex@~/0x06-signals$ cat 2-main.c 
@@ -172,7 +172,7 @@ alex@~/0x06-signals$
 ```
 
 ### 3. Current handler - sigaction
-### [3-current_handler_sigaction.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/3-current_handler_sigaction.c)
+### [3-current_handler_sigaction.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/3-current_handler_sigaction.c)
 
 ```C
 alex@~/0x06-signals$ cat 3-main.c 
@@ -235,7 +235,7 @@ alex@~/0x06-signals$
 ```
 
 ### 4. Who said that?!
-### [4-trace_signal_sender.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/4-trace_signal_sender.c)
+### [4-trace_signal_sender.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/4-trace_signal_sender.c)
 
 ```C
 alex@~/0x06-signals$ cat 4-main.c
@@ -289,7 +289,7 @@ alex@~/0x06-signals$
 ```
 
 ### 5. Description
-### [5-signal_describe.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/5-signal_describe.c)
+### [5-signal_describe.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/5-signal_describe.c)
 
 ```C
 alex@~/0x06-signals$ gcc -Wall -Wextra -Werror -pedantic 5-signal_describe.c -o 5-signal_describe
@@ -314,7 +314,7 @@ alex@~/0x06-signals$
 ```
 
 ### 6. Catch a single time
-### [6-suspend.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/6-suspend.c)
+### [6-suspend.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/6-suspend.c)
 
 ```C
 alex@~/0x06-signals$ gcc -Wall -Wextra -Werror -pedantic 6-suspend.c -o 6-suspend
@@ -328,7 +328,7 @@ alex@~/0x06-signals$
 ```
 
 ### 7. Sending a signal
-### [7-signal_send.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/7-signal_send.c)
+### [7-signal_send.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/7-signal_send.c)
 
 ```C
 alex@~/0x06-signals$ cat 7-main.c
@@ -375,7 +375,7 @@ alex@~/0x06-signals$
 ```
 
 ### 8. Sending a signal in a shell
-### [8-signal_send.sh](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/8-signal_send.sh)
+### [8-signal_send.sh](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/8-signal_send.sh)
 
 ```C
 alex@~/0x06-signals$ gcc -Wall -Wextra -Werror -pedantic 7-signal_send.c -o 7-signal_send
@@ -387,7 +387,7 @@ alex@~/0x06-signals$
 ```
 
 ### 9. Catch with sh
-### [9-handle_signal.sh](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/9-handle_signal.sh)
+### [9-handle_signal.sh](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/9-handle_signal.sh)
 
 ```C
 alex@~/0x06-signals$ cat 8-main.c
@@ -431,7 +431,7 @@ alex@~/0x06-signals$
 ```
 
 ### 10. Does it exist?
-### [10-pid_exist.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/10-pid_exist.c)
+### [10-pid_exist.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/10-pid_exist.c)
 
 ```C
 alex@~/0x06-signals$ sh ./8-signal_send.sh
@@ -442,7 +442,7 @@ alex@~/0x06-signals$
 ```
 
 ### 11. Blog post
-### [100-all_in_one.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/100-all_in_one.c)
+### [100-all_in_one.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/100-all_in_one.c)
 
 ```C
 alex@~/0x06-signals$ cat 9-main.sh
@@ -486,7 +486,7 @@ alex@~/0x06-signals$
 ```
 
 ### 12. I'm saying it's unkillable.
-### [101-sigset_init.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/101-sigset_init.c)
+### [101-sigset_init.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/101-sigset_init.c)
 
 ```C
 alex@~/0x06-signals$ cat 10-main.c 
@@ -539,7 +539,7 @@ alex@~/0x06-signals$
 ```
 
 ### 13. Sigset
-### [102-signals_block.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/102-signals_block.c)
+### [102-signals_block.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/102-signals_block.c)
 
 ```C
 alex@~/0x06-signals$ cat 100-main.c
@@ -609,7 +609,7 @@ alex@~/0x06-signals$
 ```
 
 ### 14. Block signals
-### [103-signals_unblock.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/103-signals_unblock.c)
+### [103-signals_unblock.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/103-signals_unblock.c)
 
 ```C
 alex@~/0x06-signals$ cat 101-main.c
@@ -677,7 +677,7 @@ alex@~/0x06-signals$
 ```
 
 ### 15. Unblock signals
-### [104-handle_pending.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-c-signals/104-handle_pending.c)
+### [104-handle_pending.c](https://github.com/Ineffable22/holbertonschool-system_linux/blob/main/0x06-signals/104-handle_pending.c)
 
 ```C
 alex@~/0x06-signals$ cat 102-main.c
