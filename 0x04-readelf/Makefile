@@ -1,14 +1,15 @@
 # GNU Compiler Collection
 CC = gcc
-# Debugging memory problems and program performance
-VAL = valgrind
-# GNU Debugger
-GDB = gdb
-
 # C flags
 CFLAGS = -Wall -Werror -Wextra -pedantic
+
+# GNU Debugger
+GDB = gdb
 # GDB flag
 GFLAG = -g
+
+# Debugging memory problems and program performance
+VAL = valgrind
 # Valgrind flags
 VFLAGS = --tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all -s
 
@@ -21,6 +22,7 @@ HEADER = *.h
 
 # Command readelf
 RELF = readelf
+ELF_FILE = a.out
 # readelf flags
 EFLAG0 = -W -h
 EFLAG1 = -W -S
@@ -49,45 +51,53 @@ all: clean *.c *.h
 
 # Task 0 File Header
 0-hreadelf: all
+	cp test/$(ELF_FILE) .
 	$(CC) $(SRC0) $(CFLAGS) $(GFLAG) -o $(NAME0)
 run0: 0-hreadelf
-	./$(NAME0) $(ARGS)
+	./$(NAME0) $(ELF_FILE)
+	rm $(ELF_FILE) $(NAME0)
 test0: 0-hreadelf
-	./$(NAME0) $(ARGS)
-	$(RELF) $(EFLAG0) $(ARGS)
+	./$(NAME0) $(ELF_FILE)
+	$(RELF) $(EFLAG0) $(ELF_FILE)
 
 # Task 1 Section Header
 1-hreadelf: all
+	cp test/$(ELF_FILE) .
 	$(CC) $(SRC1) $(CFLAGS) $(GFLAG) -o $(NAME1)
 run1: 1-hreadelf
-	./$(NAME1) $(ARGS)
+	./$(NAME1) $(ELF_FILE)
+	rm $(ELF_FILE) $(NAME1)
 test1: 1-hreadelf
-	./$(NAME1) $(ARGS)
-	$(RELF) $(EFLAG1) $(ARGS)
+	./$(NAME1) $(ELF_FILE)
+	$(RELF) $(EFLAG1) $(ELF_FILE)
 
 # Task 2  Program Headers
 2-hreadelf: all
+	cp test/$(ELF_FILE) .
 	$(CC) $(SRC2) $(CFLAGS) $(GFLAG) -o $(NAME2)
 run2: 2-hreadelf
-	./$(NAME2) $(ARGS)
+	./$(NAME2) $(ELF_FILE)
+	rm $(ELF_FILE) $(NAME2)
 test2: 2-hreadelf
-	./$(NAME2) $(ARGS)
-	$(RELF) $(EFLAG2) $(ARGS)
+	./$(NAME2) $(ELF_FILE)
+	$(RELF) $(EFLAG2) $(ELF_FILE)
 
 # Task 3 Symbol Tables
 100-hreadelf: all
+	cp test/$(ELF_FILE) .
 	$(CC) $(SRC3) $(CFLAGS) $(GFLAG) -o $(NAME3)
 run3: 100-hreadelf
-	./$(NAME3) $(ARGS)
+	./$(NAME3) $(ELF_FILE)
+	rm $(ELF_FILE) $(NAME3)
 test3: 100-hreadelf
-	./$(NAME3) $(ARGS)
-	$(RELF) $(EFLAG3) $(ARGS)
+	./$(NAME3) $(ELF_FILE)
+	$(RELF) $(EFLAG3) $(ELF_FILE)
 
 # Tools
 val: 0-hreadelf 1-hreadelf 2-hreadelf 100-hreadelf
-	$(VAL) $(VFLAGS) ./$(ARGS)
+	$(VAL) $(VFLAGS) ./$(ELF_FILE)
 gdb: 0-hreadelf 1-hreadelf 2-hreadelf # 100-hreadelf
-	$(GDB) ./$(ARGS)
+	$(GDB) ./$(ELF_FILE)
 betty:
 	$(BETTY) $(SRC) $(HEADER)
 clean:
