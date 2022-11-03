@@ -2,70 +2,70 @@
 
 /**
  * program_header_size - Identifies the size of program headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *program_header_size(Elf64_Ehdr *header)
+char *program_header_size(elf eh)
 {
-	if (header->e_phentsize)
-		return (itoa(header->e_phentsize, 10));
+	if (EGET(e_phentsize))
+		return (itoa(EGET(e_phentsize), 10));
 	else
 		return ("0");
 }
 
 /**
  * program_headers_number - Identifies the number of program headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *program_headers_number(Elf64_Ehdr *header)
+char *program_headers_number(elf eh)
 {
-	if (header->e_phnum < PN_XNUM)
-		return (itoa(header->e_phnum, 10));
+	if (EGET(e_phnum < PN_XNUM))
+		return (itoa(EGET(e_phnum), 10));
 	else
 		return ("0");
 }
 
 /**
  * section_headers_size - Identifies the size of section headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *section_headers_size(Elf64_Ehdr *header)
+char *section_headers_size(elf eh)
 {
-	if (header->e_shentsize)
-		return (itoa(header->e_shentsize, 10));
+	if (EGET(e_shentsize))
+		return (itoa(EGET(e_shentsize), 10));
 	else
 		return ("0");
 }
 
 /**
  * section_headers_number - Identifies the number of section headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *section_headers_number(Elf64_Ehdr *header)
+char *section_headers_number(elf eh)
 {
-	if (header->e_shnum)
-		return (itoa(header->e_shnum, 10));
+	if (EGET(e_shnum))
+		return (itoa(EGET(e_shnum), 10));
 	else
 		return ("0");
 }
 
 /**
- * section_headers_index - Identifies the section header string table index
- * @header: Pointer to the ELF header
+ * section_headers_index - Identifies the section eh string table index
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *section_headers_index(Elf64_Ehdr *header)
+char *section_headers_index(elf eh)
 {
-	if (header->e_shstrndx)
-		return (itoa(header->e_shstrndx, 10));
+	if (EGET(e_shstrndx))
+		return (itoa(EGET(e_shstrndx), 10));
 	else
 		return ("0\n");
 }
