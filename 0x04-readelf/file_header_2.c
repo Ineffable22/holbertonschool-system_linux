@@ -9,23 +9,23 @@
 char *os_abi(elf eh)
 {
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_HPUX)
-		return ("HP-UX");
+		return ("UNIX - HP-UX");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_NETBSD)
-		return ("NetBSD");
+		return ("UNIX - NetBSD");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_LINUX)
-		return ("Linux");
+		return ("UNIX - Linux");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_SOLARIS)
 		return ("UNIX - Solaris");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_IRIX)
-		return ("IRIX");
+		return ("UNIX - IRIX");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_FREEBSD)
-		return ("FreeBSD");
+		return ("UNIX - FreeBSD");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_TRU64)
-		return ("TRU64 UNIX");
+		return ("UNIX - TRU64");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_ARM)
-		return ("ARM architecture");
+		return ("UNIX - ARM architecture");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_STANDALONE)
-		return ("Stand-alone (embedded)");
+		return ("UNIX - Stand-alone (embedded)");
 
 	/* EI_OSABI == ELFOSABI_NONE || ELFOSABI_SYSV */
 	return ("UNIX - System V");
@@ -54,15 +54,15 @@ char *abi_version(elf eh)
 char *type(elf eh)
 {
 	if (EGET(e_type) == ET_REL)
-		return ("REL (A relocatable file)");
+		return ("REL (Relocatable file)");
 	if (EGET(e_type) == ET_EXEC)
-		return ("EXEC (An executable file)");
+		return ("EXEC (Executable file)");
 	if (EGET(e_type) == ET_DYN)
 		return ("DYN (Shared object file)");
 	if (EGET(e_type) == ET_CORE)
-		return ("CORE (A core file)");
+		return ("CORE (Core file)");
 	else /* (EGET(e_type == ET_NONE) */
-		return ("NONE (An unknown type)");
+		return ("NONE (None)");
 }
 
 /**
