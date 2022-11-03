@@ -15,7 +15,7 @@ char *os_abi(elf eh)
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_LINUX)
 		return ("Linux");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_SOLARIS)
-		return ("Solaris");
+		return ("UNIX - Solaris");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_IRIX)
 		return ("IRIX");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_FREEBSD)
