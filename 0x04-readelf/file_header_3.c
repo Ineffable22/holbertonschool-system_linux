@@ -2,15 +2,15 @@
 
 /**
  * point_address - Identifies the entry point address
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *point_address(Elf64_Ehdr *header)
+char *point_address(elf eh)
 {
-	if (header->e_entry)
+	if (EGET(e_entry))
 	{
-		return (itoa(header->e_entry, 16));
+		return (itoa(EGET(e_entry), 16));
 	}
 	else
 		return ("0");
@@ -18,56 +18,56 @@ char *point_address(Elf64_Ehdr *header)
 
 /**
  * start_program_headers - Identifies the start of program headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *start_program_headers(Elf64_Ehdr *header)
+char *start_program_headers(elf eh)
 {
-	if (header->e_phoff)
-		return (itoa(header->e_phoff, 10));
+	if (EGET(e_phoff))
+		return (itoa(EGET(e_phoff), 10));
 	else
 		return ("0");
 }
 
 /**
  * start_section_headers - Identifies the start of section headers
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *start_section_headers(Elf64_Ehdr *header)
+char *start_section_headers(elf eh)
 {
-	if (header->e_shoff)
-		return (itoa(header->e_shoff, 10));
+	if (EGET(e_shoff))
+		return (itoa(EGET(e_shoff), 10));
 	else
 		return ("0");
 }
 
 /**
  * flags - Identifies the flags
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *flags(Elf64_Ehdr *header)
+char *flags(elf eh)
 {
-	if (header->e_flags)
-		return (itoa(header->e_flags, 16));
+	if (EGET(e_flags))
+		return (itoa(EGET(e_flags), 16));
 	else
 		return ("0");
 }
 
 /**
- * header_size - Identifies the size of this header
- * @header: Pointer to the ELF header
+ * header_size - Identifies the size of this eh
+ * @eh: Pointer to the ELF eh
  *
  * Return: Resulting string
  */
-char *header_size(Elf64_Ehdr *header)
+char *header_size(elf eh)
 {
-	if (header->e_ehsize)
-		return (itoa(header->e_ehsize, 10));
+	if (EGET(e_ehsize))
+		return (itoa(EGET(e_ehsize), 10));
 	else
 		return ("0");
 }
