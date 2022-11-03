@@ -8,6 +8,11 @@
  */
 char *os_abi(elf eh)
 {
+	static char buff[13];
+
+	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_NONE ||
+	EGET(e_ident[EI_OSABI]) == ELFOSABI_SYSV)
+		return ("UNIX - System V");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_HPUX)
 		return ("UNIX - HP-UX");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_NETBSD)
@@ -26,9 +31,11 @@ char *os_abi(elf eh)
 		return ("UNIX - ARM architecture");
 	if (EGET(e_ident[EI_OSABI]) == ELFOSABI_STANDALONE)
 		return ("UNIX - Stand-alone (embedded)");
-
-	/* EI_OSABI == ELFOSABI_NONE || ELFOSABI_SYSV */
-	return ("UNIX - System V");
+	memset(buff, 0, 13);
+	memcpy(buff, "<unknown: ", 10);
+	memcpy(&buff[10], itoa(EGET(e_ident[EI_OSABI]), 16), 2);
+	memcpy(&buff[12], ">", 1);
+	return (buff);
 }
 
 /**
@@ -76,7 +83,7 @@ char *machine(elf eh)
 	if (EGET(e_machine) == EM_M32)
 		return ("AT&T WE 32100");
 	if (EGET(e_machine) == EM_SPARC)
-		return ("Sun Microsystems SPARC");
+		return ("Sparc");
 	if (EGET(e_machine) == EM_386)
 		return ("Intel 80386");
 	if (EGET(e_machine) == EM_68K)
@@ -106,7 +113,7 @@ char *machine(elf eh)
 	if (EGET(e_machine) == EM_IA_64)
 		return ("Intel Itanium");
 	if (EGET(e_machine) == EM_X86_64)
-		return ("Advanced Micro Devices x86-64");
+		return ("Advanced Micro Devices X86-64");
 	if (EGET(e_machine) == EM_VAX)
 		return ("DEC Vax");
 	else /* (EGET(e_machine == EM_NONE) */
