@@ -75,7 +75,7 @@ void file_header_1(elf eh)
 	printer_file_header("Version", str, 1);
 
 	str = point_address(eh);
-	printer_file_header("Entry Point Address", str, 1);
+	printer_file_header("Entry point address", str, 1);
 
 	str = start_program_headers(eh);
 	printer_file_header("Start of program headers", str, 2);
