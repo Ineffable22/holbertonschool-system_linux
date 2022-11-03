@@ -44,7 +44,7 @@ void magic_number(elf eh)
  */
 char *class_file(elf eh)
 {
-	if (CHECK_64(eh.eh32))
+	if (eh.eh32.e_ident[EI_CLASS] == ELFCLASS32)
 		return ("ELF32");
 	else if (CHECK_64(eh.eh64))
 		return ("ELF64");
