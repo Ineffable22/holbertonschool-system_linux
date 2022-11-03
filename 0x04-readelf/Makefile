@@ -13,6 +13,8 @@ VAL = valgrind
 # Valgrind flags
 VFLAGS = --tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all -s
 
+# Comparator
+CMP = compare_files.c
 # Betty C99
 BETTY = betty
 # All C files
@@ -22,8 +24,8 @@ HEADER = *.h
 
 # Command readelf
 RELF = readelf
-ELF_FILE = a.out
-ELF_FILE2 = test/solaris32
+ELF_FILE = a.out solaris32 sortix32 sparcbigendian32 ubuntu64 jpeg.mod python.obj libperl.so.5.18 sftp-server vgpreload_memcheck-x86-linux.so netbsd32
+
 # readelf flags
 EFLAG0 = -W -h
 EFLAG1 = -W -S
@@ -54,17 +56,23 @@ all: clean *.c *.h
 0-hreadelf: all
 	$(CC) $(SRC0) $(CFLAGS) $(GFLAG) -o $(NAME0)
 run0: 0-hreadelf
-	cp test/$(ELF_FILE) .
-	./$(NAME0) $(ELF_FILE)
-	rm $(ELF_FILE) $(NAME0)
+	cp test/$(ARGS) .
+	./$(NAME0) $(ARGS)
+	$(RELF) $(EFLAG0) $(ARGS)
+	rm $(ARGS) $(NAME0)
 test0: 0-hreadelf
-	cp test/$(ELF_FILE) .
-	./$(NAME0) $(ELF_FILE)
-	$(RELF) $(EFLAG0) $(ELF_FILE)
-test01: 0-hreadelf
-	cp test/$(ELF_FILE) .
-	./$(NAME0) $(ELF_FILE2)
-	$(RELF) $(EFLAG0) $(ELF_FILE2)
+	cp test/$(ARGS) .
+	./$(NAME0) $(ARGS) > text1
+	$(RELF) $(EFLAG0) $(ARGS) > text2
+	rm $(ARGS) $(NAME0)
+	$(CC) $(CMP) $(CFLAGS)
+	./a.out
+	rm a.out text1 text2
+all0: 0-hreadelf
+	$(foreach var,$(ELF_FILE), cp test/$(var) .; ./$(NAME0) $(var) > text1; $(RELF) $(EFLAG0) $(var) > text2; rm $(var); $(CC) $(CMP) $(CFLAGS); ./a.out; rm a.out text1 text2;)
+	rm $(NAME0)
+
+
 
 # Task 1 Section Header
 1-hreadelf: all
