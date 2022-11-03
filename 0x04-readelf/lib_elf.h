@@ -6,41 +6,57 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
-/* -----  ----- */
+#define CHECK_64(x) ((x).e_ident[EI_CLASS] == ELFCLASS64)
+#define IS_BE(x) ((x).e_ident[EI_DATA] == ELFDATA2MSB)
+#define EGET(x) (CHECK_64(eh.eh64) ? eh.eh64.x : eh.eh32.x)
+
+/* ----- Structures ----- */
+/**
+ * struct Elf - struct with types of architectures
+ * @eh64: Elf header 64 bits
+ * @eh32: Elf header 32 bits
+ */
+typedef struct Elf
+{
+	Elf64_Ehdr eh64;
+	Elf32_Ehdr eh32;
+} elf;
+
 
 /* ----- file_header.c ----- */
-void file_header_1(Elf64_Ehdr *header);
-void file_header_2(Elf64_Ehdr *header);
+void file_header_1(elf header);
+void file_header_2(elf header);
 void printer_file_header(char *key, char *value, char type);
 
 /* ----- file_header_1.c ----- */
-void check_elf(Elf64_Ehdr *header);
-void magic_number(Elf64_Ehdr *header);
-char *class_file(Elf64_Ehdr *header);
-char *data(Elf64_Ehdr *header);
-char *version_0(Elf64_Ehdr *header);
+void check_elf(elf header);
+void magic_number(elf header);
+char *class_file(elf header);
+char *data(elf header);
+char *version_0(elf header);
 
 /* ----- file_header_2.c ----- */
-char *os_abi(Elf64_Ehdr *header);
-char *abi_version(Elf64_Ehdr *header);
-char *type(Elf64_Ehdr *header);
-char *machine(Elf64_Ehdr *header);
-char *version_1(Elf64_Ehdr *header);
+char *os_abi(elf header);
+char *abi_version(elf header);
+char *type(elf header);
+char *machine(elf header);
+char *version_1(elf header);
 
 /* ----- file_header_3.c ----- */
-char *point_address(Elf64_Ehdr *header);
-char *start_program_headers(Elf64_Ehdr *header);
-char *start_section_headers(Elf64_Ehdr *header);
-char *flags(Elf64_Ehdr *header);
-char *header_size(Elf64_Ehdr *header);
+char *point_address(elf header);
+char *start_program_headers(elf header);
+char *start_section_headers(elf header);
+char *flags(elf header);
+char *header_size(elf header);
 
 /* ----- file_header_4.c ----- */
-char *program_header_size(Elf64_Ehdr *header);
-char *program_headers_number(Elf64_Ehdr *header);
-char *section_headers_size(Elf64_Ehdr *header);
-char *section_headers_number(Elf64_Ehdr *header);
-char *section_headers_index(Elf64_Ehdr *header);
+char *program_header_size(elf header);
+char *program_headers_number(elf header);
+char *section_headers_size(elf header);
+char *section_headers_number(elf header);
+char *section_headers_index(elf header);
 
 /* ----- section_header_1.c ----- */
 void section_header_1(Elf64_Ehdr *ehdr);
@@ -61,7 +77,7 @@ char *ptype(int type);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *itoa(int val, int base);
-int process_ehdr(Elf64_Ehdr **header, char *filename);
+int process_ehdr(elf *header, char *filename);
 
 
 
