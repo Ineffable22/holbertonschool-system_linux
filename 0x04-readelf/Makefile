@@ -51,9 +51,9 @@ all: clean *.c *.h
 
 # Task 0 File Header
 0-hreadelf: all
-	cp test/$(ELF_FILE) .
 	$(CC) $(SRC0) $(CFLAGS) $(GFLAG) -o $(NAME0)
 run0: 0-hreadelf
+	cp test/$(ELF_FILE) .
 	./$(NAME0) $(ELF_FILE)
 	rm $(ELF_FILE) $(NAME0)
 test0: 0-hreadelf
@@ -62,9 +62,9 @@ test0: 0-hreadelf
 
 # Task 1 Section Header
 1-hreadelf: all
-	cp test/$(ELF_FILE) .
 	$(CC) $(SRC1) $(CFLAGS) $(GFLAG) -o $(NAME1)
 run1: 1-hreadelf
+	cp test/$(ELF_FILE) .
 	./$(NAME1) $(ELF_FILE)
 	rm $(ELF_FILE) $(NAME1)
 test1: 1-hreadelf
@@ -73,9 +73,9 @@ test1: 1-hreadelf
 
 # Task 2  Program Headers
 2-hreadelf: all
-	cp test/$(ELF_FILE) .
 	$(CC) $(SRC2) $(CFLAGS) $(GFLAG) -o $(NAME2)
 run2: 2-hreadelf
+	cp test/$(ELF_FILE) .
 	./$(NAME2) $(ELF_FILE)
 	rm $(ELF_FILE) $(NAME2)
 test2: 2-hreadelf
@@ -84,9 +84,9 @@ test2: 2-hreadelf
 
 # Task 3 Symbol Tables
 100-hreadelf: all
-	cp test/$(ELF_FILE) .
 	$(CC) $(SRC3) $(CFLAGS) $(GFLAG) -o $(NAME3)
 run3: 100-hreadelf
+	cp test/$(ELF_FILE) .
 	./$(NAME3) $(ELF_FILE)
 	rm $(ELF_FILE) $(NAME3)
 test3: 100-hreadelf
