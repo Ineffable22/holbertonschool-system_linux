@@ -22,7 +22,7 @@ char *program_header_size(elf eh)
  */
 char *program_headers_number(elf eh)
 {
-	if (EGET(e_phnum < PN_XNUM))
+	if (EGET(e_phnum))
 		return (itoa(EGET(e_phnum), 10));
 	else
 		return ("0");
