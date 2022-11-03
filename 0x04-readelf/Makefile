@@ -23,6 +23,7 @@ HEADER = *.h
 # Command readelf
 RELF = readelf
 ELF_FILE = a.out
+ELF_FILE2 = test/solaris32
 # readelf flags
 EFLAG0 = -W -h
 EFLAG1 = -W -S
@@ -57,8 +58,13 @@ run0: 0-hreadelf
 	./$(NAME0) $(ELF_FILE)
 	rm $(ELF_FILE) $(NAME0)
 test0: 0-hreadelf
+	cp test/$(ELF_FILE) .
 	./$(NAME0) $(ELF_FILE)
 	$(RELF) $(EFLAG0) $(ELF_FILE)
+test01: 0-hreadelf
+	cp test/$(ELF_FILE) .
+	./$(NAME0) $(ELF_FILE2)
+	$(RELF) $(EFLAG0) $(ELF_FILE2)
 
 # Task 1 Section Header
 1-hreadelf: all
