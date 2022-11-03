@@ -10,68 +10,77 @@
  */
 int main(int argc, char **argv)
 {
-	Elf64_Ehdr *header = NULL;
-	int fd = 0;
+	elf eh;
+	int fd = 0, rd = 0;
 
 	if (argc != 2)
 	{
 		fprintf(stderr, "Usage: 0-hreadelf elf_filename\n");
 		exit(98);
 	}
-	fd = process_ehdr(&header, argv[1]);
-
-	file_header_1(header);
-	file_header_2(header);
-	free(header);
+	memset(&eh, 0, sizeof(eh));
+	fd = process_ehdr(&eh, argv[1]);
+	if (!CHECK_64(eh.eh64))
+	{
+		lseek(fd, 0, SEEK_SET);
+		rd = read(fd, &eh.eh32, sizeof(eh.eh32));
+		if (rd == -1 || rd != sizeof(eh.eh32))
+		{
+			fprintf(stderr, "Can't read the file %s\n", argv[1]);
+			exit(98);
+		}
+	}
+	file_header_1(eh);
+	file_header_2(eh);
 	close(fd);
 	return (0);
 }
 
 /**
  * file_header_1 - Sends the function to validate
- * @header: Pointer to the ELF header
+ * @eh: Pointer to the ELF eh
  *
  * Return: Nothing
  */
-void file_header_1(Elf64_Ehdr *header)
+void file_header_1(elf eh)
 {
 	char *str = NULL;
 
-	check_elf(header);
+	check_elf(eh);
 
-	magic_number(header);
+	magic_number(eh);
 
-	str = class_file(header);
+	str = class_file(eh);
 	printer_file_header("Class", str, 0);
 
-	str = data(header);
+	str = data(eh);
 	printer_file_header("Data", str, 0);
 
-	str = version_0(header);
+	str = version_0(eh);
 	printer_file_header("Version", str, 0);
 
-	str = os_abi(header);
+	str = os_abi(eh);
 	printer_file_header("OS/ABI", str, 0);
 
-	str = abi_version(header);
+	str = abi_version(eh);
 	printer_file_header("ABI Version", str, 0);
 
-	str = type(header);
+	str = type(eh);
 	printer_file_header("Type", str, 0);
 
-	str = machine(header);
+	str = machine(eh);
 	printer_file_header("Machine", str, 0);
 
-	str = version_1(header);
+	str = version_1(eh);
 	printer_file_header("Version", str, 1);
 
-	str = point_address(header);
+	str = point_address(eh);
 	printer_file_header("Entry Point Address", str, 1);
 
-	str = start_program_headers(header);
+	str = start_program_headers(eh);
 	printer_file_header("Start of program headers", str, 2);
 
-	str = start_section_headers(header);
+	str = start_section_headers(eh);
 	printer_file_header("Start of section headers", str, 2);
 }
 
@@ -81,7 +90,7 @@ void file_header_1(Elf64_Ehdr *header)
  *
  * Return: Nothing
  */
-void file_header_2(Elf64_Ehdr *header)
+void file_header_2(elf header)
 {
 	char *str = NULL;
 
