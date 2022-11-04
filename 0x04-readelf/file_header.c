@@ -30,11 +30,13 @@ int main(int argc, char **argv)
 			exit(98);
 		}
 	}
+	switch_endians(&eh);
 	file_header_1(eh);
 	file_header_2(eh);
 	close(fd);
 	return (0);
 }
+
 
 /**
  * file_header_1 - Sends the function to validate
