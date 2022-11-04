@@ -30,6 +30,12 @@ void file_header_1(elf header);
 void file_header_2(elf header);
 void printer_file_header(char *key, char *value, char type);
 
+/* ----- endians.c ----- */
+void switch_endians(elf *eh);
+unsigned long switch_endian8(unsigned long n);
+unsigned int switch_endian4(unsigned int n);
+unsigned short switch_endian2(unsigned short n);
+
 /* ----- file_header_1.c ----- */
 void check_elf(elf header);
 void magic_number(elf header);
