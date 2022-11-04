@@ -33,7 +33,7 @@ EFLAG2 = -W -l
 EFLAG3 = -W -s
 
 # Task0
-SRC0 = file_header*.c holbie_tools.c
+SRC0 = file_header*.c holbie_tools.c endians.c
 NAME0 = 0-hreadelf
 
 # Task1
@@ -71,8 +71,6 @@ test0: 0-hreadelf
 all0: 0-hreadelf
 	$(foreach var,$(ELF_FILE), cp test/$(var) .; ./$(NAME0) $(var) > text1; $(RELF) $(EFLAG0) $(var) > text2; rm $(var); $(CC) $(CMP) $(CFLAGS); ./a.out; rm a.out text1 text2;)
 	rm $(NAME0)
-
-
 
 # Task 1 Section Header
 1-hreadelf: all
