@@ -1,18 +1,14 @@
 #include <stdio.h>
 #include <sys/types.h>
-#include <listobject.h>
-#include <object.h>
-
-
-
-void print_python_list(PyObject *p)
-{
-	#include <stdio.h>
-#include <sys/types.h>
 #include <object.h>
 #include <listobject.h>
 
-
+/**
+ * print_python_list - Prints some basic info about Python lists.
+ * @p: Pointer to Python object
+ *
+ * Return: Nothing
+ */
 void print_python_list(PyObject *p)
 {
 	int i = 0, size = PyList_Size(p);
