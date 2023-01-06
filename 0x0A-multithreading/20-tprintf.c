@@ -28,10 +28,13 @@ void end(void)
  */
 int tprintf(char const *format, ...)
 {
+	int len = 0;
+
 	if (!format)
 		return (-1);
 	pthread_mutex_lock(&mutex);
-	printf("[%lu] %s", pthread_self(), format);
+	printf("[%lu] ", pthread_self());
+	len = printf("%s", format);
 	pthread_mutex_unlock(&mutex);
-	return (0);
+	return (len);
 }
