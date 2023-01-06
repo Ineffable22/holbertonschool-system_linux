@@ -40,20 +40,20 @@ void insert_blur(const img_t *img, img_t *new_img, const kernel_t *kernel,
 		return;
 
 	radius = kernel->size / 2;
-	for (pos_y = (ssize_t)(y - radius); i < kernel->size; i++, pos_y++)
-		for (pos_x = (ssize_t)(x - radius); j < kernel->size; j++, pos_x++)
+	for (pos_y = (ssize_t)y - radius; i < kernel->size; i++, pos_y++)
+		for (j = 0, pos_x = (ssize_t)x - radius; j < kernel->size; j++, pos_x++)
 		{
 			if ((pos_x >= 0 && (size_t)pos_x < img->w) &&
 			    (pos_y >= 0 && (size_t)pos_y < img->h))
 			{
 				divider += kernel->matrix[i][j];
-				pos_i = (img->w * pos_y) + pos_x;
+				pos_i = (pos_y * img->w) + pos_x;
 				avg_r += img->pixels[pos_i].r * kernel->matrix[i][j];
 				avg_g += img->pixels[pos_i].g * kernel->matrix[i][j];
 				avg_b += img->pixels[pos_i].b * kernel->matrix[i][j];
 			}
 		}
-	pos_i = (img->w * y) + x;
+	pos_i = (y * img->w) + x;
 	new_img->pixels[pos_i].r = (uint8_t)(avg_r / divider);
 	new_img->pixels[pos_i].g = (uint8_t)(avg_g / divider);
 	new_img->pixels[pos_i].b = (uint8_t)(avg_b / divider);
