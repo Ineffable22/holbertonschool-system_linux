@@ -12,14 +12,14 @@ blur_portion_t *create_portions(img_t *img_blur, img_t const *img,
 				kernel_t const *kernel)
 {
 	blur_portion_t *portion = NULL;
-	size_t piece_h = img->h / THREADS;
+	size_t piece_h = 0;
 	int i = 0;
 
-	portion = malloc(sizeof(blur_portion_t) * THREADS);
+	portion = calloc(sizeof(blur_portion_t), THREADS);
 	if (!portion)
 		return (NULL);
 
-	for (piece_h = 0; i < THREADS;
+	for (; i < THREADS;
 	 i++, piece_h += img->h / THREADS)
 	{
 		portion[i].img = img;
@@ -30,6 +30,7 @@ blur_portion_t *create_portions(img_t *img_blur, img_t const *img,
 		portion[i].x = 0;
 		portion[i].y = piece_h;
 	}
+	portion[i - 1].h += 4;
 	return (portion);
 }
 
@@ -57,10 +58,18 @@ void *assign_thread(void *portion)
 void blur_image(img_t *img_blur, img_t const *img, kernel_t const *kernel)
 {
 	blur_portion_t *portion = NULL;
-	pthread_t tid;
+	pthread_t tid[THREADS];
 	int i = 0;
 
 	portion = create_portions(img_blur, img, kernel);
 	for (; i < THREADS; i++)
-		pthread_create(&tid, NULL, (&assign_thread), portion + i);
+	{
+		if (pthread_create(&tid[THREADS], NULL, (&assign_thread), portion + i) != 0)
+		{
+			fprintf(stderr, "Error: Can not create prthread\n");
+			return;
+		}
+		pthread_join(tid[THREADS], NULL);
+	}
+
 }
