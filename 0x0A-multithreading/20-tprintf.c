@@ -24,10 +24,12 @@ void end(void)
  * as the following output shows.
  * @format: String to print
  *
- * Return: Always 0
+ * Return: Always 0, otherwise -1 if failed
  */
 int tprintf(char const *format, ...)
 {
+	if (!format)
+		return (-1);
 	pthread_mutex_lock(&mutex);
 	printf("[%lu] %s", pthread_self(), format);
 	pthread_mutex_unlock(&mutex);
