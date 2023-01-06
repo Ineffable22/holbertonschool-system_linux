@@ -1,4 +1,5 @@
 #include "multithreading.h"
+#include <stdarg.h>
 static pthread_mutex_t mutex;
 
 /**
@@ -28,13 +29,16 @@ void end(void)
  */
 int tprintf(char const *format, ...)
 {
+	va_list args;
 	int len = 0;
 
 	if (!format)
 		return (-1);
+	va_start(args, format);
 	pthread_mutex_lock(&mutex);
 	printf("[%lu] ", pthread_self());
-	len = printf("%s", format);
+	len = vprintf(format, args);
+	va_end(args);
 	pthread_mutex_unlock(&mutex);
 	return (len);
 }
