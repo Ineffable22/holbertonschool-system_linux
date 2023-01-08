@@ -30,6 +30,13 @@ CFLAGS = -Wall -Wextra -Werror -pedantic -g3 -pthread -I ./
 	./20-tprintf
 	rm 20-tprintf
 
+5:
+	$(CC) $(CFLAGS) test/21-main.c 21-prime_factors.c list.c -o 21-prime_factors
+	./21-prime_factors 745 872346 79283472974
+	./21-prime_factors 1048576
+	./21-prime_factors 18446744073709551612 18446744073709551609 18446744073709551608
+	rm 21-prime_factors
+
 betty:
 	betty --allow-global-variables *.c *.h test/*.c
 
