@@ -6,9 +6,9 @@
 #include <pthread.h>
 #include <stddef.h>
 #include <stdint.h>
+#include "list.h"
 #define THREADS 8
 
-#include "list.h"
 
 /**
  * struct pixel_s - RGB pixel
