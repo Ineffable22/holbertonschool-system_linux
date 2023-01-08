@@ -8,6 +8,8 @@
 #include <stdint.h>
 #define THREADS 8
 
+#include "list.h"
+
 /**
  * struct pixel_s - RGB pixel
  *
