@@ -82,5 +82,6 @@ void blur_image(img_t *img_blur, img_t const *img, kernel_t const *kernel);
 void begin(void) __attribute__ ((constructor));
 void end(void) __attribute__ ((destructor));
 int tprintf(char const *format, ...);
+list_t *prime_factors(char const *s);
 
 #endif /* _MULTITHREADING_H_ */
