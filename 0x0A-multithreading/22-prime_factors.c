@@ -65,7 +65,7 @@ void *exec_tasks(list_t const *tasks)
 {
 	node_t *node = tasks->head;
 	task_t *task = NULL;
-	size_t i = 0, num = 0;
+	size_t i = 0;
 
 	for (; i < tasks->size; i++, node = node->next)
 	{
@@ -74,21 +74,22 @@ void *exec_tasks(list_t const *tasks)
 		if (task->status == PENDING)
 		{
 			task->status = STARTED;
-			num = tasks->size - i - 1;
-			tprintf("[%0u] %s\n", num, "STARTED");
+			tprintf("[%0u] %s\n", i, "STARTED");
 			task->result = task->entry(task->param);
+			pthread_mutex_unlock(&mutex);
 			if (task->result)
 			{
 				task->status = SUCCESS;
-				tprintf("[%0u] %s\n", num, "SUCCESS");
+				tprintf("[%0u] %s\n", i, "SUCCESS");
 			}
 			else
 			{
 				task->status = FAILURE;
-				tprintf("[%0u] %s\n", num, "FAILURE");
+				tprintf("[%0u] %s\n", i, "FAILURE");
 			}
 		}
-		pthread_mutex_unlock(&mutex);
+		else
+			pthread_mutex_unlock(&mutex);
 	}
 	return ((void *)tasks);
 }
