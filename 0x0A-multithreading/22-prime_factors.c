@@ -80,7 +80,10 @@ void *exec_tasks(list_t const *tasks)
 	node = tasks->head;
 	for (; i < tasks->size; i++, node = node->next)
 	{
+
 		task = node->content;
+		if (!task)
+			continue;
 		pthread_mutex_lock(&mutex);
 		if (task->status == PENDING)
 		{
@@ -102,5 +105,5 @@ void *exec_tasks(list_t const *tasks)
 		else
 			pthread_mutex_unlock(&mutex);
 	}
-	return ((void *)tasks);
+	return (NULL);
 }
