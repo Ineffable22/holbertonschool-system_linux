@@ -74,18 +74,18 @@ void *exec_tasks(list_t const *tasks)
 		if (task->status == PENDING)
 		{
 			task->status = STARTED;
-			tprintf("[%02u] %s\n", i, "Started");
-			task->result = task->entry(task->param);
 			pthread_mutex_unlock(&mutex);
+			tprintf("[%02lu] Started\n", i);
+			task->result = task->entry(task->param);
 			if (task->result)
 			{
 				task->status = SUCCESS;
-				tprintf("[%02u] %s\n", i, "Success");
+				tprintf("[%02lu] Success\n", i);
 			}
 			else
 			{
 				task->status = FAILURE;
-				tprintf("[%02u] %s\n", i, "Failure");
+				tprintf("[%02lu] Failure\n", i);
 			}
 		}
 		else
