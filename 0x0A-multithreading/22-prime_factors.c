@@ -71,10 +71,11 @@ void destroy_task(task_t *task)
  */
 void *exec_tasks(list_t const *tasks)
 {
-	node_t *node = tasks->head;
+	node_t *node = NULL;
 	task_t *task = NULL;
 	size_t i = 0;
 
+	if (!task || !tasks->head)
 	for (; i < tasks->size; i++, node = node->next)
 	{
 		task = node->content;
