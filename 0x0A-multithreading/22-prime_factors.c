@@ -76,6 +76,7 @@ void *exec_tasks(list_t const *tasks)
 	size_t i = 0;
 
 	if (!task || !tasks->head)
+		return (NULL);
 	for (; i < tasks->size; i++, node = node->next)
 	{
 		task = node->content;
