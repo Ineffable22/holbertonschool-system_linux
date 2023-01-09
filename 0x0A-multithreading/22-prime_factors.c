@@ -29,6 +29,8 @@ task_t *create_task(task_entry_t entry, void *param)
 {
 	task_t *task = NULL;
 
+	if (!entry)
+		return (NULL);
 	task = malloc(sizeof(task_t));
 	if (task == NULL)
 	{
@@ -51,7 +53,11 @@ task_t *create_task(task_entry_t entry, void *param)
  */
 void destroy_task(task_t *task)
 {
-	list_destroy(task->result, free);
+	if (task->result)
+	{
+		list_destroy(task->result, free);
+		free(task->result);
+	}
 	free(task);
 }
 
