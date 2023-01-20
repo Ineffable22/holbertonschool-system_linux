@@ -30,7 +30,6 @@ blur_portion_t *create_portions(img_t *img_blur, img_t const *img,
 		portion[i].x = 0;
 		portion[i].y = piece_h;
 	}
-	portion[i - 1].h += 4;
 	return (portion);
 }
 
@@ -62,14 +61,15 @@ void blur_image(img_t *img_blur, img_t const *img, kernel_t const *kernel)
 	int i = 0;
 
 	portion = create_portions(img_blur, img, kernel);
-	for (; i < THREADS; i++)
+	for (i = 0; i < THREADS; i++)
 	{
-		if (pthread_create(&tid[THREADS], NULL, (&assign_thread), portion + i) != 0)
+		if (pthread_create(tid + i, NULL, (&assign_thread), portion + i) != 0)
 		{
 			fprintf(stderr, "Error: Can not create prthread\n");
 			return;
 		}
-		pthread_join(tid[THREADS], NULL);
 	}
-
+	for (i = 0; i < THREADS; i++)
+		if (pthread_join(tid[i], NULL) != 0)
+			return;
 }
