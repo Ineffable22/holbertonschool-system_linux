@@ -1,4 +1,10 @@
-#include "socket.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
 
 /**
  * die_with_error - Print message to stderr and exit
