@@ -19,7 +19,7 @@ SRC3 = 3-server.c
 OBJ3 = $(SRC3:%.c=%.o)
 NAME3 = 3-server
 
-SRC4 = server.c
+SRC4 = server.c request.c
 OBJ4 = $(SRC4:%.c=%.o)
 NAME4 = todo_api_0
 
@@ -35,7 +35,7 @@ ALLNAME = $(NAME0) $(NAME1) $(NAME2) $(NAME3) $(NAME4) $(NAME5) $(NAME6) $(NAME7
 all: taks0 taks1 taks2 taks3 todo_api_0
 
 # Task 0-3
-taks0: $(OBJ0)
+task0: $(OBJ0)
 	$(CC) $(CFLAGS) $(OBJ0) -o $(NAME0)
 
 task1: $(OBJ1)
@@ -48,7 +48,7 @@ task3: $(OBJ3)
 	$(CC) $(CFLAGS) $(OBJ3) -o $(NAME3)
 
 # API tasks 4 - 11
-todo_api_0: $(HEADER) $(OBJ0)
+todo_api_0: $(HEADER) $(OBJ4)
 	$(CC) $(CFLAGS) $(OBJ4) -o $(NAME4)
 
 clean:
