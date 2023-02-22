@@ -1,4 +1,10 @@
-#include "socket.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
 
 /**
  * die_with_error - Print message to stderr and exit
@@ -43,14 +49,14 @@ int create_socket(void)
  */
 struct sockaddr_in assgin_address_to_socket(const int sockid, const int port)
 {
-	struct sockaddr_in ServerAddress;
+	struct sockaddr_in server;
 
-	ServerAddress.sin_family = AF_INET;
-	ServerAddress.sin_port = htons(port);
-	ServerAddress.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(sockid, (struct sockaddr *)&ServerAddress, sizeof(ServerAddress)) == -1)
+	server.sin_family = AF_INET;
+	server.sin_port = htons(port);
+	server.sin_addr.s_addr = htonl(INADDR_ANY);
+	if (bind(sockid, (struct sockaddr *)&server, sizeof(server)) == -1)
 		die_with_error("bind error", sockid);
-	return (ServerAddress);
+	return (server);
 }
 
 /**
