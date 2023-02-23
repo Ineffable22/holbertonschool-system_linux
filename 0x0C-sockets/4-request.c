@@ -6,17 +6,19 @@
  * - Print the IP address of the connected client
  * - Wait for an incoming message from the connected client
  * - Print the full received HTTP request
- * - Print the break-down of the first line of the received HTTP request (See example)
+ * - Print the break-down of the first line of the received HTTP request
  * - Send back a response to the connected client (HTTP 200 OK)
  * - Close the connection with the client
  * - Wait for the next connection
- * 
- * Return: Always EXIT_SUCCESS
+ *
+ * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
 */
 int main(void)
 {
-	start_server();
-	return (EXIT_SUCCESS);
+	int status;
+
+	status = start_server();
+	return (status);
 }
 
 /**
