@@ -17,7 +17,7 @@ void die_with_error(const char *str, const int sockid)
 /**
  * start_server - Start the server and connect
  *
- * Return: A new socket
+ * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
 int start_server(void)
 {
