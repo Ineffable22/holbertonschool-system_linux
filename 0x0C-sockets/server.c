@@ -66,7 +66,6 @@ void response_signal(int x)
 	current = ptr;
 	ptr = (char *)ptr - (0x10 + 0x10);
 	sockid = *(int *)ptr;
-	printf("socketid => %d\n", sockid);
 	setsockopt(sockid, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 	close(sockid);
 	free(ptr);
@@ -91,7 +90,6 @@ int accept_message(const int sockid)
 	signal(SIGINT, response_signal);
 	/* Save sockid in memory to close if needed with signal */
 	ptr = malloc(sizeof(int));
-	printf("socketid => %d\n", sockid);
 	*(int *)ptr = sockid;
 
 	fd = accept(sockid, (struct sockaddr *)&ClientAddress, &adddrLen);
