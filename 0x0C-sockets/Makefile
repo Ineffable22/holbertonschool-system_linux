@@ -31,7 +31,7 @@ SRC6 = server.c 6-headers.c
 OBJ6 = $(patsubst %.c, obj/%.o, $(SRC6))
 NAME6 = bin/todo_api_2
 
-SRC7 = server.c 7-body_parameters.c
+SRC7 = server.c 7-body.c
 OBJ7 = $(patsubst %.c, obj/%.o, $(SRC7))
 NAME7 = bin/todo_api_3
 
