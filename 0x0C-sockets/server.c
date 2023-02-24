@@ -57,16 +57,20 @@ int start_server(void)
  */
 void response_signal(int x)
 {
-	void *ptr;
+	void *ptr, *current;
 	int option = 1;
 	int sockid;
 	(void) x;
 
-	ptr = sbrk(0);
-	ptr = (char *)ptr - sizeof(int);
+	ptr = malloc(sizeof(int));
+	current = ptr;
+	ptr = (char *)ptr - (0x10 + 0x10);
 	sockid = *(int *)ptr;
+	printf("socketid => %d\n", sockid);
 	setsockopt(sockid, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
 	close(sockid);
+	free(ptr);
+	free(current);
 	exit(EXIT_FAILURE);
 }
 
@@ -86,7 +90,8 @@ int accept_message(const int sockid)
 
 	signal(SIGINT, response_signal);
 	/* Save sockid in memory to close if needed with signal */
-	ptr = sbrk(sizeof(int));
+	ptr = malloc(sizeof(int));
+	printf("socketid => %d\n", sockid);
 	*(int *)ptr = sockid;
 
 	fd = accept(sockid, (struct sockaddr *)&ClientAddress, &adddrLen);
@@ -108,7 +113,8 @@ int accept_message(const int sockid)
 		die_with_error("recv error", sockid);
 		return (EXIT_FAILURE);
 	}
-	printf("Raw request: \"%s\"/\n", buf);
+	printf("Raw request: \"%s\"\n", buf);
 	response(fd, buf);
+	free(ptr);
 	return (EXIT_SUCCESS);
 }
