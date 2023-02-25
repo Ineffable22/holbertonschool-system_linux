@@ -1,17 +1,21 @@
 #include "socket.h"
 
+int client_fd = -1;
+int server_fd = -1;
+
 /**
  * die_with_error - Print message to stderr and exit
  * @str:    String to print
- * @sockid: Socket descriptor to close
  *
  * Returns: Nothing
  */
-void die_with_error(const char *str, const int sockid)
+void die_with_error(const char *str)
 {
 	fprintf(stderr, "%s\n", str);
-	if (close(sockid) == -1)
-		fprintf(stderr, "close error\n");
+	if (client_fd != -1 && close(server_fd) == -1)
+		fprintf(stderr, "close client error\n");
+	if (server_fd != -1 && close(server_fd) == -1)
+		fprintf(stderr, "close server error\n");
 }
 
 /**
@@ -21,98 +25,66 @@ void die_with_error(const char *str, const int sockid)
  */
 int start_server(void)
 {
-	int sockid;
 	struct sockaddr_in server;
 
-	sockid = socket(PF_INET, SOCK_STREAM, 0);
-	if (sockid == -1)
-	{
-		fprintf(stderr, "socket error\n");
-		return (EXIT_FAILURE);
-	}
+	signal(SIGINT, response_signal);
+	server_fd = socket(PF_INET, SOCK_STREAM, 0);
+	if (server_fd == -1)
+		return (fprintf(stderr, "socket error\n"), EXIT_FAILURE);
 	server.sin_family = AF_INET;
 	server.sin_port = htons(PORT);
 	server.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(sockid, (struct sockaddr *)&server, sizeof(server)) == -1)
-	{
-		die_with_error("bind error", sockid);
-		return (EXIT_FAILURE);
-	}
-	if (listen(sockid, SOMAXCONN) == -1)
-	{
-		die_with_error("listen error", sockid);
-		return (EXIT_FAILURE);
-	}
+	if (bind(server_fd, (struct sockaddr *)&server, sizeof(server)) == -1)
+		return (die_with_error("bind error"), EXIT_FAILURE);
+	if (listen(server_fd, SOMAXCONN) == -1)
+		return (die_with_error("listen error"), EXIT_FAILURE);
 	printf("Server listening on port %d\n", PORT);
-	while (accept_message(sockid) == EXIT_SUCCESS)
+	while (accept_message() == EXIT_SUCCESS)
 	{}
 	return (EXIT_SUCCESS);
 }
 
 /**
- * response_signal - Prints the prompt signal (Ctrl + C)
+ * response_signal - Close client_fd and server_fd
  * @x: Unused number
  *
  * Return: Nothing
  */
 void response_signal(int x)
 {
-	void *ptr, *current;
-	int option = 1;
-	int sockid;
 	(void) x;
 
-	ptr = malloc(sizeof(int));
-	current = ptr;
-	ptr = (char *)ptr - (0x10 + 0x10);
-	sockid = *(int *)ptr;
-	setsockopt(sockid, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(option));
-	close(sockid);
-	free(ptr);
-	free(current);
+	if (server_fd != -1 && close(server_fd) == -1)
+		fprintf(stderr, "close server error\n");
+	server_fd = -1;
+	if (client_fd != -1 && close(server_fd) == -1)
+		fprintf(stderr, "close client error\n");
+	client_fd = -1;
 	exit(EXIT_FAILURE);
 }
 
 /**
  * accept_message - Accept a message from the server
- * @sockid: Socket descriptor
  *
  * Return: Nothing
  */
-int accept_message(const int sockid)
+int accept_message()
 {
 	char *client_ip, buf[BUFSIZ];
-	int rd, fd;
+	int rd;
 	struct sockaddr_in ClientAddress;
 	socklen_t adddrLen = sizeof(ClientAddress);
-	void *ptr;
 
-	signal(SIGINT, response_signal);
-	/* Save sockid in memory to close if needed with signal */
-	ptr = malloc(sizeof(int));
-	*(int *)ptr = sockid;
-
-	fd = accept(sockid, (struct sockaddr *)&ClientAddress, &adddrLen);
-	if (fd == -1)
-	{
-		die_with_error("accept error", sockid);
-		return (EXIT_FAILURE);
-	}
+	client_fd = accept(server_fd, (struct sockaddr *)&ClientAddress, &adddrLen);
+	if (client_fd == -1)
+		return (die_with_error("accept error"), EXIT_FAILURE);
 	client_ip = inet_ntoa(ClientAddress.sin_addr);
 	if (client_ip == NULL)
-	{
-		die_with_error("inet_ntoa error", sockid);
-		return (EXIT_FAILURE);
-	}
+		return (die_with_error("inet_ntoa error"), EXIT_FAILURE);
 	printf("Client connected: %s\n", client_ip);
-	rd = recv(fd, buf, BUFSIZ, 0);
+	rd = recv(client_fd, buf, BUFSIZ, 0);
 	if (rd == -1)
-	{
-		die_with_error("recv error", sockid);
-		return (EXIT_FAILURE);
-	}
+		return (die_with_error("recv error"), EXIT_FAILURE);
 	printf("Raw request: \"%s\"\n", buf);
-	response(fd, buf);
-	free(ptr);
-	return (EXIT_SUCCESS);
+	return (response(buf));
 }
