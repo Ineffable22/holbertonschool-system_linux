@@ -1,5 +1,4 @@
 #include "socket.h"
-
 /**
  * main - Opens an IPv4/TCP socket, and listens to traffic on port 8080
  * - Accept an entering connection
@@ -15,20 +14,16 @@
 */
 int main(void)
 {
-	int status;
-
-	status = start_server();
-	return (status);
+	return (start_server());
 }
 
 /**
  * response - Print and send HTTP response
- * @fd: file descriptor
  * @buf: buffer to split and print
  *
- * Return: Always EXIT_SUCCESS
+ * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
-int response(int fd, char *buf)
+int response(char *buf)
 {
 	char *method, *path, *version;
 	char *delim = " \r\t\n";
@@ -39,6 +34,5 @@ int response(int fd, char *buf)
 	printf("Method: %s\n", method);
 	printf("Path: %s\n", path);
 	printf("Version: %s\n", version);
-	send(fd, "HTTP/1.1 200 OK\r\n\r\n", 17, 0);
-	return (EXIT_SUCCESS);
+	return (http_response(200));
 }
