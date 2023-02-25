@@ -20,12 +20,11 @@ int main(void)
 
 /**
  * response - Print and send HTTP response
- * @fd: file descriptor
  * @buf: buffer to split and print
  *
  * Return: Always EXIT_SUCCESS
  */
-int response(int fd, char *buf)
+int response(char *buf)
 {
 	char *user_agent, *user_agent2, *host, *host2, *accept, *accept2;
 	char *delim1 = " \r\t\n";
@@ -45,6 +44,5 @@ int response(int fd, char *buf)
 	printf("Header: \"%s\" -> \"%s\"\n", user_agent, user_agent2);
 	printf("Header: \"%s\" -> \"%s\"\n", host, host2);
 	printf("Header: \"%s\" -> \"%s\"\n", accept, accept2);
-	send(fd, "HTTP/1.1 200 OK\r\n\r\n", 17, 0);
-	return (EXIT_SUCCESS);
+	return (http_response(200));
 }
