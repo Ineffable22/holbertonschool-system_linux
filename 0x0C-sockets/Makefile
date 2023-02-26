@@ -35,7 +35,7 @@ SRC7 = server.c status_code.c 7-body.c
 OBJ7 = $(patsubst %.c, obj/%.o, $(SRC7))
 NAME7 = todo_api_3
 
-SRC8 = server.c status_code.c
+SRC8 = server.c status_code.c 8-create_todo.c
 OBJ8 = $(patsubst %.c, obj/%.o, $(SRC8))
 NAME8 = todo_api_4
 
