@@ -63,7 +63,7 @@ void response_signal(int x)
 	if (client_fd != -1 && close(server_fd) == -1)
 		fprintf(stderr, "close client error\n");
 	client_fd = -1;
-	putchar(0xA);
+	/* putchar(0xA); */
 	exit(EXIT_FAILURE);
 }
 
