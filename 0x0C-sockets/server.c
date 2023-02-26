@@ -56,7 +56,7 @@ int start_server(int task)
  */
 void response_signal(int x)
 {
-	(void)x;
+	(void) x;
 
 	if (server_fd != -1 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
@@ -64,6 +64,7 @@ void response_signal(int x)
 	if (client_fd != -1 && close(server_fd) == -1)
 		fprintf(stderr, "close client error\n");
 	client_fd = -1;
+	putchar(0xA);
 	exit(EXIT_FAILURE);
 }
 
