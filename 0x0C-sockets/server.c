@@ -2,6 +2,8 @@
 
 int client_fd = -1;
 int server_fd = -1;
+char ram_json[100][100] = {0};
+int id = 0;
 
 /**
  * die_with_error - Print message to stderr and exit
