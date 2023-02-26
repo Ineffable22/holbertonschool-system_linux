@@ -15,17 +15,16 @@
  */
 int main(void)
 {
-	return (start_server());
+	return (start_server(7));
 }
 
 /**
  * response - Print and send HTTP response
- * @fd: file descriptor
  * @buf: buffer to split and print
  *
  * Return: Always EXIT_SUCCESS
  */
-int response(int fd, char *buf)
+int response(char *buf)
 {
 	char *delim1 = " \r\t\n";
 	char *delim2 = "& ";
@@ -49,6 +48,5 @@ int response(int fd, char *buf)
 		putchar(0x22);
 		putchar(0xA);
 	}
-	send(fd, "HTTP/1.1 200 OK\r\n\r\n", 17, 0);
-	return (EXIT_SUCCESS);
+	return (http_response(200));
 }
