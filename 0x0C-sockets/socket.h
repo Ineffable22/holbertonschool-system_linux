@@ -12,29 +12,11 @@
 
 #define PORT 8080
 #define CRLF "\r\n"
-
-/**
- * struct memory_s - Structure representing a memory allocation
- * @id: identifier
- * @key_query: Key of first query
- * @value_query: Value of first query
- * @key_query2: Key of second query
- * @value_query2: Value of second query
- * @next: Pointer to next structure
- */
-typedef struct memory_s
-{
-	int id[BUFSIZ];
-	char *key_query[BUFSIZ];
-	char *value_query[BUFSIZ];
-	char *key_query2[BUFSIZ];
-	char *value_query2[BUFSIZ];
-	struct memory_s *next;
-} memory_t;
+#define MAX_SIZE 1024
 
 extern int server_fd;
 extern int client_fd;
-extern char ram_json[100][100];
+extern char ram_json[MAX_SIZE][MAX_SIZE];
 extern int id;
 
 /* ----- server.c -----*/
