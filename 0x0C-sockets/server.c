@@ -72,7 +72,7 @@ void response_signal(int x)
  */
 int accept_message(void)
 {
-	char *client_ip, buf[BUFSIZ];
+	char *client_ip, buf[BUFSIZ] = {0};
 	int rd;
 	struct sockaddr_in ClientAddress;
 	socklen_t adddrLen = sizeof(ClientAddress);
