@@ -131,7 +131,7 @@ int http_response(int status_code)
 	char *http = "HTTP/1.1";
 	char *cl = "Content-Length: ";
 	char *ct = "Content-Type: application/json";
-	int len = strlen(http) + 3 + strlen(cl) + strlen(ct) + 1;
+	int len = strlen(http) + 3 + strlen(cl) + strlen(ct) + 10;
 	int len2;
 	char *response = NULL;
 	char *buf;
@@ -149,8 +149,8 @@ int http_response(int status_code)
 	}
 	else
 	{
-		len2 = sizeof(char) * (strlen(response) + strlen(http) + 5);
-		buf = malloc(len2);
+		len2 = (strlen(response) + strlen(http) + 10);
+		buf = calloc(len2, sizeof(char));
 		if (buf == NULL)
 			status_code = 500, response = get_response(status_code);
 		sprintf(buf, "%s %d %s" CRLF CRLF, http, status_code, response);
