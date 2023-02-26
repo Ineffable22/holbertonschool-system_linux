@@ -131,10 +131,9 @@ int http_response(int status_code)
 	char *http = "HTTP/1.1";
 	char *cl = "Content-Length: ";
 	char *ct = "Content-Type: application/json";
-	int len = strlen(http) + strlen(cl) + strlen(ct);
-	int len2;
+	int len = strlen(http) + strlen(cl) + strlen(ct), len2 = 0;
 	char *response = NULL;
-	char *buf;
+	char *buf = NULL, flag = 1;
 
 	response = get_response(status_code);
 	if (status_code == 201)
@@ -142,7 +141,7 @@ int http_response(int status_code)
 		len2 = (strlen(response) + MAX_SIZE + len + 1);
 		buf = calloc(len2, sizeof(char));
 		if (buf == NULL)
-			status_code = 500, response = get_response(status_code);
+			flag = 0;
 		sprintf(buf, "%s %d %s" CRLF "Content-Length: %lu"
 		CRLF "Content-Type: application/json" CRLF CRLF "%s",
 		http, status_code, response, strlen(ram_json[id - 1]), ram_json[id - 1]);
@@ -152,10 +151,13 @@ int http_response(int status_code)
 		len2 = (strlen(response) + strlen(http) + 10);
 		buf = calloc(len2, sizeof(char));
 		if (buf == NULL)
-			status_code = 500, response = get_response(status_code);
+			flag = 0;
 		sprintf(buf, "%s %d %s" CRLF CRLF, http, status_code, response);
 	}
-	send(client_fd, buf, strlen(buf), 0);
+	if (flag == 1)
+		send(client_fd, buf, strlen(buf), 0);
+	else
+		send(client_fd, "HTTP/1.1 500 Internal Server Error" CRLF CRLF, 43, 0);
 	if (client_fd != -1 && close(client_fd) == -1)
 	{
 		fprintf(stderr, "close client error\n");
