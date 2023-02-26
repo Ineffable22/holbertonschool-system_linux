@@ -65,5 +65,6 @@ int main(int argc, char **argv)
 	if (status == -1)
 		die_with_error("connect error", sockid);
 	printf("Connected to %s:%s\n", argv[1], argv[2]);
+	close(sockid);
 	return (EXIT_SUCCESS);
 }
