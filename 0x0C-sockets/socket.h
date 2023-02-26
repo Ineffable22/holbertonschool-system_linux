@@ -11,13 +11,43 @@
 #include <signal.h>
 
 #define PORT 8080
+#define CRLF "\r\n"
+
+/**
+ * struct memory_s - Structure representing a memory allocation
+ * @id: identifier
+ * @key_query: Key of first query
+ * @value_query: Value of first query
+ * @key_query2: Key of second query
+ * @value_query2: Value of second query
+ * @next: Pointer to next structure
+ */
+typedef struct memory_s
+{
+	int id[BUFSIZ];
+	char *key_query[BUFSIZ];
+	char *value_query[BUFSIZ];
+	char *key_query2[BUFSIZ];
+	char *value_query2[BUFSIZ];
+	struct memory_s *next;
+} memory_t;
+
+extern int server_fd;
+extern int client_fd;
+extern char ram_json[100][100];
+extern int id;
 
 /* ----- server.c -----*/
 int start_server(void);
-int accept_message(const int sockid);
-int response(int fd, char *buf);
-void die_with_error(const char *str, const int sockid);
+int accept_message(void);
+void die_with_error(const char *str);
+void response_signal(int x);
 
-/* ----- server.c -----*/
+/* ----- {4..11}-*.c -----*/
+int response(char *buf);
+
+/* ----- status_code.c -----*/
+int http_response(const int status_code);
+char *get_response(const int status_code);
 
 #endif /* _SOCKET_H_ */
