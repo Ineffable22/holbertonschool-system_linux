@@ -129,14 +129,16 @@ char *get_response(const int status_code)
 int http_response(const int status_code)
 {
 	char *http = "HTTP/1.1";
+	char *cl = "Content-Length: ";
+	char *ct = "Content-Type: application/json";
+	int len = strlen(http) + 3 + strlen(cl) + strlen(ct) + 1;
 	char *response = NULL;
-	char buf[SIZE_SEND];
+	char *buf;
 
 	response = get_response(status_code);
-
+	buf = malloc(sizeof(char) * (strlen(response) + strlen(ram_json[id - 1])));
 	if (status_code == 201)
 	{
-		send(client_fd, buf, strlen(buf), 0);
 		sprintf(buf, "%s %d %s" CRLF "Content-Length: %lu"
 		CRLF "Content-Type: application/json" CRLF CRLF "%s",
 		http, status_code, response, strlen(buf), ram_json[id - 1]);
@@ -150,5 +152,6 @@ int http_response(const int status_code)
 		return (EXIT_FAILURE);
 	}
 	client_fd = -1;
+	free(buf);
 	return (EXIT_SUCCESS);
 }
