@@ -68,7 +68,7 @@ void response_signal(int x)
  *
  * Return: Nothing
  */
-int accept_message()
+int accept_message(void)
 {
 	char *client_ip, buf[BUFSIZ];
 	int rd;
