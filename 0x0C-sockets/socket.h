@@ -31,5 +31,8 @@ int response(char *buf);
 /* ----- status_code.c -----*/
 int http_response(const int status_code);
 char *get_response(const int status_code);
+char *get_1xx_3xx(const int status_code);
+char *get_4xx(const int status_code);
+char *get_5xx(const int status_code);
 
 #endif /* _SOCKET_H_ */
