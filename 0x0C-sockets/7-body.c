@@ -36,7 +36,7 @@ int response(int fd, char *buf)
 	printf("Path: %s\n", strtok(NULL, delim1));
 	for (i = 12; i; i--)
 		all_body = strtok(NULL, delim1);
-	while((body = strtok(all_body, delim2)))
+	while ((body = strtok(all_body, delim2)))
 	{
 		all_body = NULL;
 		printf("Body param: \"");
