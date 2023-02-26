@@ -136,7 +136,7 @@ int http_response(const int status_code)
 
 	if (status_code == 201)
 	{
-		send(client_fd, buf , strlen(buf), 0);
+		send(client_fd, buf, strlen(buf), 0);
 		sprintf(buf, "%s %d %s" CRLF "Content-Length: %lu"
 		CRLF "Content-Type: application/json" CRLF CRLF "%s",
 		http, status_code, response, strlen(buf), ram_json[id - 1]);
