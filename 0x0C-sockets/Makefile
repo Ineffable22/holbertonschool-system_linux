@@ -21,35 +21,35 @@ NAME3 = bin/3-server
 
 SRC4 = server.c 4-request.c
 OBJ4 = $(patsubst %.c, obj/%.o, $(SRC4))
-NAME4 = bin/todo_api_0
+NAME4 = todo_api_0
 
 SRC5 = server.c 5-queries.c
 OBJ5 = $(patsubst %.c, obj/%.o, $(SRC5))
-NAME5 = bin/todo_api_1
+NAME5 = todo_api_1
 
 SRC6 = server.c 6-headers.c
 OBJ6 = $(patsubst %.c, obj/%.o, $(SRC6))
-NAME6 = bin/todo_api_2
+NAME6 = todo_api_2
 
 SRC7 = server.c 7-body.c
 OBJ7 = $(patsubst %.c, obj/%.o, $(SRC7))
-NAME7 = bin/todo_api_3
+NAME7 = todo_api_3
 
 SRC8 = server.c
 OBJ8 = $(patsubst %.c, obj/%.o, $(SRC8))
-NAME8 = bin/todo_api_4
+NAME8 = todo_api_4
 
 SRC9 = server.c
 OBJ9 = $(patsubst %.c, obj/%.o, $(SRC9))
-NAME9 = bin/todo_api_5
+NAME9 = todo_api_5
 
 SRC10 = server.c
 OBJ10 = $(patsubst %.c, obj/%.o, $(SRC10))
-NAME10 = bin/todo_api_6
+NAME10 = todo_api_6
 
 SRC11 = server.c
 OBJ11 = $(patsubst %.c, obj/%.o, $(SRC11))
-NAME11 = bin/todo_api_7
+NAME11 = todo_api_7
 
 ALLOBJ = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) $(OBJ8) $(OBJ9) $(OBJ10) $(OBJ11)
 ALLNAME = $(NAME0) $(NAME1) $(NAME2) $(NAME3) $(NAME4) $(NAME5) $(NAME6) $(NAME7) $(NAME8) $(NAME9) $(NAME10) $(NAME11)
