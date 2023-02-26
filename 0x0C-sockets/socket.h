@@ -38,8 +38,8 @@ extern char ram_json[100][100];
 extern int id;
 
 /* ----- server.c -----*/
-int start_server(void);
-int accept_message(void);
+int start_server(int task);
+int accept_message(int task);
 void die_with_error(const char *str);
 void response_signal(int x);
 
