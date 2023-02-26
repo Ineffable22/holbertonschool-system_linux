@@ -80,7 +80,6 @@ int accept_message(int task)
 	struct sockaddr_in ClientAddress;
 	socklen_t adddrLen = sizeof(ClientAddress);
 
-	memset(buf, 0, BUFSIZ);
 	client_fd = accept(server_fd, (struct sockaddr *)&ClientAddress, &adddrLen);
 	if (client_fd == -1)
 		return (die_with_error("accept error"), EXIT_FAILURE);
