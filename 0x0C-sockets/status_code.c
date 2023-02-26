@@ -126,7 +126,7 @@ char *get_response(const int status_code)
  *
  * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
-int http_response(const int status_code)
+int http_response(int status_code)
 {
 	char *http = "HTTP/1.1";
 	char *cl = "Content-Length: ";
@@ -137,16 +137,24 @@ int http_response(const int status_code)
 	char *buf;
 
 	response = get_response(status_code);
-	len2 = sizeof(char) * (strlen(response) + strlen(ram_json[id - 1]) + len);
-	buf = malloc(len2);
 	if (status_code == 201)
 	{
+		len2 = sizeof(char) * (strlen(response) + strlen(ram_json[id - 1]) + len);
+		buf = malloc(len2);
+		if (buf == NULL)
+			status_code = 500, response = get_response(status_code);
 		sprintf(buf, "%s %d %s" CRLF "Content-Length: %lu"
 		CRLF "Content-Type: application/json" CRLF CRLF "%s",
 		http, status_code, response, strlen(buf), ram_json[id - 1]);
 	}
 	else
+	{
+		len2 = sizeof(char) * (strlen(response) + strlen(http) + 5);
+		buf = malloc(len2);
+		if (buf == NULL)
+			status_code = 500, response = get_response(status_code);
 		sprintf(buf, "%s %d %s" CRLF CRLF, http, status_code, response);
+	}
 	send(client_fd, buf, strlen(buf), 0);
 	if (client_fd != -1 && close(client_fd) == -1)
 	{
