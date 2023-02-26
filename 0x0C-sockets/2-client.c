@@ -1,10 +1,9 @@
+#include <arpa/inet.h>
+#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <string.h>
 
 /**
  * die_with_error - Print message to stderr and exit
@@ -58,7 +57,7 @@ int main(int argc, char **argv)
 	}
 	sockid = create_socket();
 	if (sockid == -1)
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	servAddr.sin_family = AF_INET;
 	servAddr.sin_port = htons(atoi(argv[2]));
 	status = connect(sockid, (struct sockaddr *)&servAddr, sizeof(servAddr));
