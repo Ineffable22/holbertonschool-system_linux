@@ -84,7 +84,7 @@ void accept_message(const int sockid)
 	rd = recv(fd, buf, BUFSIZ, 0);
 	if (rd == -1)
 		die_with_error("recv error", sockid);
-	printf("Message received: %s\n", buf);
+	printf("Message received: \"%s\"\n", buf);
 }
 
 /**
