@@ -2,7 +2,7 @@
 
 int client_fd = -1;
 int server_fd = -1;
-char ram_json[100][100];
+char ram_json[MAX_SIZE][MAX_SIZE];
 int id = 0;
 
 /**
@@ -43,8 +43,7 @@ int start_server(int task)
 		return (die_with_error("listen error"), EXIT_FAILURE);
 	printf("Server listening on port %d\n", PORT);
 	while (accept_message(task) == EXIT_SUCCESS)
-	{
-	}
+	{}
 	return (EXIT_SUCCESS);
 }
 
