@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <netdb.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,6 +50,7 @@ int main(int argc, char **argv)
 {
 	struct sockaddr_in servAddr;
 	int sockid, status;
+	struct hostent *host;
 
 	if (argc != 3)
 	{
@@ -59,6 +61,9 @@ int main(int argc, char **argv)
 	if (sockid == -1)
 		return (EXIT_FAILURE);
 	servAddr.sin_family = AF_INET;
+	host = gethostbyname(argv[1]);
+	inet_pton(AF_INET, inet_ntoa(*(struct in_addr *)host->h_addr),
+		&servAddr.sin_addr);
 	servAddr.sin_port = htons(atoi(argv[2]));
 	status = connect(sockid, (struct sockaddr *)&servAddr, sizeof(servAddr));
 	if (status == -1)
