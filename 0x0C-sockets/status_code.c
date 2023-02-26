@@ -136,7 +136,7 @@ int http_response(const int status_code)
 	char *buf;
 
 	response = get_response(status_code);
-	buf = malloc(sizeof(char) * (strlen(response) + strlen(ram_json[id - 1])));
+	buf = malloc(sizeof(char) * (strlen(response) + strlen(ram_json[id - 1]) + len));
 	if (status_code == 201)
 	{
 		sprintf(buf, "%s %d %s" CRLF "Content-Length: %lu"
