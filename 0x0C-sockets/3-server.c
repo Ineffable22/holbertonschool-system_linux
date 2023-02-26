@@ -101,7 +101,7 @@ int main(void)
 	if (sockid == -1)
 		exit(EXIT_FAILURE);
 	assgin_address_to_socket(sockid, port);
-	printf("Server listening %d\n", port);
+	printf("Server listening on port %d\n", port);
 	if (listen(sockid, 1) == -1)
 		die_with_error("listen error", sockid);
 	accept_message(sockid);
