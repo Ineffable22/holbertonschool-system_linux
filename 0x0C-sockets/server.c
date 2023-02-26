@@ -22,10 +22,11 @@ void die_with_error(const char *str)
 
 /**
  * start_server - Start the server and connect
+ * @task: Task number to evaluate
  *
  * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
-int start_server(void)
+int start_server(int task)
 {
 	struct sockaddr_in server;
 
@@ -41,8 +42,9 @@ int start_server(void)
 	if (listen(server_fd, SOMAXCONN) == -1)
 		return (die_with_error("listen error"), EXIT_FAILURE);
 	printf("Server listening on port %d\n", PORT);
-	while (accept_message() == EXIT_SUCCESS)
-	{}
+	while (accept_message(task) == EXIT_SUCCESS)
+	{
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -54,7 +56,7 @@ int start_server(void)
  */
 void response_signal(int x)
 {
-	(void) x;
+	(void)x;
 
 	if (server_fd != -1 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
@@ -67,10 +69,11 @@ void response_signal(int x)
 
 /**
  * accept_message - Accept a message from the server
+ * @task: Task number to evaluate
  *
  * Return: Nothing
  */
-int accept_message(void)
+int accept_message(int task)
 {
 	char *client_ip, buf[BUFSIZ] = {0};
 	int rd;
@@ -84,10 +87,14 @@ int accept_message(void)
 	client_ip = inet_ntoa(ClientAddress.sin_addr);
 	if (client_ip == NULL)
 		return (die_with_error("inet_ntoa error"), EXIT_FAILURE);
-	printf("Client connected: %s\n", client_ip);
+	if (task < 8)
+		printf("Client connected: %s\n", client_ip);
+	else
+		printf("%s ", client_ip);
 	rd = recv(client_fd, buf, BUFSIZ, 0);
 	if (rd == -1)
 		return (die_with_error("recv error"), EXIT_FAILURE);
-	printf("Raw request: \"%s\"\n", buf);
+	if (task < 8)
+		printf("Raw request: \"%s\"\n", buf);
 	return (response(buf));
 }
