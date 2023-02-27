@@ -44,5 +44,5 @@ int response(char *buf)
 	printf("Header: \"%s\" -> \"%s\"\n", user_agent, user_agent2);
 	printf("Header: \"%s\" -> \"%s\"\n", host, host2);
 	printf("Header: \"%s\" -> \"%s\"\n", accept, accept2);
-	return (http_response(200));
+	return (http_response(200, NULL));
 }
