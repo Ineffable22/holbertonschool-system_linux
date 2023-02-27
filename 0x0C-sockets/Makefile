@@ -54,9 +54,9 @@ NAME11 = todo_api_7
 ALLOBJ = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ5) $(OBJ6) $(OBJ7) $(OBJ8) $(OBJ9) $(OBJ10) $(OBJ11)
 ALLNAME = $(NAME0) $(NAME1) $(NAME2) $(NAME3) $(NAME4) $(NAME5) $(NAME6) $(NAME7) $(NAME8) $(NAME9) $(NAME10) $(NAME11)
 
-.PHONY: task0 task1 task2 task3 todo_api_0 todo_api_1
+.PHONY: task0 task1 task2 task3 todo_api_0 todo_api_1 todo_api_2 todo_api_3 todo_api_4 todo_api_5 todo_api_6 todo_api_7
 
-all: task0 task1 task2 task3 todo_api_0 todo_api_1
+all: task0 task1 task2 task3 todo_api_0 todo_api_1 todo_api_2 todo_api_3 todo_api_4 todo_api_5 todo_api_6 todo_api_7
 
 directories:
 	mkdir -p obj bin
