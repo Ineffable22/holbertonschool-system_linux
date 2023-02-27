@@ -1,7 +1,7 @@
 #include "socket.h"
 
-int client_fd = -1;
-int server_fd = -1;
+static int client_fd = -1;
+static int server_fd = -1;
 
 /**
  * die_with_error - Print message to stderr and exit
