@@ -46,5 +46,5 @@ int response(char *buf)
 		putchar(0x22);
 		putchar(0xA);
 	}
-	return (http_response(200));
+	return (http_response(200, NULL));
 }
