@@ -35,5 +35,5 @@ int response(char *buf)
 	printf("Method: %s\n", method);
 	printf("Path: %s\n", path);
 	printf("Version: %s\n", version);
-	return (http_response(200));
+	return (http_response(200, NULL));
 }
