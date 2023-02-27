@@ -57,10 +57,10 @@ void response_signal(int x)
 
 	if (server_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
-	server_fd = -1;
-	if (client_fd != 0 && close(server_fd) == -1)
+	server_fd = 0;
+	if (client_fd != 0 && close(client_fd) == -1)
 		fprintf(stderr, "close client error\n");
-	client_fd = -1;
+	client_fd = 0;
 	putchar(0xA);
 	exit(EXIT_FAILURE);
 }
