@@ -27,8 +27,7 @@ int main(void)
 int response(char *buf)
 {
 	char *method, *path, *content_lenght, *queries, *query1, *query2;
-	char *delim = " \r\t\n";
-	char *delim2 = "&";
+	char *delim = " \r\t\n", *delim2 = "&", *body = NULL;
 	int i = 12, response = 201;
 
 	method = strtok(buf, delim);
@@ -56,9 +55,11 @@ int response(char *buf)
 	printf("%d %s\n", response, get_response(response));
 	if (response == 201)
 	{
-		sprintf(ram_json[id], "{\"id\":%d,\"title\":\"%s\",\"description\": \"%s\"}",
+		sprintf(ram_json[id], "{\"id\":%d,\"title\":\"%s\",\"description\":\"%s\"}",
 		id, &query1[6], &query2[12]);
+		body = malloc(sizeof(char) * MAX_SIZE);
+		strcpy(body, ram_json[id]);
 		id++;
 	}
-	return (http_response(response));
+	return (http_response(response, body));
 }
