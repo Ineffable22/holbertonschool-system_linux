@@ -1,7 +1,7 @@
 #include "socket.h"
 
-static int client_fd = -1;
-static int server_fd = -1;
+static int server_fd;
+static int client_fd;
 
 /**
  * die_with_error - Print message to stderr and exit
@@ -94,4 +94,53 @@ int accept_message(int task)
 	if (task < 8)
 		printf("Raw request: \"%s\"\n", buf);
 	return (response(buf));
+}
+
+/**
+ * http_response - Validates the response and send it to the client
+ * @status_code: Status code to evaluate
+ * @body: Pointer to JSON object or list of JSON objects
+ *
+ * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
+ */
+int http_response(int status_code, char *body)
+{
+	char *cl = "Content-Length: ";
+	char *ct = "Content-Type: application/json";
+	int len = 10 + strlen(cl) + strlen(ct), len2 = 0;
+	char *response = NULL;
+	char *buf = NULL, flag = 1;
+
+	response = get_response(status_code);
+	if (body)
+	{
+		len2 = (strlen(response) + MAX_SIZE + len + 4);
+		buf = calloc(len2, sizeof(char));
+		if (buf == NULL)
+			flag = 0;
+		sprintf(buf, "HTTP/1.1 %d %s" CRLF "Content-Length: %lu"
+		CRLF "Content-Type: application/json" CRLF CRLF "%s",
+		status_code, response, strlen(body), body);
+	}
+	else
+	{
+		len2 = (strlen(response) + 18);
+		buf = calloc(len2, sizeof(char));
+		if (buf == NULL)
+			flag = 0;
+		sprintf(buf, "HTTP/1.1 %d %s" CRLF CRLF, status_code, response);
+	}
+	if (flag == 1)
+	{
+		send(client_fd, buf, strlen(buf), 0);
+		free(buf);
+	}
+	else
+		send(client_fd, "HTTP/1.1 500 Internal Server Error" CRLF CRLF, 43, 0);
+	if (body)
+		free(body);
+	if (client_fd != -1 && close(client_fd) == -1)
+		return (fprintf(stderr, "close client error\n"), EXIT_FAILURE);
+	client_fd = -1;
+	return (EXIT_SUCCESS);
 }
