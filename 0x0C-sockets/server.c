@@ -12,9 +12,9 @@ static int client_fd;
 void die_with_error(const char *str)
 {
 	fprintf(stderr, "%s\n", str);
-	if (client_fd != -1 && close(server_fd) == -1)
+	if (client_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close client error\n");
-	if (server_fd != -1 && close(server_fd) == -1)
+	if (server_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
 }
 
@@ -55,10 +55,10 @@ void response_signal(int x)
 {
 	(void) x;
 
-	if (server_fd != -1 && close(server_fd) == -1)
+	if (server_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
 	server_fd = -1;
-	if (client_fd != -1 && close(server_fd) == -1)
+	if (client_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close client error\n");
 	client_fd = -1;
 	putchar(0xA);
