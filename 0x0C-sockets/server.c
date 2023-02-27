@@ -12,7 +12,7 @@ static int client_fd;
 void die_with_error(const char *str)
 {
 	fprintf(stderr, "%s\n", str);
-	if (client_fd != 0 && close(server_fd) == -1)
+	if (client_fd != 0 && close(client_fd) == -1)
 		fprintf(stderr, "close client error\n");
 	if (server_fd != 0 && close(server_fd) == -1)
 		fprintf(stderr, "close server error\n");
@@ -139,8 +139,8 @@ int http_response(int status_code, char *body)
 		send(client_fd, "HTTP/1.1 500 Internal Server Error" CRLF CRLF, 43, 0);
 	if (body)
 		free(body);
-	if (client_fd != -1 && close(client_fd) == -1)
+	if (client_fd != 0 && close(client_fd) == -1)
 		return (fprintf(stderr, "close client error\n"), EXIT_FAILURE);
-	client_fd = -1;
+	client_fd = 0;
 	return (EXIT_SUCCESS);
 }
