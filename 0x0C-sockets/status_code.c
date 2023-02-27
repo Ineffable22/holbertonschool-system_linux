@@ -123,10 +123,11 @@ char *get_response(const int status_code)
 /**
  * http_response - Validates the response and send it to the client
  * @status_code: Status code to evaluate
+ * @body: Pointer to JSON object or list of JSON objects
  *
  * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
-int http_response(int status_code)
+int http_response(int status_code, char *body)
 {
 	char *cl = "Content-Length: ";
 	char *ct = "Content-Type: application/json";
@@ -135,7 +136,7 @@ int http_response(int status_code)
 	char *buf = NULL, flag = 1;
 
 	response = get_response(status_code);
-	if (status_code == 201)
+	if (body)
 	{
 		len2 = (strlen(response) + MAX_SIZE + len + 4);
 		buf = calloc(len2, sizeof(char));
@@ -143,7 +144,7 @@ int http_response(int status_code)
 			flag = 0;
 		sprintf(buf, "HTTP/1.1 %d %s" CRLF "Content-Length: %lu"
 		CRLF "Content-Type: application/json" CRLF CRLF "%s",
-		status_code, response, strlen(ram_json[id - 1]), ram_json[id - 1]);
+		status_code, response, strlen(body), body);
 	}
 	else
 	{
@@ -160,11 +161,10 @@ int http_response(int status_code)
 	}
 	else
 		send(client_fd, "HTTP/1.1 500 Internal Server Error" CRLF CRLF, 43, 0);
+	if (body)
+		free(body);
 	if (client_fd != -1 && close(client_fd) == -1)
-	{
-		fprintf(stderr, "close client error\n");
-		return (EXIT_FAILURE);
-	}
+		return (fprintf(stderr, "close client error\n"), EXIT_FAILURE);
 	client_fd = -1;
 	return (EXIT_SUCCESS);
 }
