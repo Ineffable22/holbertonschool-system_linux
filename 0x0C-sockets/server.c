@@ -93,7 +93,7 @@ int accept_message(int task)
 	rd = recv(client_fd, buf, BUFSIZ, 0);
 	if (rd == -1)
 		return (die_with_error("recv error"), EXIT_FAILURE);
-	/* if (task < 8) */
-		/* printf("Raw request: \"%s\"\n", buf); */
+	if (task < 8)
+		printf("Raw request: \"%s\"\n", buf);
 	return (response(buf));
 }
