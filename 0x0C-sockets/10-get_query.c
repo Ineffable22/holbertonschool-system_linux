@@ -42,6 +42,7 @@ int validate_method(char *method)
  * @query1: Query value1 string
  * @query2: Query value2 string
  * @id: Id of the JSON object
+ * @path: Path with query string
  *
  * Return: Pointer to JSON object or list of JSON objects
 */
@@ -55,10 +56,7 @@ char *content(int *response, char ram_json[MAX_SIZE][MAX_SIZE], char *query1,
 	{
 		body = malloc(sizeof(char) * BUFSIZ);
 		if (body == NULL)
-		{
-			fprintf(stderr, "Can not malloc\n");
-			return (NULL);
-		}
+			return (fprintf(stderr, "Can not malloc\n"), NULL);
 		printf("path => %s\n", path);
 		if (*path)
 		{
