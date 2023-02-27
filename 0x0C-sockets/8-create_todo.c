@@ -28,6 +28,8 @@ int response(char *buf)
 {
 	char *method, *path, *content_lenght, *queries, *query1, *query2;
 	char *delim = " \r\t\n", *delim2 = "&", *body = NULL;
+	static char ram_json[MAX_SIZE][MAX_SIZE];
+	static int id;
 	int i = 12, response = 201;
 
 	method = strtok(buf, delim);
