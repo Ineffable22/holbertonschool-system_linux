@@ -63,7 +63,7 @@ void response_signal(int x)
 	if (client_fd != -1 && close(server_fd) == -1)
 		fprintf(stderr, "close client error\n");
 	client_fd = -1;
-	/* putchar(0xA); */
+	putchar(0xA);
 	exit(EXIT_FAILURE);
 }
 
@@ -71,7 +71,7 @@ void response_signal(int x)
  * accept_message - Accept a message from the server
  * @task: Task number to evaluate
  *
- * Return: Nothing
+ * Return: EXIT_SUCCESS if successful otherwise EXIT_FAILURE
  */
 int accept_message(int task)
 {
@@ -93,7 +93,7 @@ int accept_message(int task)
 	rd = recv(client_fd, buf, BUFSIZ, 0);
 	if (rd == -1)
 		return (die_with_error("recv error"), EXIT_FAILURE);
-	if (task < 8)
-		printf("Raw request: \"%s\"\n", buf);
+	/* if (task < 8) */
+		/* printf("Raw request: \"%s\"\n", buf); */
 	return (response(buf));
 }
