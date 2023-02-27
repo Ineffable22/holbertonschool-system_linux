@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pedantic
+CFLAGS = -Wall -Wextra -Werror -pedantic -g3
 HEADER = socket.h
 BETTY = betty
 
@@ -39,7 +39,7 @@ SRC8 = server.c status_code.c 8-create_todo.c
 OBJ8 = $(patsubst %.c, obj/%.o, $(SRC8))
 NAME8 = todo_api_4
 
-SRC9 = server.c status_code.c
+SRC9 = server.c status_code.c 9-all_todo.c
 OBJ9 = $(patsubst %.c, obj/%.o, $(SRC9))
 NAME9 = todo_api_5
 
