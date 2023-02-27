@@ -16,8 +16,6 @@
 
 extern int server_fd;
 extern int client_fd;
-extern char ram_json[MAX_SIZE][MAX_SIZE];
-extern int id;
 
 /* ----- server.c -----*/
 int start_server(int task);
@@ -29,7 +27,7 @@ void response_signal(int x);
 int response(char *buf);
 
 /* ----- status_code.c -----*/
-int http_response(const int status_code);
+int http_response(int status_code, char *body);
 char *get_response(const int status_code);
 char *get_1xx_3xx(const int status_code);
 char *get_4xx(const int status_code);
