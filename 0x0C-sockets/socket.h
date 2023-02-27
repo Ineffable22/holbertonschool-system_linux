@@ -14,20 +14,17 @@
 #define CRLF "\r\n"
 #define MAX_SIZE 1024
 
-extern int server_fd;
-extern int client_fd;
-
 /* ----- server.c -----*/
 int start_server(int task);
 int accept_message(int task);
 void die_with_error(const char *str);
 void response_signal(int x);
+int http_response(int status_code, char *body);
 
 /* ----- {4..11}-*.c -----*/
 int response(char *buf);
 
 /* ----- status_code.c -----*/
-int http_response(int status_code, char *body);
 char *get_response(const int status_code);
 char *get_1xx_3xx(const int status_code);
 char *get_4xx(const int status_code);
