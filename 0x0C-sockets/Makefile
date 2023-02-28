@@ -47,7 +47,7 @@ SRC10 = server.c status_code.c 10-get_query.c
 OBJ10 = $(patsubst %.c, obj/%.o, $(SRC10))
 NAME10 = todo_api_6
 
-SRC11 = server.c status_code.c
+SRC11 = server.c status_code.c 11-delete_todo.c
 OBJ11 = $(patsubst %.c, obj/%.o, $(SRC11))
 NAME11 = todo_api_7
 
