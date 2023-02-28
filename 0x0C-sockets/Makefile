@@ -19,7 +19,7 @@ SRC3 = 3-server.c
 OBJ3 = $(patsubst %.c, obj/%.o, $(SRC3))
 NAME3 = bin/3-server
 
-SRC4 = server.c status_code.c 4-request.c 
+SRC4 = server.c status_code.c 4-request.c
 OBJ4 = $(patsubst %.c, obj/%.o, $(SRC4))
 NAME4 = todo_api_0
 
@@ -78,7 +78,7 @@ task3: directories $(OBJ3)
 	$(CC) $(CFLAGS) $(OBJ3) -o $(NAME3)
 
 # API tasks 4 - 11
-todo_api_0: directories $(HEADER) $(OBJ4) 
+todo_api_0: directories $(HEADER) $(OBJ4)
 	$(CC) $(CFLAGS) $(OBJ4) -o $(NAME4)
 
 todo_api_1: directories $(HEADER) $(OBJ5)
@@ -113,4 +113,4 @@ fclean: clean oclean
 re: oclean all
 
 betty:
-	$(BETTY) *.c *.h
+	$(BETTY) *.c *.h Makefile
