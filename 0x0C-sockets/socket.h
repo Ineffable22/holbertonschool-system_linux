@@ -10,7 +10,7 @@
 #include <string.h>
 #include <signal.h>
 
-#define PORT 8081
+#define PORT 8080
 #define CRLF "\r\n"
 #define MAX_SIZE 1024
 
