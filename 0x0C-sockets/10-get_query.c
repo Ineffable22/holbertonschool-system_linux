@@ -57,10 +57,8 @@ char *content(int *response, char ram_json[MAX_SIZE][MAX_SIZE], char *query1,
 		body = malloc(sizeof(char) * BUFSIZ);
 		if (body == NULL)
 			return (fprintf(stderr, "Can not malloc\n"), NULL);
-		printf("path => %s\n", path);
 		if (*path)
 		{
-			printf("path => %s\n", path);
 			find = atoi(&path[4]);
 			if (strncmp(path, "?id=", 3) || find < 0 || find > *id)
 				return (*response = 404, NULL);
